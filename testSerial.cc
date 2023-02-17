@@ -10,7 +10,6 @@ int main(int argc, char* argv[]) {
 	return RUN_ALL_TESTS();
 }
 
-
 TEST(Constructor , OBinaryFile) {
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
@@ -23,9 +22,9 @@ TEST(Constructor , OBinaryFile) {
 	IBinaryFile fileToRead = IBinaryFile(path); 
 
 	std::byte toRead{255};
-	std::size_t size = fileToRead.read(toRead,sizeof(std::byte));
+	std::size_t size = fileToRead.read(&toRead, sizeof(std::byte));
 	EXPECT_EQ(size,sizeof(std::byte));
-	std::cout << static_cast<char>(toRead) << std::endl;
+	EXPECT_EQ('A', static_cast<char>(toRead));
 }
 
 TEST(Operator, OBinaryFile) {
@@ -38,7 +37,20 @@ TEST(Operator, OBinaryFile) {
 	std::byte reading[4 + 4 + 1];
 	std::size_t size = file.read(reading, sizeof(std::byte) * (4 + 4 + 1));
 	EXPECT_EQ(size, sizeof(std::byte) * (4 + 4 + 1));
-	std::cout << static_cast<char>(reading[8]) << std::endl;
+
+	// char a
+	char new_a = static_cast<char>(reading[8]);
+	EXPECT_EQ('a', new_a);
+
+	// int32_t
+	int32_t new_int;
+	std::memcpy(&new_int, reading, sizeof(int32_t));
+	EXPECT_EQ(5, new_int);
+
+	// float
+	float new_float;
+	std::memcpy(&new_float, reading + 4, sizeof(float));
+	EXPECT_EQ(5.f, new_float);
 }
 
 TEST(String, OBinaryFile) {
@@ -52,9 +64,11 @@ TEST(String, OBinaryFile) {
 	IBinaryFile file = IBinaryFile(path);
 	std::byte reading[a.size() + 1];
 	std::size_t size = file.read(reading, a.size() + 1);
-	char new_a[a.size() + 1];
+	char* new_a = (char*)malloc(a.size() + 1);
 	std::memcpy(new_a, reading, a.size() + 1);
+	std::string real_a(new_a);
 	EXPECT_EQ(size, a.size() + 1);
-	std::cout << new_a << std::endl;
+	EXPECT_EQ(a, real_a);
+	free(new_a);
 }
 
