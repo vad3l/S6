@@ -92,13 +92,12 @@ namespace serial {
 		FILE *m_file;
 	};
 
-
 	template<typename T>
 	OBinaryFile& operator<<(OBinaryFile& file, T x) {
 		std::byte bytes[sizeof(T)];
 		std::memcpy(bytes, &x, sizeof(T));
 		file.write(bytes, sizeof(T));
-		return file;	
+		return file;
 	}
 /*
 	OBinaryFile& operator<<(OBinaryFile& file, uint8_t x);
@@ -113,8 +112,9 @@ namespace serial {
 	OBinaryFile& operator<<(OBinaryFile& file, float x);
 	OBinaryFile& operator<<(OBinaryFile& file, double x);
 	OBinaryFile& operator<<(OBinaryFile& file, bool x);
-	OBinaryFile& operator<<(OBinaryFile& file, const std::string& x);
 */
+	OBinaryFile& operator<<(OBinaryFile& file, const std::string& x);
+
 	template<typename T>
 	OBinaryFile& operator<<(OBinaryFile& file, const std::vector<T>& x) {
 		return file;

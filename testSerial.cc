@@ -16,7 +16,6 @@ TEST(Constructor , OBinaryFile) {
 	{
 		OBinaryFile fileToWrite = OBinaryFile(path,OBinaryFile::Mode::Truncate);
 
-		//const char bytes[] = { 72, 101, 108, 108, 111 };
 		std::byte toWrite{ 'A' };
 		fileToWrite.write(&toWrite,sizeof(std::byte));
 	
@@ -41,3 +40,21 @@ TEST(Operator, OBinaryFile) {
 	EXPECT_EQ(size, sizeof(std::byte) * (4 + 4 + 1));
 	std::cout << static_cast<char>(reading[8]) << std::endl;
 }
+
+TEST(String, OBinaryFile) {
+	std::string a = "Banger";
+	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
+	{
+		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
+		file << a;
+	}
+
+	IBinaryFile file = IBinaryFile(path);
+	std::byte reading[a.size() + 1];
+	std::size_t size = file.read(reading, a.size() + 1);
+	char new_a[a.size() + 1];
+	std::memcpy(new_a, reading, a.size() + 1);
+	EXPECT_EQ(size, a.size() + 1);
+	std::cout << new_a << std::endl;
+}
+

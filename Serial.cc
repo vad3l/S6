@@ -30,19 +30,25 @@ namespace serial {
 		}
 	}
 
-/*	OBinaryFile& operator<<(OBinaryFile& file, int32_t x) {
-		std::byte integer[4];
-		std::memcpy(integer, &x, sizeof(x));
-		file.write(integer, 4);
-		return file;
-	}
-
-	OBinaryFile& operator<<(OBinaryFile& file, char x) {
-		std::byte character{ x };
-		file.write(&character, 1);
-		return file;
-	}
+/*
+	OBinaryFile& operator<<(OBinaryFile& file, int8_t x);
+	OBinaryFile& operator<<(OBinaryFile& file, uint16_t x);
+	OBinaryFile& operator<<(OBinaryFile& file, int16_t x);
+	OBinaryFile& operator<<(OBinaryFile& file, uint32_t x);
+	OBinaryFile& operator<<(OBinaryFile& file, int32_t x);
+	OBinaryFile& operator<<(OBinaryFile& file, uint64_t x);
+	OBinaryFile& operator<<(OBinaryFile& file, int64_t x);
+	OBinaryFile& operator<<(OBinaryFile& file, char x);
+	OBinaryFile& operator<<(OBinaryFile& file, float x);
+	OBinaryFile& operator<<(OBinaryFile& file, double x);
+	OBinaryFile& operator<<(OBinaryFile& file, bool x);
 */
+	OBinaryFile& operator<<(OBinaryFile& file, const std::string& x) {
+		std::byte bytes[x.size() + 1];
+		std::memcpy(bytes, x.c_str(), x.size() + 1);
+		file.write(bytes, x.size() + 1);
+		return file;
+	}
 
 	IBinaryFile::~IBinaryFile(){
 		fclose(m_file);
