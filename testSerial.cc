@@ -23,7 +23,7 @@ TEST(Constructor , OBinaryFile) {
 	IBinaryFile fileToRead = IBinaryFile(path); 
 
 	std::byte toRead{255};
-	std::size_t size = fileToRead.read(&toRead,sizeof(std::byte));
+	std::size_t size = fileToRead.read(toRead,sizeof(std::byte));
 	EXPECT_EQ(size,sizeof(std::byte));
 	std::cout << static_cast<char>(toRead) << std::endl;
 }
