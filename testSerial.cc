@@ -16,15 +16,15 @@ TEST(Constructor , OBinaryFile) {
 	{
 		OBinaryFile fileToWrite = OBinaryFile(path,OBinaryFile::Mode::Truncate);
 
-		//const char bytes[] = { 72, 101, 108, 108, 111 };
-		std::byte toWrite{65};
+
+		std::vector<std::byte> toWrite = {72,101, 108, 108, 111} ;
 		fileToWrite.write(&toWrite,sizeof(std::byte));
 	
 	}
 	IBinaryFile fileToRead = IBinaryFile(path); 
 
 	std::byte toRead{255};
-	std::size_t size = fileToRead.read(&toRead,sizeof(std::byte));
+	std::size_t size = fileToRead.read(toRead,sizeof(std::byte));
 	EXPECT_EQ(size,sizeof(std::byte));
 
 	std::cout << static_cast<char>(toRead) << std::endl;
