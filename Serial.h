@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
+#include <cstring>
 
 #include <array>
 #include <map>
@@ -92,6 +93,14 @@ namespace serial {
 	};
 
 
+	template<typename T>
+	OBinaryFile& operator<<(OBinaryFile& file, T x) {
+		std::byte bytes[sizeof(T)];
+		std::memcpy(bytes, &x, sizeof(T));
+		file.write(bytes, sizeof(T));
+		return file;	
+	}
+/*
 	OBinaryFile& operator<<(OBinaryFile& file, uint8_t x);
 	OBinaryFile& operator<<(OBinaryFile& file, int8_t x);
 	OBinaryFile& operator<<(OBinaryFile& file, uint16_t x);
@@ -105,7 +114,7 @@ namespace serial {
 	OBinaryFile& operator<<(OBinaryFile& file, double x);
 	OBinaryFile& operator<<(OBinaryFile& file, bool x);
 	OBinaryFile& operator<<(OBinaryFile& file, const std::string& x);
-
+*/
 	template<typename T>
 	OBinaryFile& operator<<(OBinaryFile& file, const std::vector<T>& x) {
 		return file;

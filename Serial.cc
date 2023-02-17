@@ -1,6 +1,8 @@
 #include "Serial.h"
+
 #include <stdexcept>
 #include <iostream>
+#include <cstring>
 
 namespace serial {
 
@@ -27,6 +29,20 @@ namespace serial {
 			throw std::runtime_error("Error while trying to open binary files :"+filename);
 		}
 	}
+
+/*	OBinaryFile& operator<<(OBinaryFile& file, int32_t x) {
+		std::byte integer[4];
+		std::memcpy(integer, &x, sizeof(x));
+		file.write(integer, 4);
+		return file;
+	}
+
+	OBinaryFile& operator<<(OBinaryFile& file, char x) {
+		std::byte character{ x };
+		file.write(&character, 1);
+		return file;
+	}
+*/
 
 	IBinaryFile::~IBinaryFile(){
 		fclose(m_file);
