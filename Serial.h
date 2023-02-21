@@ -108,21 +108,33 @@ namespace serial {
 
 	template<typename T>
 	OBinaryFile& operator<<(OBinaryFile& file, const std::vector<T>& x) {
+		for (size_t i = 0; i < x.size(); i++) {
+			file << x[i];
+		}
 		return file;
 	}
 
 	template<typename T, std::size_t N>
 	OBinaryFile& operator<<(OBinaryFile& file, const std::array<T,N>& x) {
+		for (size_t i = 0; i < N; i++) {
+			file << x[i];
+		}
 		return file;
 	}
 
 	template<typename K, typename V>
 	OBinaryFile& operator<<(OBinaryFile& file, const std::map<K,V>& x) {
+		for (auto const& [key, val] : x) {
+			file << key << val;
+		}
 		return file;
 	}
 
 	template<typename T>
 	OBinaryFile& operator<<(OBinaryFile& file, const std::set<T>& x) {
+		for (const int &v : x) {
+			file << v;
+		}
 		return file;
 	}
 
@@ -142,21 +154,42 @@ namespace serial {
 
 	template<typename T>
 	IBinaryFile& operator>>(IBinaryFile& file, std::vector<T>& x) {
+		std::byte tab[sizeof(T)];
+		while (size_t readed = file.read(tab, sizeof(T))) {
+			x.push_back(static_cast<T>(tab));
+		}
 		return file;
 	}
 
 	template<typename T, std::size_t N>
 	IBinaryFile& operator>>(IBinaryFile& file, std::array<T, N>& x) {
+		for (size_t i = 0; i < N; i++) {
+			T value;
+			file >> value;
+			x[i] = value;
+		}
 		return file;
 	}
 
 	template<typename K, typename V>
 	IBinaryFile& operator>>(IBinaryFile& file, std::map<K, V>& x) {
+		std::byte tab[sizeof(V) + sizeof(K)];
+		while (size_t readed = file.read(tab, sizeof(V) + sizeof(K))) {
+			K key;
+			V value;
+			std::memcpy(&key, tab, sizeof(K));
+			std::memcpy(&value, &tab[sizeof(K)], sizeof(V));
+			x[key] = value;
+		}
 		return file;
 	}
 
 	template<typename T>
 	IBinaryFile& operator>>(IBinaryFile& file, std::set<T>& x) {
+		std::byte tab[sizeof(T)];
+		while (size_t readed = file.read(tab, sizeof(T))) {
+			x.insert(static_cast<T>(tab));	
+		}
 		return file;
 	}
 
