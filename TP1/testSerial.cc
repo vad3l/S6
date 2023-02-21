@@ -10,216 +10,155 @@ int main(int argc, char* argv[]) {
 	return RUN_ALL_TESTS();
 }
 
-TEST(Constructor , OBinaryFile) {
-	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
-	{
-		OBinaryFile fileToWrite = OBinaryFile(path,OBinaryFile::Mode::Truncate);
-
-		std::byte toWrite{ 'A' };
-		fileToWrite.write(&toWrite,sizeof(std::byte));
-	
-	}
-	IBinaryFile fileToRead = IBinaryFile(path); 
-
-	std::byte toRead{255};
-	std::size_t size = fileToRead.read(&toRead, sizeof(std::byte));
-	EXPECT_EQ(size,sizeof(std::byte));
-	EXPECT_EQ('A', static_cast<char>(toRead));
-}
-
-
-TEST(OperatorUnit, OBinaryFile) {
+TEST(Uint8, BinaryFile) {
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
 		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
 		file << (uint8_t)5 ;
 	}
-	IBinaryFile file = IBinaryFile(path);
-	std::byte reading[sizeof(uint8_t)];
-	std::size_t size = file.read(reading, sizeof(std::byte) * sizeof(uint8_t));
-	EXPECT_EQ(size, sizeof(uint8_t));
 
-	uint8_t new_uint8_te;
-	std::memcpy(&new_uint8_te, reading, sizeof(uint8_t));
-	EXPECT_EQ(5, new_uint8_te);	
+	IBinaryFile file = IBinaryFile(path);
+	uint8_t i;
+	file >> i;
+	EXPECT_EQ((uint8_t)5, i);
 }
 
-TEST(OperatorInt8, OBinaryFile) {
+TEST(Int8, BinaryFile) {
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
 		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
 		file << (int8_t)5 ;
 	}
 	IBinaryFile file = IBinaryFile(path);
-	std::byte reading[sizeof(int8_t)];
-	std::size_t size = file.read(reading, sizeof(std::byte) * sizeof(int8_t));
-	EXPECT_EQ(size, sizeof(int8_t));
-
-	int8_t new_int8_te;
-	std::memcpy(&new_int8_te, reading, sizeof(int8_t));
-	EXPECT_EQ(5, new_int8_te);	
+	int8_t i;
+	file >> i;
+	EXPECT_EQ(5, i);
 }
 
-TEST(OperatorUint16, OBinaryFile) {
+TEST(Uint16, BinaryFile) {
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
 		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
 		file << (uint16_t)5 ;
 	}
-	IBinaryFile file = IBinaryFile(path);
-	std::byte reading[sizeof(uint16_t)];
-	std::size_t size = file.read(reading, sizeof(std::byte) * sizeof(uint16_t));
-	EXPECT_EQ(size, sizeof(uint16_t));
 
-	uint16_t new_uint16_te;
-	std::memcpy(&new_uint16_te, reading, sizeof(uint16_t));
-	EXPECT_EQ(5, new_uint16_te);	
+	IBinaryFile file = IBinaryFile(path);
+	uint16_t i;
+	file >> i;
+	EXPECT_EQ((uint16_t)5, i);
 }
 
-TEST(OperatorInt16, OBinaryFile) {
+TEST(Int16, BinaryFile) {
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
 		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
 		file << (int16_t)5 ;
 	}
-	IBinaryFile file = IBinaryFile(path);
-	std::byte reading[sizeof(int16_t)];
-	std::size_t size = file.read(reading, sizeof(std::byte) * sizeof(int16_t));
-	EXPECT_EQ(size, sizeof(int16_t));
 
-	int16_t new_int16_te;
-	std::memcpy(&new_int16_te, reading, sizeof(int16_t));
-	EXPECT_EQ(5, new_int16_te);	
+	IBinaryFile file = IBinaryFile(path);
+	int16_t i;
+	file >> i;
+	EXPECT_EQ(5, i);
 }
 
-TEST(OperatorUint32, OBinaryFile) {
+TEST(Uint32, BinaryFile) {
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
 		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
 		file << (uint32_t)5 ;
 	}
-	IBinaryFile file = IBinaryFile(path);
-	std::byte reading[sizeof(uint32_t)];
-	std::size_t size = file.read(reading, sizeof(std::byte) * sizeof(uint32_t));
-	EXPECT_EQ(size, sizeof(uint32_t));
 
-	uint32_t new_uint32_t_te;
-	std::memcpy(&new_uint32_t_te, reading, sizeof(uint32_t));
-	EXPECT_EQ((uint32_t)5, new_uint32_t_te);	
+	IBinaryFile file = IBinaryFile(path);
+	uint32_t i;
+	file >> i;
+	EXPECT_EQ((uint32_t)5, i);
 }
 
-TEST(OperatorInt32, OBinaryFile) {
+TEST(Int32, BinaryFile) {
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
 		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
 		file << (int32_t)5 ;
 	}
 	IBinaryFile file = IBinaryFile(path);
-	std::byte reading[sizeof(int32_t)];
-	std::size_t size = file.read(reading, sizeof(std::byte) * sizeof(int32_t));
-	EXPECT_EQ(size, sizeof(int32_t));
-
-	int32_t new_int32_t_te;
-	std::memcpy(&new_int32_t_te, reading, sizeof(int32_t));
-	EXPECT_EQ(5, new_int32_t_te);	
+	int32_t i;
+	file >> i;
+	EXPECT_EQ(5, i);
 }
 
-TEST(OperatorUint64, OBinaryFile) {
+TEST(Uint64, BinaryFile) {
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
 		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
 		file << (uint64_t)5 ;
 	}
 	IBinaryFile file = IBinaryFile(path);
-	std::byte reading[sizeof(uint64_t)];
-	std::size_t size = file.read(reading, sizeof(std::byte) * sizeof(uint64_t));
-	EXPECT_EQ(size, sizeof(uint64_t));
-
-	uint64_t new_uint64_t_t_te;
-	std::memcpy(&new_uint64_t_t_te, reading, sizeof(uint64_t));
-	EXPECT_EQ((uint64_t)5, new_uint64_t_t_te);	
+	uint64_t i;
+	file >> i;
+	EXPECT_EQ((uint64_t)5, i);
 }
 
-TEST(OperatorInt64, OBinaryFile) {
+TEST(Int64, BinaryFile) {
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
 		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
 		file << (int64_t)5 ;
 	}
 	IBinaryFile file = IBinaryFile(path);
-	std::byte reading[sizeof(int64_t)];
-	std::size_t size = file.read(reading, sizeof(std::byte) * sizeof(int64_t));
-	EXPECT_EQ(size, sizeof(int64_t));
-
-	int64_t new_int64_te;
-	std::memcpy(&new_int64_te, reading, sizeof(int64_t));
-	EXPECT_EQ((int64_t)5, new_int64_te);	
+	int64_t i;
+	file >> i;
+	EXPECT_EQ(5, i);
 }
 
-TEST(OperatorChar, OBinaryFile) {
+TEST(Char, BinaryFile) {
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
 		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
 		file << 'a' ;
 	}
 	IBinaryFile file = IBinaryFile(path);
-	std::byte reading[sizeof(char)];
-	std::size_t size = file.read(reading, sizeof(std::byte) * sizeof(char));
-	EXPECT_EQ(size, sizeof(char));
-
-	char new_a = static_cast<char>(reading[0]);
-	EXPECT_EQ('a', new_a);
+	char a;
+	file >> a;
+	EXPECT_EQ('a', a);
 }
 
-TEST(OperatorFloat, OBinaryFile) {
+TEST(Float, BinaryFile) {
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
 		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
 		file << float(5.f) ;
 	}
 	IBinaryFile file = IBinaryFile(path);
-	std::byte reading[sizeof(float)];
-	std::size_t size = file.read(reading, sizeof(std::byte) * sizeof(float));
-	EXPECT_EQ(size, sizeof(float));
-
-	float new_float_te;
-	std::memcpy(&new_float_te, reading, sizeof(float));
-	EXPECT_EQ(5.f, new_float_te);	
+	float f;
+	file >> f;
+	EXPECT_EQ(5.f, f);
 }
 
-TEST(OperatorDouble, OBinaryFile) {
+TEST(Double, BinaryFile) {
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
 		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
 		file << double(5.0) ;
 	}
 	IBinaryFile file = IBinaryFile(path);
-	std::byte reading[sizeof(double)];
-	std::size_t size = file.read(reading, sizeof(std::byte) * sizeof(double));
-	EXPECT_EQ(size, sizeof(double));
-
-	double new_double_te;
-	std::memcpy(&new_double_te, reading, sizeof(double));
-	EXPECT_EQ(5.0, new_double_te);	
+	double d;
+	file >> d;
+	EXPECT_EQ(5.0, d);
 }
 
-TEST(OperatorBool, OBinaryFile) {
+TEST(Bool, BinaryFile) {
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
 		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
 		file << true ;
 	}
 	IBinaryFile file = IBinaryFile(path);
-	std::byte reading[sizeof(bool)];
-	std::size_t size = file.read(reading, sizeof(std::byte) * sizeof(bool));
-	EXPECT_EQ(size, sizeof(bool));
-
-	bool boole;
-	std::memcpy(&boole, reading, sizeof(bool));
-	EXPECT_EQ(true, boole);	
+	bool b;
+	file >> b;
+	EXPECT_EQ(true, b);
 }
 
-TEST(OperatorString, OBinaryFile) {
+TEST(String, BinaryFile) {
 	std::string a = "Banger";
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
@@ -228,9 +167,81 @@ TEST(OperatorString, OBinaryFile) {
 	}
 
 	IBinaryFile file = IBinaryFile(path);
-	std::string s ;
-
+	std::string s;
 	file >> s ;
 	EXPECT_EQ(a,s); 
 }
-	
+
+TEST(Vector, BinaryFile) {
+	std::vector<int32_t> v;
+	v.push_back(5); v.push_back(8);
+	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
+	{
+		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
+		file << v;
+	}
+
+	IBinaryFile file = IBinaryFile(path);
+	std::vector<int32_t> r;
+	file >> r;
+	EXPECT_EQ((size_t)2, r.size());
+	EXPECT_EQ(5, r[0]);
+	EXPECT_EQ(8, r[1]);
+}
+
+TEST(Map, BinaryFile) {
+	std::map<int32_t, char> m;
+	m.insert({ 5, 'a' });
+	m.insert({ 15, 'y' });
+
+	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
+	{
+		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
+		file << m;
+	}
+
+	IBinaryFile file = IBinaryFile(path);
+	std::map<int32_t, char> r;
+	file >> r;
+	EXPECT_EQ((size_t)2, r.size());
+	EXPECT_EQ('a', r[5]);
+	EXPECT_EQ('y', r[15]);
+}
+
+TEST(Array, BinaryFile) {
+	std::array<char, 2> m;
+	m[0] = 'j';
+	m[1] = 'e';
+
+	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
+	{
+		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
+		file << m;
+	}
+
+	IBinaryFile file = IBinaryFile(path);
+	std::array<char, 2> r;
+	file >> r;
+	EXPECT_EQ((size_t)2, r.size());
+	EXPECT_EQ('j', r[0]);
+	EXPECT_EQ('e', r[1]);
+}
+
+TEST(Set, BinaryFile) {
+	std::set<uint8_t> s;
+	s.insert(0);
+	s.insert(96);
+	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
+	{
+		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
+		file << s;
+	}
+
+	IBinaryFile file = IBinaryFile(path);
+	std::set<uint8_t> r;
+	file >> r;
+	EXPECT_EQ((size_t)2, r.size());
+	EXPECT_EQ(0, *r.begin());
+	EXPECT_EQ(96, *(std::prev(r.end())));
+}
+

@@ -160,7 +160,10 @@ namespace serial {
 	IBinaryFile& operator>>(IBinaryFile& file, std::string& x) {
 		std::byte character;
 		while (file.read(&character, sizeof(char))) {
-			x += static_cast<char>(character);
+			char c = static_cast<char>(character);
+			if (c != 0) {
+				x += c;
+			}
 		}
 		return file;
 	}

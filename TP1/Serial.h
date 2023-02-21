@@ -132,7 +132,7 @@ namespace serial {
 
 	template<typename T>
 	OBinaryFile& operator<<(OBinaryFile& file, const std::set<T>& x) {
-		for (const int &v : x) {
+		for (const T &v : x) {
 			file << v;
 		}
 		return file;
@@ -156,7 +156,9 @@ namespace serial {
 	IBinaryFile& operator>>(IBinaryFile& file, std::vector<T>& x) {
 		std::byte tab[sizeof(T)];
 		while (size_t readed = file.read(tab, sizeof(T))) {
-			x.push_back(static_cast<T>(tab));
+			T value;
+			std::memcpy(&value, tab, sizeof(T));
+			x.push_back(value);
 		}
 		return file;
 	}
@@ -179,7 +181,7 @@ namespace serial {
 			V value;
 			std::memcpy(&key, tab, sizeof(K));
 			std::memcpy(&value, &tab[sizeof(K)], sizeof(V));
-			x[key] = value;
+			x.insert({ key, value });
 		}
 		return file;
 	}
@@ -188,7 +190,9 @@ namespace serial {
 	IBinaryFile& operator>>(IBinaryFile& file, std::set<T>& x) {
 		std::byte tab[sizeof(T)];
 		while (size_t readed = file.read(tab, sizeof(T))) {
-			x.insert(static_cast<T>(tab));	
+			T value;
+			std::memcpy(&value, tab, sizeof(T));
+			x.insert(value);	
 		}
 		return file;
 	}
