@@ -6,6 +6,14 @@
 
 namespace serial {
 
+	template<typename T>
+	OBinaryFile& operator<<(OBinaryFile& file, T x) {
+		std::byte bytes[sizeof(T)];
+		std::memcpy(bytes, &x, sizeof(T));
+		file.write(bytes, sizeof(T));
+		return file;
+	}
+
 	OBinaryFile::OBinaryFile(const std::string& filename,OBinaryFile::Mode mode)
 	:m_file(fopen(filename.c_str(),(mode == Mode::Truncate ? "wb" : "ab")))
 	{
@@ -30,19 +38,6 @@ namespace serial {
 		}
 	}
 
-/*
-	OBinaryFile& operator<<(OBinaryFile& file, int8_t x);
-	OBinaryFile& operator<<(OBinaryFile& file, uint16_t x);
-	OBinaryFile& operator<<(OBinaryFile& file, int16_t x);
-	OBinaryFile& operator<<(OBinaryFile& file, uint32_t x);
-	OBinaryFile& operator<<(OBinaryFile& file, int32_t x);
-	OBinaryFile& operator<<(OBinaryFile& file, uint64_t x);
-	OBinaryFile& operator<<(OBinaryFile& file, int64_t x);
-	OBinaryFile& operator<<(OBinaryFile& file, char x);
-	OBinaryFile& operator<<(OBinaryFile& file, float x);
-	OBinaryFile& operator<<(OBinaryFile& file, double x);
-	OBinaryFile& operator<<(OBinaryFile& file, bool x);
-*/
 	OBinaryFile& operator<<(OBinaryFile& file, const std::string& x) {
 		std::byte bytes[x.size() + 1];
 		std::memcpy(bytes, x.c_str(), x.size() + 1);
