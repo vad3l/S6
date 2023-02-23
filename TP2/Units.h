@@ -31,7 +31,7 @@ namespace phy {
 	using Kelvin	= Unit<0,0,0,0,1,0,0>;
 	using Mole	= Unit<0,0,0,0,0,1,0>;
 	using Candela	= Unit<0,0,0,0,0,0,1>;
-	using Radian	= Unit<1,0,0,0,0,0,0>;
+	using Radian	= Unit<1,0,1,0,0,0,0>;
 
 	/*
 	 * A quantity is a value associated with a unit and a ratio

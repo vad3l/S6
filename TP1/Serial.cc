@@ -48,9 +48,9 @@ namespace serial {
 
 	OBinaryFile& operator<<(OBinaryFile& file, const std::string& x) {
 		file << x.size();
-		std::byte bytes[x.size() + 1];
-		std::memcpy(bytes, x.c_str(), x.size() + 1);
-		file.write(bytes, x.size() + 1);
+		std::byte bytes[x.size()];
+		std::memcpy(bytes, x.c_str(), x.size());
+		file.write(bytes, x.size());
 		return file;
 	}
 

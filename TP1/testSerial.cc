@@ -247,3 +247,58 @@ TEST(Set, BinaryFile) {
 	EXPECT_EQ(97, *(std::prev(r.end())));
 }
 
+TEST(MultipleTestCollection, BinaryFile) {
+	std::string a = "Banger";
+
+	std::set<uint8_t> s;
+	s.insert(7);
+	s.insert(8);
+	s.insert(9);
+	s.insert(97);
+
+	std::array<char, 2> m;
+	m[0] = 'j';
+	m[1] = 'e';
+
+	std::map<int32_t, char> ma;
+	ma.insert({ 5, 'a' });
+	ma.insert({ 15, 'y' });
+
+	std::vector<int32_t> v;
+	v.push_back(5); v.push_back(8);
+
+	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
+	{
+		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
+		file << a << s << m << ma << v;
+	}
+
+	IBinaryFile file = IBinaryFile(path);
+	std::string resString;
+	file >> resString ;
+	EXPECT_EQ(a,resString); 
+
+	std::set<uint8_t> resSet;
+	file >> resSet;
+	EXPECT_EQ((size_t)4, resSet.size());
+	EXPECT_EQ(7, *resSet.begin());
+	EXPECT_EQ(97, *(std::prev(resSet.end())));
+
+	std::array<char, 2> resArray;
+	file >> resArray;
+	EXPECT_EQ((size_t)2, resArray.size());
+	EXPECT_EQ('j', resArray[0]);
+	EXPECT_EQ('e', resArray[1]);
+
+	std::map<int32_t, char> resMap;
+	file >> resMap;
+	EXPECT_EQ((size_t)2, resMap.size());
+	EXPECT_EQ('a', resMap[5]);
+	EXPECT_EQ('y', resMap[15]);
+
+	std::vector<int32_t> resVector;
+	file >> resVector;
+	EXPECT_EQ((size_t)2, resVector.size());
+	EXPECT_EQ(5, resVector[0]);
+	EXPECT_EQ(8, resVector[1]);
+}
