@@ -158,10 +158,8 @@ namespace serial {
 
 	template<typename T>
 	IBinaryFile& operator>>(IBinaryFile& file, std::vector<T>& x) {
-		std::byte sizeTab[sizeof(size_t)];
 		size_t size;
-		file.read(sizeTab, sizeof(size_t));
-		std::memcpy(&size, sizeTab, sizeof(size_t));
+		file >> size;
 
 		std::byte tab[sizeof(T)];
 		for (size_t i = 0 ; i < size ; ++i) { 
@@ -186,10 +184,8 @@ namespace serial {
 
 	template<typename K, typename V>
 	IBinaryFile& operator>>(IBinaryFile& file, std::map<K, V>& x) {
-		std::byte sizeTab[sizeof(size_t)];
 		size_t size;
-		file.read(sizeTab, sizeof(size_t));
-		std::memcpy(&size, sizeTab, sizeof(size_t));
+		file >> size;
 
 		std::byte tab[sizeof(V) + sizeof(K)];
 		for (size_t i = 0 ; i < size ; ++i) { 
@@ -206,10 +202,8 @@ namespace serial {
 
 	template<typename T>
 	IBinaryFile& operator>>(IBinaryFile& file, std::set<T>& x) {
-		std::byte sizeTab[sizeof(size_t)];
 		size_t size;
-		file.read(sizeTab, sizeof(size_t));
-		std::memcpy(&size, sizeTab, sizeof(size_t));
+		file >> size;
 
 		std::byte tab[sizeof(T)];
 		for (size_t i = 0 ; i < size ; ++i) {
