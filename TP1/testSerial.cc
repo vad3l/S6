@@ -229,8 +229,10 @@ TEST(Array, BinaryFile) {
 
 TEST(Set, BinaryFile) {
 	std::set<uint8_t> s;
-	s.insert(0);
-	s.insert(96);
+	s.insert(7);
+	s.insert(8);
+	s.insert(9);
+	s.insert(97);
 	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
 	{
 		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
@@ -240,8 +242,8 @@ TEST(Set, BinaryFile) {
 	IBinaryFile file = IBinaryFile(path);
 	std::set<uint8_t> r;
 	file >> r;
-	EXPECT_EQ((size_t)2, r.size());
-	EXPECT_EQ(0, *r.begin());
-	EXPECT_EQ(96, *(std::prev(r.end())));
+	EXPECT_EQ((size_t)4, r.size());
+	EXPECT_EQ(7, *r.begin());
+	EXPECT_EQ(97, *(std::prev(r.end())));
 }
 

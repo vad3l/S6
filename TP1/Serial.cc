@@ -47,6 +47,7 @@ namespace serial {
 	}
 
 	OBinaryFile& operator<<(OBinaryFile& file, const std::string& x) {
+		file << x.size();
 		std::byte bytes[x.size() + 1];
 		std::memcpy(bytes, x.c_str(), x.size() + 1);
 		file.write(bytes, x.size() + 1);
@@ -159,10 +160,18 @@ namespace serial {
 
 	IBinaryFile& operator>>(IBinaryFile& file, std::string& x) {
 		std::byte character;
-		while (file.read(&character, sizeof(char))) {
-			char c = static_cast<char>(character);
-			if (c != 0) {
-				x += c;
+
+		std::byte sizeTab[sizeof(size_t)];
+		size_t size;
+		file.read(sizeTab, sizeof(size_t));
+		std::memcpy(&size, sizeTab, sizeof(size_t));
+
+		for (size_t i = 0 ; i < size ; ++i) { 
+			if (file.read(&character, sizeof(char))) {
+				char c = static_cast<char>(character);
+				if (c != 0) {
+					x += c;
+				}
 			}
 		}
 		return file;

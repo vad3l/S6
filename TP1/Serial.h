@@ -12,7 +12,8 @@
 #include <string>
 #include <vector>
 
-
+#include <iostream>
+#include <ostream>
 namespace serial {
 
 	/**
@@ -108,6 +109,7 @@ namespace serial {
 
 	template<typename T>
 	OBinaryFile& operator<<(OBinaryFile& file, const std::vector<T>& x) {
+		file << x.size();
 		for (size_t i = 0; i < x.size(); i++) {
 			file << x[i];
 		}
@@ -124,6 +126,7 @@ namespace serial {
 
 	template<typename K, typename V>
 	OBinaryFile& operator<<(OBinaryFile& file, const std::map<K,V>& x) {
+		file << x.size();
 		for (auto const& [key, val] : x) {
 			file << key << val;
 		}
@@ -132,6 +135,7 @@ namespace serial {
 
 	template<typename T>
 	OBinaryFile& operator<<(OBinaryFile& file, const std::set<T>& x) {
+		file << x.size();
 		for (const T &v : x) {
 			file << v;
 		}
@@ -154,11 +158,18 @@ namespace serial {
 
 	template<typename T>
 	IBinaryFile& operator>>(IBinaryFile& file, std::vector<T>& x) {
+		std::byte sizeTab[sizeof(size_t)];
+		size_t size;
+		file.read(sizeTab, sizeof(size_t));
+		std::memcpy(&size, sizeTab, sizeof(size_t));
+
 		std::byte tab[sizeof(T)];
-		while (size_t readed = file.read(tab, sizeof(T))) {
-			T value;
-			std::memcpy(&value, tab, sizeof(T));
-			x.push_back(value);
+		for (size_t i = 0 ; i < size ; ++i) { 
+			if (size_t readed = file.read(tab, sizeof(T))) {
+				T value;
+				std::memcpy(&value, tab, sizeof(T));
+				x.push_back(value);
+			}
 		}
 		return file;
 	}
@@ -175,24 +186,38 @@ namespace serial {
 
 	template<typename K, typename V>
 	IBinaryFile& operator>>(IBinaryFile& file, std::map<K, V>& x) {
+		std::byte sizeTab[sizeof(size_t)];
+		size_t size;
+		file.read(sizeTab, sizeof(size_t));
+		std::memcpy(&size, sizeTab, sizeof(size_t));
+
 		std::byte tab[sizeof(V) + sizeof(K)];
-		while (size_t readed = file.read(tab, sizeof(V) + sizeof(K))) {
-			K key;
-			V value;
-			std::memcpy(&key, tab, sizeof(K));
-			std::memcpy(&value, &tab[sizeof(K)], sizeof(V));
-			x.insert({ key, value });
+		for (size_t i = 0 ; i < size ; ++i) { 
+			if (size_t readed = file.read(tab, sizeof(V) + sizeof(K))) {
+				K key;
+				V value;
+				std::memcpy(&key, tab, sizeof(K));
+				std::memcpy(&value, &tab[sizeof(K)], sizeof(V));
+				x.insert({ key, value });
+			}
 		}
 		return file;
 	}
 
 	template<typename T>
 	IBinaryFile& operator>>(IBinaryFile& file, std::set<T>& x) {
+		std::byte sizeTab[sizeof(size_t)];
+		size_t size;
+		file.read(sizeTab, sizeof(size_t));
+		std::memcpy(&size, sizeTab, sizeof(size_t));
+
 		std::byte tab[sizeof(T)];
-		while (size_t readed = file.read(tab, sizeof(T))) {
-			T value;
-			std::memcpy(&value, tab, sizeof(T));
-			x.insert(value);	
+		for (size_t i = 0 ; i < size ; ++i) {
+			if (size_t readed = file.read(tab, sizeof(T))) {
+				T value;
+				std::memcpy(&value, tab, sizeof(T));
+				x.insert(value);
+			}	
 		}
 		return file;
 	}

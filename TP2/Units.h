@@ -24,14 +24,14 @@ namespace phy {
 	 * Various type aliases
 	 */
 
-	using Metre		 = Unit<1,0,0,0,0,0,0>;
+	using Metre		= Unit<1,0,0,0,0,0,0>;
 	using Kilogram	= Unit<0,1,0,0,0,0,0>;
-	using Second		= Unit<0,0,1,0,0,0,0>;
-	using Ampere		= Unit<0,0,0,1,0,0,0>;
-	using Kelvin		= Unit<0,0,0,0,1,0,0>;
-	using Mole			= Unit<0,0,0,0,0,1,0>;
-	using Candela	 = Unit<0,0,0,0,0,0,1>;
-	using Radian		= /* implementation defined */;
+	using Second	= Unit<0,0,1,0,0,0,0>;
+	using Ampere	= Unit<0,0,0,1,0,0,0>;
+	using Kelvin	= Unit<0,0,0,0,1,0,0>;
+	using Mole	= Unit<0,0,0,0,0,1,0>;
+	using Candela	= Unit<0,0,0,0,0,0,1>;
+	using Radian	= Unit<1,0,0,0,0,0,0>;
 
 	/*
 	 * A quantity is a value associated with a unit and a ratio
@@ -141,6 +141,10 @@ namespace phy {
 		/* implementation defined */ operator "" _celsius(unsigned long long int val);
 		/* implementation defined */ operator "" _fahrenheit(unsigned long long int val);
 
+	}	
+
+	namespace details {
+		
 	}
 
 }
