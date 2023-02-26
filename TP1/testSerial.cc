@@ -247,6 +247,64 @@ TEST(Set, BinaryFile) {
 	EXPECT_EQ(97, *(std::prev(r.end())));
 }
 
+TEST(NumberCollections, set) {
+	std::set<uint8_t> s;
+	s.insert(7);
+	s.insert(8);
+	s.insert(9);
+	s.insert(97);
+	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
+	{
+		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
+		file << 4 << s;
+	}
+
+	IBinaryFile file = IBinaryFile(path);
+
+	int i;
+	file >> i;
+	EXPECT_EQ(4, i);
+
+
+	std::set<uint8_t> r;
+	file >> r;
+	EXPECT_EQ((size_t)4, r.size());
+	EXPECT_EQ(7, *r.begin());
+	EXPECT_EQ(97, *(std::prev(r.end())));
+}
+
+TEST(NumberCollections, stringAndSet) {
+	std::string a = "Banger";
+
+	std::set<uint8_t> s;
+	s.insert(7);
+	s.insert(8);
+	s.insert(9);
+	s.insert(97);
+
+	std::string path((std::string)std::filesystem::temp_directory_path() + "/pmp.bin");
+	{
+		OBinaryFile file = OBinaryFile(path, OBinaryFile::Mode::Truncate);
+		file << (uint8_t)5 << a << s;
+	}
+
+	IBinaryFile file = IBinaryFile(path);
+	uint8_t i;
+	file >> i;
+	EXPECT_EQ((uint8_t)5, i);
+
+	std::string resString;
+	file >> resString ;
+	EXPECT_EQ(a,resString); 
+
+	std::set<uint8_t> r;
+	file >> r;
+	EXPECT_EQ((size_t)4, r.size());
+	EXPECT_EQ(7, *r.begin());
+	EXPECT_EQ(97, *(std::prev(r.end())));
+
+}
+
 TEST(MultipleTestCollection, BinaryFile) {
 	std::string a = "Banger";
 
