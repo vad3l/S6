@@ -22,16 +22,16 @@ namespace phy {
 
 	/*
 	 * Various type aliases
-	 */
+ */
 
-	using Metre		= Unit<1,0,0,0,0,0,0>;
+	using Metre	= Unit<1,0,0,0,0,0,0>;
 	using Kilogram	= Unit<0,1,0,0,0,0,0>;
 	using Second	= Unit<0,0,1,0,0,0,0>;
 	using Ampere	= Unit<0,0,0,1,0,0,0>;
 	using Kelvin	= Unit<0,0,0,0,1,0,0>;
 	using Mole	= Unit<0,0,0,0,0,1,0>;
 	using Candela	= Unit<0,0,0,0,0,0,1>;
-	using Radian	= Unit<1,0,1,0,0,0,0>;
+	using Radian	= Unit<0,0,0,0,0,0,0>;
 
 	/*
 	 * A quantity is a value associated with a unit and a ratio
@@ -44,7 +44,9 @@ namespace phy {
 		intmax_t value;
 
 		Qty();
-		Qty(intmax_t v);
+		Qty(intmax_t v) {
+			value = v;
+		}
 
 		template<typename ROther>
 		Qty& operator+=(Qty<U, ROther> other);
@@ -70,10 +72,10 @@ namespace phy {
 	 * Some weird quantities
 	 */
 
-	using Mile = Qty<Metre,std::ratio<1000, 1609344>>;;
-	using Yard = Qty<Metre>;
-	using Foot = Qty<Metre>;
-	using Inch = Qty<Metre>;
+	using Mile = Qty<Metre,std::ratio<1609344, 1000>>;;
+	using Yard = Qty<Metre,std::ratio<9144, 10000>>;
+	using Foot = Qty<Metre,std::ratio<3048, 10000>>;
+	using Inch = Qty<Metre,std::ratio<254, 10000>>;
 
 	/*
 	 * Comparison operators
@@ -102,16 +104,16 @@ namespace phy {
 	 */
 
 	template<typename U, typename R1, typename R2>
-	/* implementation defined */ operator+(Qty<U, R1> q1, Qty<U, R2> q2);
+	Qty<U, R1> operator+(Qty<U, R1> q1, Qty<U, R2> q2) { return q1; }
 
 	template<typename U, typename R1, typename R2>
-	/* implementation defined */ operator-(Qty<U, R1> q1, Qty<U, R2> q2);
+	Qty<U, R1> operator-(Qty<U, R1> q1, Qty<U, R2> q2) { return q1; }
 
 	template<typename U1, typename R1, typename U2, typename R2>
-	/* implementation defined */ operator*(Qty<U1, R1> q1, Qty<U2, R2> q2);
+	Qty<U2, R1> operator*(Qty<U1, R1> q1, Qty<U2, R2> q2) { return q1; }
 
 	template<typename U1, typename R1, typename U2, typename R2>
-	/* implementation defined */ operator/(Qty<U1, R1> q1, Qty<U2, R2> q2);
+	Qty<U2, R1> operator/(Qty<U1, R1> q1, Qty<U2, R2> q2) { return q1; }
 
 
 	/*
@@ -119,14 +121,16 @@ namespace phy {
 	 */
 	template<typename ResQty, typename U, typename R>
 	ResQty qtyCast(Qty<U,R>);
-
 	namespace literals {
 
 		/*
 		 * Some user-defined literals
 		 */
 
-		Length operator "" _metres(unsigned long long int val);
+		Length operator "" _metres(unsigned long long int val) {
+			return Length((intmax_t)val);
+		}
+
 		Mass operator "" _kilograms(unsigned long long int val);
 		Time operator "" _seconds(unsigned long long int val);
 		Current operator "" _amperes(unsigned long long int val);
@@ -138,15 +142,13 @@ namespace phy {
 		 * Temperature literals
 		 */
 
-		/* implementation defined */ operator "" _celsius(unsigned long long int val);
-		/* implementation defined */ operator "" _fahrenheit(unsigned long long int val);
+		Kelvin operator "" _celsius(unsigned long long int val);
+		Kelvin operator "" _fahrenheit(unsigned long long int val);
 
 	}	
 
 	namespace details {
-		
 	}
-
 }
 
 #endif // UNITS_H
