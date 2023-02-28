@@ -31,7 +31,7 @@ namespace phy {
 	using Kelvin	= Unit<0,0,0,0,1,0,0>;
 	using Mole	= Unit<0,0,0,0,0,1,0>;
 	using Candela	= Unit<0,0,0,0,0,0,1>;
-	using Radian	= Unit<1,0,1,0,0,0,0>;
+	using Radian	= Unit<0,0,0,0,0,0,0>;
 
 	/*
 	 * A quantity is a value associated with a unit and a ratio
@@ -70,9 +70,9 @@ namespace phy {
 	 * Some weird quantities
 	 */
 
-	using Mile = Qty<Metre,std::ratio<1000, 1609344>>;;
-	using Yard = Qty<Metre>;
-	using Foot = Qty<Metre>;
+	using Mile = Qty<Metre, std::ratio<1000, 1609344>>;;
+	using Yard = Qty<Metre, std::ratio<1000, 9144>>;
+	using Foot = Qty<Metre, std>;
 	using Inch = Qty<Metre>;
 
 	/*
