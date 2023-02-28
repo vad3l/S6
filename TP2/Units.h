@@ -92,19 +92,29 @@ namespace phy {
 	}
 
 	template<typename U, typename R1, typename R2>
-	bool operator!=(Qty<U, R1> q1, Qty<U, R2> q2);
+	bool operator!=(Qty<U, R1> q1, Qty<U, R2> q2) {
+		return !(q1 == q2);
+	}
 
 	template<typename U, typename R1, typename R2>
-	bool operator<(Qty<U, R1> q1, Qty<U, R2> q2);
+	bool operator<(Qty<U, R1> q1, Qty<U, R2> q2) {
+		return q1.value * (R1::num / R1::den) < q2.value * (R2::num / R2::den);
+	}
 
 	template<typename U, typename R1, typename R2>
-	bool operator<=(Qty<U, R1> q1, Qty<U, R2> q2);
+	bool operator<=(Qty<U, R1> q1, Qty<U, R2> q2) {
+		return q1.value * (R1::num / R1::den) <= q2.value * (R2::num / R2::den);
+	}
 
 	template<typename U, typename R1, typename R2>
-	bool operator>(Qty<U, R1> q1, Qty<U, R2> q2);
+	bool operator>(Qty<U, R1> q1, Qty<U, R2> q2) {
+		return q1.value * (R1::num / R1::den) > q2.value * (R2::num / R2::den);
+	}
 
 	template<typename U, typename R1, typename R2>
-	bool operator>=(Qty<U, R1> q1, Qty<U, R2> q2);
+	bool operator>=(Qty<U, R1> q1, Qty<U, R2> q2) {
+		return q1.value * (R1::num / R1::den) >= q2.value * (R2::num / R2::den);
+	}
 
 	/*
 	 * Arithmetic operators
@@ -138,12 +148,29 @@ namespace phy {
 			return Length((intmax_t)val);
 		}
 
-		Mass operator "" _kilograms(unsigned long long int val);
-		Time operator "" _seconds(unsigned long long int val);
-		Current operator "" _amperes(unsigned long long int val);
-		Temperature operator "" _kelvins(unsigned long long int val);
-		Amount operator "" _moles(unsigned long long int val);
-		LuminousIntensity operator "" _candelas(unsigned long long int val);
+		Mass operator "" _kilograms(unsigned long long int val) {
+			return Mass((intmax_t)val);
+		}
+
+		Time operator "" _seconds(unsigned long long int val) {
+			return Time((intmax_t)val);
+		}
+
+		Current operator "" _amperes(unsigned long long int val) {
+			return Current((intmax_t)val);
+		}
+
+		Temperature operator "" _kelvins(unsigned long long int val) {
+			return Temperature((intmax_t)val);
+		}
+
+		Amount operator "" _moles(unsigned long long int val) {
+			return Amount((intmax_t)val);
+		}
+
+		LuminousIntensity operator "" _candelas(unsigned long long int val) {
+			return LuminousIntensity((intmax_t)val);
+		}
 
 		/*
 		 * Temperature literals
@@ -155,6 +182,7 @@ namespace phy {
 	}	
 
 	namespace details {
+		
 	}
 }
 
