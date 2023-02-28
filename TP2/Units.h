@@ -70,10 +70,10 @@ namespace phy {
 	 * Some weird quantities
 	 */
 
-	using Mile = /* implementation defined */;
-	using Yard = /* implementation defined */;
-	using Foot = /* implementation defined */;
-	using Inch = /* implementation defined */;
+	using Mile = Qty<Metre,std::ratio<1000, 1609344>>;;
+	using Yard = Qty<Metre>;
+	using Foot = Qty<Metre>;
+	using Inch = Qty<Metre>;
 
 	/*
 	 * Comparison operators
