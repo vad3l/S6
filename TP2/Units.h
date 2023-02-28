@@ -49,10 +49,16 @@ namespace phy {
 		}
 
 		template<typename ROther>
-		Qty& operator+=(Qty<U, ROther> other);
+		Qty& operator+=(Qty<U, ROther> other){
+			value += other.value ;
+			return *this;
+		}
 
 		template<typename ROther>
-		Qty& operator-=(Qty<U, ROther> other);
+		Qty& operator-=(Qty<U, ROther> other){
+			value -= other.value;
+			return *this;
+		}
 
 	};
 
@@ -132,7 +138,9 @@ namespace phy {
 		}
 
 		Mass operator "" _kilograms(unsigned long long int val);
-		Time operator "" _seconds(unsigned long long int val);
+		Time operator "" _seconds(unsigned long long int val) {
+			return Time((intmax_t)val);
+		}
 		Current operator "" _amperes(unsigned long long int val);
 		Temperature operator "" _kelvins(unsigned long long int val);
 		Amount operator "" _moles(unsigned long long int val);
