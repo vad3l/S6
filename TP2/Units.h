@@ -55,6 +55,7 @@ namespace phy {
 		}
 
 		template<typename ROther>
+
 		Qty& operator-=(Qty<U, ROther> other) {
 			value -= other.value * (ROther::num / ROther::den);		
 			return *this;
