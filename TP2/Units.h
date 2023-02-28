@@ -49,17 +49,17 @@ namespace phy {
 		}
 
 		template<typename ROther>
-		Qty& operator+=(Qty<U, ROther> other){
-			value += other.value ;
+		Qty& operator+=(Qty<U, ROther> other) {
+			value += other.value * (ROther::num / ROther::den);
 			return *this;
 		}
 
 		template<typename ROther>
-		Qty& operator-=(Qty<U, ROther> other){
-			value -= other.value;
+
+		Qty& operator-=(Qty<U, ROther> other) {
+			value -= other.value * (ROther::num / ROther::den);		
 			return *this;
 		}
-
 	};
 
 	/*
@@ -88,7 +88,9 @@ namespace phy {
 	 */
 
 	template<typename U, typename R1, typename R2>
-	bool operator==(Qty<U, R1> q1, Qty<U, R2> q2);
+	bool operator==(Qty<U, R1> q1, Qty<U, R2> q2) {
+		return q1.value * (R1::num / R1::den) == q2.value * (R2::num / R2::den);
+	}
 
 	template<typename U, typename R1, typename R2>
 	bool operator!=(Qty<U, R1> q1, Qty<U, R2> q2);
