@@ -3,8 +3,15 @@
 
 #include <cstdint>
 #include <ratio>
+#include <type_traits>
 
 namespace phy {	
+
+
+	namespace details {
+		template<typename R1, typename R2>
+		using MinoRatio = typename std::conditional<(R1::num/R1::den)<(R2::num/R2::den), R1, R2>::type;
+	}
 
 	/*
 	 * A unit defined in terms of the base units
@@ -112,7 +119,18 @@ namespace phy {
 	 */
 
 	template<typename U, typename R1, typename R2>
-	Qty<U, R1> operator+(Qty<U, R1> q1, Qty<U, R2> q2) { return q1; }
+	Qty<U,details::MinoRatio<R1,R2>> operator+(Qty<U, R1> q1, Qty<U, R2> q2) {
+		float temp1 = R1::num/R1::den;
+		float temp2 = R2::num/R2::den;
+
+		if (temp1 < temp2) {
+			Qty<U,details::MinoRatio<R1,R2>> newe1(q1.value+q2.value*temp2);
+			return newe1;	
+		}
+		
+		Qty<U,details::MinoRatio<R1,R2>> newe2(q1.value+q2.value*temp1);
+		return newe2;
+	}
 
 	template<typename U, typename R1, typename R2>
 	Qty<U, R1> operator-(Qty<U, R1> q1, Qty<U, R2> q2) { return q1; }
@@ -121,7 +139,10 @@ namespace phy {
 	Qty<U2, R1> operator*(Qty<U1, R1> q1, Qty<U2, R2> q2) { return q1; }
 
 	template<typename U1, typename R1, typename U2, typename R2>
-	Qty<U2, R1> operator/(Qty<U1, R1> q1, Qty<U2, R2> q2) { return q1; }
+	Qty<U1, R1> operator/(Qty<U1, R1> q1, Qty<U2, R2> q2) { 
+		q1.value = q1.value/q2.value;
+		return  q1;
+	}
 
 
 	/*
@@ -157,8 +178,6 @@ namespace phy {
 
 	}	
 
-	namespace details {
-	}
 }
 
 #endif // UNITS_H
