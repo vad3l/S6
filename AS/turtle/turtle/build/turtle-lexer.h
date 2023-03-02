@@ -2,9 +2,9 @@
 #define yyHEADER_H 1
 #define yyIN_HEADER 1
 
-#line 5 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.h"
+#line 5 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.h"
 
-#line 7 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.h"
+#line 7 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.h"
 
 #define  YY_INT_ALIGNED short int
 
@@ -472,6 +472,6 @@ extern int yylex (void);
 #line 21 "turtle-lexer.l"
 
 
-#line 475 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.h"
+#line 475 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.h"
 #undef yyIN_HEADER
 #endif /* yyHEADER_H */

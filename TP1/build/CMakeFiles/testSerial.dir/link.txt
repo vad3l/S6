@@ -1,0 +1,1 @@
+/usr/bin/c++ -fsanitize=address,undefined CMakeFiles/testSerial.dir/Serial.cc.o CMakeFiles/testSerial.dir/testSerial.cc.o -o testSerial  libgoogletest1.a 

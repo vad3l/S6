@@ -1,0 +1,5 @@
+if(EXISTS "/home/tizu/Documents/Dev/C++/PIMP/TP1/build/testSerial[1]_tests.cmake")
+  include("/home/tizu/Documents/Dev/C++/PIMP/TP1/build/testSerial[1]_tests.cmake")
+else()
+  add_test(testSerial_NOT_BUILT testSerial_NOT_BUILT)
+endif()
