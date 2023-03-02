@@ -119,7 +119,6 @@ int main() {
 	backwardAction.addKeycodeKeyControl(gf::Keycode::Left);
 	actions.addAction(backwardAction);
 
-
 	// game loop
 
 	renderer.clear(gf::Color::White);

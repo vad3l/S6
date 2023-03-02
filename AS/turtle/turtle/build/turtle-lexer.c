@@ -1,6 +1,6 @@
-#line 1 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.c"
+#line 1 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.c"
 
-#line 3 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.c"
+#line 3 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -452,8 +452,8 @@ char *yytext;
 
 #include "turtle-ast.h"
 #include "turtle-parser.h"
-#line 455 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.c"
-#line 456 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.c"
+#line 455 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.c"
+#line 456 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.c"
 
 #define INITIAL 0
 
@@ -673,7 +673,7 @@ YY_DECL
 #line 14 "turtle-lexer.l"
 
 
-#line 676 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.c"
+#line 676 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -751,7 +751,7 @@ YY_RULE_SETUP
 #line 21 "turtle-lexer.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 754 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.c"
+#line 754 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
