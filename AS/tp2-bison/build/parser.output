@@ -1,0 +1,288 @@
+Grammaire
+
+    0 $accept: input $end
+
+    1 input: ε
+    2      | input line
+
+    3 line: '\n'
+    4     | expr '\n'
+
+    5 expr: "value"
+    6     | "name"
+    7     | expr '+' expr
+    8     | '-' expr
+    9     | expr '-' expr
+   10     | expr '*' expr
+   11     | expr '/' expr
+   12     | '(' expr ')'
+
+
+Terminaux, suivis des règles où ils apparaissent
+
+    $end (0) 0
+    '\n' (10) 3 4
+    '(' (40) 12
+    ')' (41) 12
+    '*' (42) 10
+    '+' (43) 7
+    '-' (45) 8 9
+    '/' (47) 11
+    error (256)
+    "value" <value> (258) 5
+    "name" <name> (259) 6
+
+
+Non-terminaux, suivis des règles où ils apparaissent
+
+    $accept (12)
+        à gauche: 0
+    input (13)
+        à gauche: 1 2
+        à droite: 0 2
+    line (14)
+        à gauche: 3 4
+        à droite: 2
+    expr <value> (15)
+        à gauche: 5 6 7 8 9 10 11 12
+        à droite: 4 7 8 9 10 11 12
+
+
+État 0
+
+    0 $accept: • input $end
+
+    $défaut  réduction par utilisation de la règle 1 (input)
+
+    input  aller à l'état 1
+
+
+État 1
+
+    0 $accept: input • $end
+    2 input: input • line
+
+    $end     décalage et aller à l'état 2
+    "value"  décalage et aller à l'état 3
+    "name"   décalage et aller à l'état 4
+    '-'      décalage et aller à l'état 5
+    '('      décalage et aller à l'état 6
+    '\n'     décalage et aller à l'état 7
+
+    line  aller à l'état 8
+    expr  aller à l'état 9
+
+
+État 2
+
+    0 $accept: input $end •
+
+    $défaut  accepter
+
+
+État 3
+
+    5 expr: "value" •
+
+    $défaut  réduction par utilisation de la règle 5 (expr)
+
+
+État 4
+
+    6 expr: "name" •
+
+    $défaut  réduction par utilisation de la règle 6 (expr)
+
+
+État 5
+
+    8 expr: '-' • expr
+
+    "value"  décalage et aller à l'état 3
+    "name"   décalage et aller à l'état 4
+    '-'      décalage et aller à l'état 5
+    '('      décalage et aller à l'état 6
+
+    expr  aller à l'état 10
+
+
+État 6
+
+   12 expr: '(' • expr ')'
+
+    "value"  décalage et aller à l'état 3
+    "name"   décalage et aller à l'état 4
+    '-'      décalage et aller à l'état 5
+    '('      décalage et aller à l'état 6
+
+    expr  aller à l'état 11
+
+
+État 7
+
+    3 line: '\n' •
+
+    $défaut  réduction par utilisation de la règle 3 (line)
+
+
+État 8
+
+    2 input: input line •
+
+    $défaut  réduction par utilisation de la règle 2 (input)
+
+
+État 9
+
+    4 line: expr • '\n'
+    7 expr: expr • '+' expr
+    9     | expr • '-' expr
+   10     | expr • '*' expr
+   11     | expr • '/' expr
+
+    '+'   décalage et aller à l'état 12
+    '-'   décalage et aller à l'état 13
+    '*'   décalage et aller à l'état 14
+    '/'   décalage et aller à l'état 15
+    '\n'  décalage et aller à l'état 16
+
+
+État 10
+
+    7 expr: expr • '+' expr
+    8     | '-' expr •
+    9     | expr • '-' expr
+   10     | expr • '*' expr
+   11     | expr • '/' expr
+
+    '*'  décalage et aller à l'état 14
+    '/'  décalage et aller à l'état 15
+
+    $défaut  réduction par utilisation de la règle 8 (expr)
+
+
+État 11
+
+    7 expr: expr • '+' expr
+    9     | expr • '-' expr
+   10     | expr • '*' expr
+   11     | expr • '/' expr
+   12     | '(' expr • ')'
+
+    '+'  décalage et aller à l'état 12
+    '-'  décalage et aller à l'état 13
+    '*'  décalage et aller à l'état 14
+    '/'  décalage et aller à l'état 15
+    ')'  décalage et aller à l'état 17
+
+
+État 12
+
+    7 expr: expr '+' • expr
+
+    "value"  décalage et aller à l'état 3
+    "name"   décalage et aller à l'état 4
+    '-'      décalage et aller à l'état 5
+    '('      décalage et aller à l'état 6
+
+    expr  aller à l'état 18
+
+
+État 13
+
+    9 expr: expr '-' • expr
+
+    "value"  décalage et aller à l'état 3
+    "name"   décalage et aller à l'état 4
+    '-'      décalage et aller à l'état 5
+    '('      décalage et aller à l'état 6
+
+    expr  aller à l'état 19
+
+
+État 14
+
+   10 expr: expr '*' • expr
+
+    "value"  décalage et aller à l'état 3
+    "name"   décalage et aller à l'état 4
+    '-'      décalage et aller à l'état 5
+    '('      décalage et aller à l'état 6
+
+    expr  aller à l'état 20
+
+
+État 15
+
+   11 expr: expr '/' • expr
+
+    "value"  décalage et aller à l'état 3
+    "name"   décalage et aller à l'état 4
+    '-'      décalage et aller à l'état 5
+    '('      décalage et aller à l'état 6
+
+    expr  aller à l'état 21
+
+
+État 16
+
+    4 line: expr '\n' •
+
+    $défaut  réduction par utilisation de la règle 4 (line)
+
+
+État 17
+
+   12 expr: '(' expr ')' •
+
+    $défaut  réduction par utilisation de la règle 12 (expr)
+
+
+État 18
+
+    7 expr: expr • '+' expr
+    7     | expr '+' expr •
+    9     | expr • '-' expr
+   10     | expr • '*' expr
+   11     | expr • '/' expr
+
+    '*'  décalage et aller à l'état 14
+    '/'  décalage et aller à l'état 15
+
+    $défaut  réduction par utilisation de la règle 7 (expr)
+
+
+État 19
+
+    7 expr: expr • '+' expr
+    9     | expr • '-' expr
+    9     | expr '-' expr •
+   10     | expr • '*' expr
+   11     | expr • '/' expr
+
+    '*'  décalage et aller à l'état 14
+    '/'  décalage et aller à l'état 15
+
+    $défaut  réduction par utilisation de la règle 9 (expr)
+
+
+État 20
+
+    7 expr: expr • '+' expr
+    9     | expr • '-' expr
+   10     | expr • '*' expr
+   10     | expr '*' expr •
+   11     | expr • '/' expr
+
+    $défaut  réduction par utilisation de la règle 10 (expr)
+
+
+État 21
+
+    7 expr: expr • '+' expr
+    9     | expr • '-' expr
+   10     | expr • '*' expr
+   11     | expr • '/' expr
+   11     | expr '/' expr •
+
+    $défaut  réduction par utilisation de la règle 11 (expr)

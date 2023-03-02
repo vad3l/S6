@@ -1,0 +1,120 @@
+Terminals unused in grammar
+
+    "name"
+
+
+Grammar
+
+    0 $accept: unit $end
+
+    1 unit: cmds
+
+    2 cmds: cmd cmds
+    3     | ε
+
+    4 cmd: "forward" expr
+
+    5 expr: "value"
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    "value" <value> (258) 5
+    "name" <name> (259)
+    "forward" (260) 4
+
+
+Nonterminals, with rules where they appear
+
+    $accept (6)
+        on left: 0
+    unit <node> (7)
+        on left: 1
+        on right: 0
+    cmds <node> (8)
+        on left: 2 3
+        on right: 1 2
+    cmd <node> (9)
+        on left: 4
+        on right: 2
+    expr <node> (10)
+        on left: 5
+        on right: 4
+
+
+State 0
+
+    0 $accept: • unit $end
+
+    "forward"  shift, and go to state 1
+
+    $default  reduce using rule 3 (cmds)
+
+    unit  go to state 2
+    cmds  go to state 3
+    cmd   go to state 4
+
+
+State 1
+
+    4 cmd: "forward" • expr
+
+    "value"  shift, and go to state 5
+
+    expr  go to state 6
+
+
+State 2
+
+    0 $accept: unit • $end
+
+    $end  shift, and go to state 7
+
+
+State 3
+
+    1 unit: cmds •
+
+    $default  reduce using rule 1 (unit)
+
+
+State 4
+
+    2 cmds: cmd • cmds
+
+    "forward"  shift, and go to state 1
+
+    $default  reduce using rule 3 (cmds)
+
+    cmds  go to state 8
+    cmd   go to state 4
+
+
+State 5
+
+    5 expr: "value" •
+
+    $default  reduce using rule 5 (expr)
+
+
+State 6
+
+    4 cmd: "forward" expr •
+
+    $default  reduce using rule 4 (cmd)
+
+
+State 7
+
+    0 $accept: unit $end •
+
+    $default  accept
+
+
+State 8
+
+    2 cmds: cmd cmds •
+
+    $default  reduce using rule 2 (cmds)
