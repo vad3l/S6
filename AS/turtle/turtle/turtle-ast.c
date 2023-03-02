@@ -10,10 +10,10 @@
 #define PI 3.141592653589793
 
 struct ast_node *make_expr_value(double value) {
-  struct ast_node *node = calloc(1, sizeof(struct ast_node));
-  node->kind = KIND_EXPR_VALUE;
-  node->u.value = value;
-  return node;
+	struct ast_node *node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_EXPR_VALUE;
+	node->u.value = value;
+	return node;
 }
 
 
