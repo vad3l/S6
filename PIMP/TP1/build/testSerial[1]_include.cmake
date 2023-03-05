@@ -1,0 +1,5 @@
+if(EXISTS "/home/xadel/Project/COUR/TP-PMP/PIMP/TP1/build/testSerial[1]_tests.cmake")
+  include("/home/xadel/Project/COUR/TP-PMP/PIMP/TP1/build/testSerial[1]_tests.cmake")
+else()
+  add_test(testSerial_NOT_BUILT testSerial_NOT_BUILT)
+endif()

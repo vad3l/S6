@@ -5,6 +5,7 @@
 
 using namespace phy::literals;
 
+// Metre
 TEST(QtyMetre, Add) {
 	auto metre = 1_metres;
 	EXPECT_EQ(2_metres, metre += 1_metres);
@@ -191,6 +192,18 @@ TEST(QtyCandelas, CandelasDifferent) {
 
 TEST(QtyCandelas, CandelasEqual) {
 	EXPECT_TRUE(10_candelas == 10_candelas);
+}
+
+// experimental
+TEST(experimental, velocity) {
+	auto velocity = 100000_metres / 3600_seconds; // 100 km/h
+	EXPECT_EQ(100,velocity.value);
+}
+
+TEST(experimental, add) {
+	phy::Qty<phy::Metre,std::ratio<1,75>> mm(10);
+	auto add = 100000_metres + mm;
+	EXPECT_EQ(200000,add.value);
 }
 
 int main(int argc, char* argv[]) {

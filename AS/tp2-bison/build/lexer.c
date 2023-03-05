@@ -1,6 +1,6 @@
-#line 1 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/lexer.c"
+#line 1 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/lexer.c"
 
-#line 3 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/lexer.c"
+#line 3 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/lexer.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -465,8 +465,8 @@ char *yytext;
 #include <stdlib.h>
 
 #include "parser.h"
-#line 468 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/lexer.c"
-#line 469 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/lexer.c"
+#line 468 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/lexer.c"
+#line 469 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/lexer.c"
 
 #define INITIAL 0
 
@@ -686,7 +686,7 @@ YY_DECL
 #line 14 "lexer.l"
 
 
-#line 689 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/lexer.c"
+#line 689 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/lexer.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -821,7 +821,7 @@ YY_RULE_SETUP
 #line 32 "lexer.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 824 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/lexer.c"
+#line 824 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/lexer.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

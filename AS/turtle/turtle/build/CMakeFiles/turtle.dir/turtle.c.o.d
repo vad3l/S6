@@ -1,5 +1,5 @@
 CMakeFiles/turtle.dir/turtle.c.o: \
- /home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/turtle.c \
+ /home/xadel/Project/COUR/TP/AS/turtle/turtle/turtle.c \
  /usr/include/stdc-predef.h /usr/include/assert.h /usr/include/features.h \
  /usr/include/features-time64.h /usr/include/bits/wordsize.h \
  /usr/include/bits/timesize.h /usr/include/sys/cdefs.h \
@@ -19,9 +19,9 @@ CMakeFiles/turtle.dir/turtle.c.o: \
  /usr/include/bits/types/timer_t.h \
  /usr/include/bits/types/struct_itimerspec.h \
  /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
- /home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/turtle-ast.h \
+ /home/xadel/Project/COUR/TP/AS/turtle/turtle/turtle-ast.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include/stdbool.h \
- /home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.h \
+ /home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.h \
  /usr/include/stdio.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include/stdarg.h \
  /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__mbstate_t.h \
@@ -39,4 +39,4 @@ CMakeFiles/turtle.dir/turtle.c.o: \
  /usr/include/bits/environments.h /usr/include/bits/confname.h \
  /usr/include/bits/getopt_posix.h /usr/include/bits/getopt_core.h \
  /usr/include/bits/unistd_ext.h \
- /home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-parser.h
+ /home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-parser.h

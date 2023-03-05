@@ -1,5 +1,5 @@
 CMakeFiles/turtle.dir/turtle-lexer.c.o: \
- /home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.c \
+ /home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.c \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/bits/libc-header-start.h /usr/include/features.h \
  /usr/include/features-time64.h /usr/include/bits/wordsize.h \
@@ -26,9 +26,9 @@ CMakeFiles/turtle.dir/turtle-lexer.c.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include/stdint.h \
  /usr/include/stdint.h /usr/include/bits/wchar.h \
  /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
- /home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/turtle-ast.h \
+ /home/xadel/Project/COUR/TP/AS/turtle/turtle/turtle-ast.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include/stdbool.h \
- /home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-parser.h \
+ /home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-parser.h \
  /usr/include/unistd.h /usr/include/bits/posix_opt.h \
  /usr/include/bits/environments.h /usr/include/bits/confname.h \
  /usr/include/bits/getopt_posix.h /usr/include/bits/getopt_core.h \

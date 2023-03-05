@@ -1,7 +1,7 @@
 CMakeFiles/turtle.dir/turtle-ast.c.o: \
- /home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/turtle-ast.c \
+ /home/xadel/Project/COUR/TP/AS/turtle/turtle/turtle-ast.c \
  /usr/include/stdc-predef.h \
- /home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/turtle-ast.h \
+ /home/xadel/Project/COUR/TP/AS/turtle/turtle/turtle-ast.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include/stddef.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include/stdbool.h \
  /usr/include/assert.h /usr/include/features.h \

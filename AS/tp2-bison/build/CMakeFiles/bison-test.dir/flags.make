@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = -D_POSIX_C_SOURCE=200809L
 
-C_INCLUDES = -I/home/tizu/Documents/Dev/C/AS/tp2-bison -I/home/tizu/Documents/Dev/C/AS/tp2-bison/build
+C_INCLUDES = -I/home/xadel/Project/COUR/TP/AS/tp2-bison -I/home/xadel/Project/COUR/TP/AS/tp2-bison/build
 
 C_FLAGS = -Wall -std=c99 -O2 -g
 

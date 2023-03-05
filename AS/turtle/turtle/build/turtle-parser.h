@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_HOME_TIZU_DOCUMENTS_DEV_C_PIMP_AS_TURTLE_TURTLE_BUILD_TURTLE_PARSER_H_INCLUDED
-# define YY_YY_HOME_TIZU_DOCUMENTS_DEV_C_PIMP_AS_TURTLE_TURTLE_BUILD_TURTLE_PARSER_H_INCLUDED
+#ifndef YY_YY_HOME_XADEL_PROJECT_COUR_TP_AS_TURTLE_TURTLE_BUILD_TURTLE_PARSER_H_INCLUDED
+# define YY_YY_HOME_XADEL_PROJECT_COUR_TP_AS_TURTLE_TURTLE_BUILD_TURTLE_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 1
@@ -56,7 +56,9 @@ extern int yydebug;
     YYUNDEF = 257,                 /* "invalid token"  */
     VALUE = 258,                   /* "value"  */
     NAME = 259,                    /* "name"  */
-    KW_FORWARD = 260               /* "forward"  */
+    KW_FORWARD = 260,              /* "forward"  */
+    KW_LEFT = 261,                 /* "Directionleft"  */
+    KW_RIGHT = 262                 /* "Directionright"  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -67,11 +69,11 @@ union YYSTYPE
 {
 #line 18 "turtle-parser.y"
 
-  double value;
-  char *name;
-  struct ast_node *node;
+	double value;
+	char *name;
+	struct ast_node *node;
 
-#line 75 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-parser.h"
+#line 77 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -86,4 +88,4 @@ extern YYSTYPE yylval;
 int yyparse (struct ast *ret);
 
 
-#endif /* !YY_YY_HOME_TIZU_DOCUMENTS_DEV_C_PIMP_AS_TURTLE_TURTLE_BUILD_TURTLE_PARSER_H_INCLUDED  */
+#endif /* !YY_YY_HOME_XADEL_PROJECT_COUR_TP_AS_TURTLE_TURTLE_BUILD_TURTLE_PARSER_H_INCLUDED  */

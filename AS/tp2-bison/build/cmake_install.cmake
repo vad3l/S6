@@ -1,4 +1,4 @@
-# Install script for directory: /home/tizu/Documents/Dev/C/AS/tp2-bison
+# Install script for directory: /home/xadel/Project/COUR/TP/AS/tp2-bison
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

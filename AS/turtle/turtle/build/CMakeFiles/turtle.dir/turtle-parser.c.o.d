@@ -1,5 +1,5 @@
 CMakeFiles/turtle.dir/turtle-parser.c.o: \
- /home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-parser.c \
+ /home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-parser.c \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/bits/libc-header-start.h /usr/include/features.h \
  /usr/include/features-time64.h /usr/include/bits/wordsize.h \
@@ -15,6 +15,6 @@ CMakeFiles/turtle.dir/turtle-parser.c.o: \
  /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \
  /usr/include/bits/stdio_lim.h /usr/include/bits/floatn.h \
  /usr/include/bits/floatn-common.h /usr/include/bits/stdio.h \
- /home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/turtle-ast.h \
+ /home/xadel/Project/COUR/TP/AS/turtle/turtle/turtle-ast.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include/stdbool.h \
- /home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-parser.h
+ /home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-parser.h

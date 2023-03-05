@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_HOME_TIZU_DOCUMENTS_DEV_C_AS_TP2_BISON_BUILD_PARSER_H_INCLUDED
-# define YY_YY_HOME_TIZU_DOCUMENTS_DEV_C_AS_TP2_BISON_BUILD_PARSER_H_INCLUDED
+#ifndef YY_YY_HOME_XADEL_PROJECT_COUR_TP_AS_TP2_BISON_BUILD_PARSER_H_INCLUDED
+# define YY_YY_HOME_XADEL_PROJECT_COUR_TP_AS_TP2_BISON_BUILD_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 1
@@ -69,7 +69,7 @@ union YYSTYPE
   double value;
   const char *name;
 
-#line 73 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/parser.h"
+#line 73 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -84,4 +84,4 @@ extern YYSTYPE yylval;
 int yyparse (void);
 
 
-#endif /* !YY_YY_HOME_TIZU_DOCUMENTS_DEV_C_AS_TP2_BISON_BUILD_PARSER_H_INCLUDED  */
+#endif /* !YY_YY_HOME_XADEL_PROJECT_COUR_TP_AS_TP2_BISON_BUILD_PARSER_H_INCLUDED  */

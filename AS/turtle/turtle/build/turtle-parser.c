@@ -77,7 +77,7 @@ int yylex();
 void yyerror(struct ast *ret, const char *);
 
 
-#line 81 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-parser.c"
+#line 81 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-parser.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -111,11 +111,13 @@ enum yysymbol_kind_t
   YYSYMBOL_VALUE = 3,                      /* "value"  */
   YYSYMBOL_NAME = 4,                       /* "name"  */
   YYSYMBOL_KW_FORWARD = 5,                 /* "forward"  */
-  YYSYMBOL_YYACCEPT = 6,                   /* $accept  */
-  YYSYMBOL_unit = 7,                       /* unit  */
-  YYSYMBOL_cmds = 8,                       /* cmds  */
-  YYSYMBOL_cmd = 9,                        /* cmd  */
-  YYSYMBOL_expr = 10                       /* expr  */
+  YYSYMBOL_KW_LEFT = 6,                    /* "Directionleft"  */
+  YYSYMBOL_KW_RIGHT = 7,                   /* "Directionright"  */
+  YYSYMBOL_YYACCEPT = 8,                   /* $accept  */
+  YYSYMBOL_unit = 9,                       /* unit  */
+  YYSYMBOL_cmds = 10,                      /* cmds  */
+  YYSYMBOL_cmd = 11,                       /* cmd  */
+  YYSYMBOL_expr = 12                       /* expr  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -446,7 +448,7 @@ union yyalloc
 #define YYLAST   3
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  6
+#define YYNTOKENS  8
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  5
 /* YYNRULES -- Number of rules.  */
@@ -455,7 +457,7 @@ union yyalloc
 #define YYNSTATES  9
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   260
+#define YYMAXUTOK   262
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -495,14 +497,14 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5
+       5,     6,     7
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    35,    35,    39,    40,    44,    48
+       0,    37,    37,    41,    42,    46,    52
 };
 #endif
 
@@ -519,7 +521,8 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "\"value\"",
-  "\"name\"", "\"forward\"", "$accept", "unit", "cmds", "cmd", "expr", YY_NULLPTR
+  "\"name\"", "\"forward\"", "\"Directionleft\"", "\"Directionright\"",
+  "$accept", "unit", "cmds", "cmd", "expr", YY_NULLPTR
 };
 
 static const char *
@@ -583,13 +586,13 @@ static const yytype_int8 yycheck[] =
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     5,     7,     8,     9,     3,    10,     0,     8
+       0,     5,     9,    10,    11,     3,    12,     0,    10
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,     6,     7,     8,     8,     9,    10
+       0,     8,     9,    10,    10,    11,    12
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -1331,37 +1334,39 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* unit: cmds  */
-#line 35 "turtle-parser.y"
-                      { (yyval.node) = (yyvsp[0].node); ret->unit = (yyval.node); }
-#line 1337 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-parser.c"
+#line 37 "turtle-parser.y"
+                                { (yyval.node) = (yyvsp[0].node); ret->unit = (yyval.node); }
+#line 1340 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-parser.c"
     break;
 
   case 3: /* cmds: cmd cmds  */
-#line 39 "turtle-parser.y"
-                      { (yyvsp[-1].node)->next = (yyvsp[0].node); (yyval.node) = (yyvsp[-1].node); }
-#line 1343 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-parser.c"
+#line 41 "turtle-parser.y"
+                                        { (yyvsp[-1].node)->next = (yyvsp[0].node); (yyval.node) = (yyvsp[-1].node); }
+#line 1346 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-parser.c"
     break;
 
   case 4: /* cmds: %empty  */
-#line 40 "turtle-parser.y"
-                      { (yyval.node) = NULL; }
-#line 1349 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-parser.c"
+#line 42 "turtle-parser.y"
+                                { (yyval.node) = NULL; }
+#line 1352 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-parser.c"
     break;
 
   case 5: /* cmd: "forward" expr  */
-#line 44 "turtle-parser.y"
-                      { /* TODO */ }
-#line 1355 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-parser.c"
+#line 46 "turtle-parser.y"
+                                 { 
+			(yyval.node) = make_cmd_forward((yyvsp[0].node)); 
+		}
+#line 1360 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-parser.c"
     break;
 
   case 6: /* expr: "value"  */
-#line 48 "turtle-parser.y"
-                      { (yyval.node) = make_expr_value((yyvsp[0].value)); }
-#line 1361 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-parser.c"
+#line 52 "turtle-parser.y"
+                                { (yyval.node) = make_expr_value((yyvsp[0].value)); }
+#line 1366 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-parser.c"
     break;
 
 
-#line 1365 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-parser.c"
+#line 1370 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-parser.c"
 
       default: break;
     }
@@ -1585,10 +1590,10 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 52 "turtle-parser.y"
+#line 56 "turtle-parser.y"
 
 
 void yyerror(struct ast *ret, const char *msg) {
-  (void) ret;
-  fprintf(stderr, "%s\n", msg);
+	(void) ret;
+	fprintf(stderr, "%s\n", msg);
 }

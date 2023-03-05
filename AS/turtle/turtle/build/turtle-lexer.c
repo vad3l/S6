@@ -1,6 +1,6 @@
-#line 1 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.c"
+#line 1 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.c"
 
-#line 3 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.c"
+#line 3 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -355,8 +355,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 4
-#define YY_END_OF_BUFFER 5
+#define YY_NUM_RULES 7
+#define YY_END_OF_BUFFER 8
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -364,9 +364,11 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[11] =
+static const flex_int16_t yy_accept[27] =
     {   0,
-        2,    2,    5,    3,    2,    2,    1,    2,    1,    0
+        3,    3,    8,    6,    5,    5,    2,    6,    6,    6,
+        5,    2,    0,    1,    0,    0,    0,    0,    0,    0,
+        3,    0,    0,    4,    0,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -380,10 +382,10 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    5,    1,    1,    6,
 
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        7,    8,    9,   10,   11,    1,    1,   12,    1,    1,
+       13,    1,    1,   14,    1,   15,    1,    1,   16,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -401,33 +403,44 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[5] =
+static const YY_CHAR yy_meta[17] =
     {   0,
-        1,    2,    2,    3
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1
     } ;
 
-static const flex_int16_t yy_base[13] =
+static const flex_int16_t yy_base[28] =
     {   0,
-        0,    0,    7,    8,    0,    0,    0,    0,    0,    8,
-        4,    2
+        0,   13,   38,   39,    3,    7,   33,    6,   29,   24,
+       21,   30,   19,   39,   24,   22,   14,   14,   18,   21,
+       39,    5,    4,   39,    1,   39,    0
     } ;
 
-static const flex_int16_t yy_def[13] =
+static const flex_int16_t yy_def[28] =
     {   0,
-       10,    1,   10,   10,   11,   11,   12,   11,   12,    0,
-       10,   10
+       27,   27,   26,   26,   26,   26,   26,   26,   26,   26,
+       26,   26,   26,   26,   26,   26,   26,   26,   26,   26,
+       26,   26,   26,   26,   26,    0,   26
     } ;
 
-static const flex_int16_t yy_nxt[13] =
+static const flex_int16_t yy_nxt[56] =
     {   0,
-        4,    5,    6,    7,    9,    8,   10,    3,   10,   10,
-       10,   10
+        4,    5,    6,    7,   11,   11,   14,    8,   11,   11,
+       26,    9,   26,   10,    5,    6,    7,   25,   13,   24,
+        8,   14,   11,   11,    9,   23,   10,   22,   21,   20,
+       19,   18,   17,   12,   16,   15,   12,   26,    3,   26,
+       26,   26,   26,   26,   26,   26,   26,   26,   26,   26,
+       26,   26,   26,   26,   26
     } ;
 
-static const flex_int16_t yy_chk[13] =
+static const flex_int16_t yy_chk[56] =
     {   0,
-        1,    1,    1,    1,   12,   11,    3,   10,   10,   10,
-       10,   10
+       27,    1,    1,    1,    5,    5,   25,    1,    6,    6,
+        0,    1,    0,    1,    2,    2,    2,   23,    8,   22,
+        2,    8,   11,   11,    2,   20,    2,   19,   18,   17,
+       16,   15,   13,   12,   10,    9,    7,    3,   26,   26,
+       26,   26,   26,   26,   26,   26,   26,   26,   26,   26,
+       26,   26,   26,   26,   26
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -452,8 +465,8 @@ char *yytext;
 
 #include "turtle-ast.h"
 #include "turtle-parser.h"
-#line 455 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.c"
-#line 456 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.c"
+#line 468 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.c"
+#line 469 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.c"
 
 #define INITIAL 0
 
@@ -670,10 +683,10 @@ YY_DECL
 		}
 
 	{
-#line 14 "turtle-lexer.l"
+#line 17 "turtle-lexer.l"
 
 
-#line 676 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.c"
+#line 689 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -700,13 +713,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 11 )
+				if ( yy_current_state >= 27 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 8 );
+		while ( yy_base[yy_current_state] != 39 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -732,26 +745,41 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 16 "turtle-lexer.l"
-{ yylval.value = strtod(yytext, NULL); return VALUE; }
+#line 19 "turtle-lexer.l"
+{ return KW_FORWARD;}
 	YY_BREAK
 case 2:
-/* rule 2 can match eol */
 YY_RULE_SETUP
-#line 18 "turtle-lexer.l"
-/* whitespace */
+#line 21 "turtle-lexer.l"
+{ yylval.value = strtod(yytext, NULL); return VALUE; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 19 "turtle-lexer.l"
-{ fprintf(stderr, "Unknown token: '%s'\n", yytext); exit(EXIT_FAILURE); }
+#line 23 "turtle-lexer.l"
+{ return KW_LEFT; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 21 "turtle-lexer.l"
+#line 25 "turtle-lexer.l"
+{ return KW_RIGHT; }
+	YY_BREAK
+case 5:
+/* rule 5 can match eol */
+YY_RULE_SETUP
+#line 27 "turtle-lexer.l"
+/* whitespace */
+	YY_BREAK
+case 6:
+YY_RULE_SETUP
+#line 28 "turtle-lexer.l"
+{ fprintf(stderr, "Unknown token: '%s'\n", yytext); exit(EXIT_FAILURE); }
+	YY_BREAK
+case 7:
+YY_RULE_SETUP
+#line 30 "turtle-lexer.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 754 "/home/tizu/Documents/Dev/C++/PIMP/AS/turtle/turtle/build/turtle-lexer.c"
+#line 782 "/home/xadel/Project/COUR/TP/AS/turtle/turtle/build/turtle-lexer.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1048,7 +1076,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 11 )
+			if ( yy_current_state >= 27 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1076,11 +1104,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 11 )
+		if ( yy_current_state >= 27 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 10);
+	yy_is_jam = (yy_current_state == 26);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1756,6 +1784,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 21 "turtle-lexer.l"
+#line 30 "turtle-lexer.l"
 
 

@@ -1,0 +1,3 @@
+/home/xadel/Project/COUR/TP/AS/turtle/build/CMakeFiles/turtle-viewer.dir
+/home/xadel/Project/COUR/TP/AS/turtle/build/CMakeFiles/edit_cache.dir
+/home/xadel/Project/COUR/TP/AS/turtle/build/CMakeFiles/rebuild_cache.dir

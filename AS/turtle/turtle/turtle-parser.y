@@ -21,10 +21,12 @@ void yyerror(struct ast *ret, const char *);
 	struct ast_node *node;
 }
 
-%token <value>		VALUE			 "value"
-%token <name>		 NAME				"name"
+%token <value>		VALUE		"value"
+%token <name>		 NAME		"name"
+%token		KW_FORWARD		"forward"
+%token		KW_LEFT		"Directionleft"
+%token		KW_RIGHT		"Directionright"
 
-%token						KW_FORWARD	"forward"
 /* TODO: add other tokens */
 
 %type <node> unit cmds cmd expr
@@ -32,20 +34,22 @@ void yyerror(struct ast *ret, const char *);
 %%
 
 unit:
-		cmds							{ $$ = $1; ret->unit = $$; }
+		cmds		{ $$ = $1; ret->unit = $$; }
 ;
 
 cmds:
-		cmd cmds					{ $1->next = $2; $$ = $1; }
-	| /* empty */			 { $$ = NULL; }
+		cmd cmds		{ $1->next = $2; $$ = $1; }
+	| /* empty */		{ $$ = NULL; }
 ;
 
 cmd:
-		KW_FORWARD expr	 { /* TODO */ }
+		KW_FORWARD expr	 { 
+			$$ = make_cmd_forward($2); 
+		}
 ;
 
 expr:
-		VALUE						 { $$ = make_expr_value($1); }
+		VALUE		{ $$ = make_expr_value($1); }
 		/* TODO: add identifier */
 ;
 

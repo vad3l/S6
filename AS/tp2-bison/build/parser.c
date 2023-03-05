@@ -76,7 +76,7 @@ int yylex();
 void yyerror(const char *);
 
 
-#line 80 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/parser.c"
+#line 80 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/parser.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -1350,59 +1350,59 @@ yyreduce:
   case 5: /* line: expr '\n'  */
 #line 38 "parser.y"
                       { printf("> %.10g\n", (yyvsp[-1].value)); }
-#line 1354 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/parser.c"
+#line 1354 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/parser.c"
     break;
 
   case 6: /* expr: "value"  */
 #line 42 "parser.y"
                       { (yyval.value) = (yyvsp[0].value); }
-#line 1360 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/parser.c"
+#line 1360 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/parser.c"
     break;
 
   case 7: /* expr: "name"  */
 #line 43 "parser.y"
                       { (yyval.value) = constant((yyvsp[0].name)); }
-#line 1366 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/parser.c"
+#line 1366 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/parser.c"
     break;
 
   case 8: /* expr: expr '+' expr  */
 #line 44 "parser.y"
                       { (yyval.value) = (yyvsp[-2].value) + (yyvsp[0].value); printf("addition\n"); }
-#line 1372 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/parser.c"
+#line 1372 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/parser.c"
     break;
 
   case 9: /* expr: '-' expr  */
 #line 45 "parser.y"
                       { (yyval.value) = -(yyvsp[0].value); }
-#line 1378 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/parser.c"
+#line 1378 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/parser.c"
     break;
 
   case 10: /* expr: expr '-' expr  */
 #line 46 "parser.y"
                       { (yyval.value) = (yyvsp[-2].value) - (yyvsp[0].value); }
-#line 1384 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/parser.c"
+#line 1384 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/parser.c"
     break;
 
   case 11: /* expr: expr '*' expr  */
 #line 47 "parser.y"
                       { (yyval.value) = (yyvsp[-2].value) * (yyvsp[0].value); printf("multiplication\n"); }
-#line 1390 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/parser.c"
+#line 1390 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/parser.c"
     break;
 
   case 12: /* expr: expr '/' expr  */
 #line 48 "parser.y"
                       { (yyval.value) = (yyvsp[-2].value) / (yyvsp[0].value); }
-#line 1396 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/parser.c"
+#line 1396 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/parser.c"
     break;
 
   case 13: /* expr: '(' expr ')'  */
 #line 49 "parser.y"
                       { (yyval.value) = (yyvsp[-1].value); }
-#line 1402 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/parser.c"
+#line 1402 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/parser.c"
     break;
 
 
-#line 1406 "/home/tizu/Documents/Dev/C/AS/tp2-bison/build/parser.c"
+#line 1406 "/home/xadel/Project/COUR/TP/AS/tp2-bison/build/parser.c"
 
       default: break;
     }
