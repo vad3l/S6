@@ -1,3 +1,0 @@
-/home/tizu/Documents/Dev/C/AS/tp1-flex/build/CMakeFiles/flex-test.dir
-/home/tizu/Documents/Dev/C/AS/tp1-flex/build/CMakeFiles/edit_cache.dir
-/home/tizu/Documents/Dev/C/AS/tp1-flex/build/CMakeFiles/rebuild_cache.dir
