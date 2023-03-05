@@ -1,1 +1,0 @@
-/usr/bin/c++ "CMakeFiles/turtle-viewer.dir/turtle-viewer.cc.o" -o turtle-viewer  -Wl,-rpath,/usr/local/lib /usr/local/lib/libgf0.so.1.1.0 /usr/local/lib/libgfnet0.so.1.1.0 /usr/local/lib/libgfcore0.so.1.1.0 /usr/lib/libz.so 
