@@ -222,7 +222,7 @@ TEST(OperatorPlus, Metres) {
 }
 
 // Operator -
-TEST(OperatorPlus, PrimeRatio) {
+TEST(OperatorMinus, PrimeRatio) {
 	phy::Qty<phy::Metre, std::ratio<1, 10>> dm(5);
 	phy::Qty<phy::Metre, std::ratio<1>> m(1);
 	auto newqty = m - dm;
@@ -231,20 +231,20 @@ TEST(OperatorPlus, PrimeRatio) {
 	EXPECT_EQ(10, decltype(newqty)::Ratio::den);
 }
 
-TEST(OperatorPlus, MultiRatio) {
+TEST(OperatorMinus, MultiRatio) {
 	phy::Qty<phy::Metre, std::ratio<1, 5>> dm(5);
 	phy::Qty<phy::Metre, std::ratio<1, 3>> m(1);
-	auto newqty = m - dm;
-	EXPECT_EQ(20, newqty.value);
+	auto newqty = dm - m;
+	EXPECT_EQ(10, newqty.value);
 	EXPECT_EQ(1, decltype(newqty)::Ratio::num);
 	EXPECT_EQ(15, decltype(newqty)::Ratio::den);
 }
 
-TEST(OperatorPlus, Metres) {
+TEST(OperatorMinus, Metres) {
 	phy::Qty<phy::Metre, std::ratio<1>> dm(5);
 	phy::Qty<phy::Metre, std::ratio<1, 10>> m(1);
-	auto newqty = m - dm;
-	EXPECT_EQ(51, newqty.value);
+	auto newqty = dm - m;
+	EXPECT_EQ(49, newqty.value);
 	EXPECT_EQ(1, decltype(newqty)::Ratio::num);
 	EXPECT_EQ(10, decltype(newqty)::Ratio::den);
 }
