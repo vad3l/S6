@@ -100,4 +100,9 @@ void ast_print(const struct ast *self);
 void ast_eval(const struct ast *self, struct context *ctx);
 void ast_node_eval (const struct ast_node *node, struct context* ctx);
 
+// CMD
+void foward (const struct ast_node* n, struct context* ctx);
+void backward (const struct ast_node* n, struct context* ctx);
+
+
 #endif /* TURTLE_AST_H */

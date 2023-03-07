@@ -64,14 +64,13 @@ void ast_eval(const struct ast *self, struct context *ctx) {
 
 void ast_node_eval (const struct ast_node* node, struct context* ctx) {
 	if (node->kind == KIND_CMD_SIMPLE) {
-		if (node->u.cmd == CMD_FORWARD) {
-			double new_x = ctx->x;
-			double new_y = ctx->y - node->u.value;
-
-			new_x = new_x * cos(ctx->angle) - new_y * sin(ctx->angle);
-			new_y = new_x * sin(ctx->angle) + new_y * cos(ctx->angle);
-			ctx->x = new_x;
-			ctx->y = new_y;
+		switch (node->u.cmd) {
+			case CMD_FORWARD:
+				foward(node, ctx);
+				break;
+			case CMD_BACKWARD:
+				backward(node, ctx);
+				break;
 		}
 	}
 
@@ -85,5 +84,23 @@ void ast_node_eval (const struct ast_node* node, struct context* ctx) {
  */
 
 void ast_print(const struct ast *self) {
+	printf("feur\n");
+}
 
+void foward (const struct ast_node* n, struct context* ctx) {
+	double new_x = ctx->x;
+	double new_y = ctx->y - n->u.value;
+	new_x = new_x * cos(ctx->angle) - new_y * sin(ctx->angle);
+	new_y = new_x * sin(ctx->angle) + new_y * cos(ctx->angle);
+	ctx->x = new_x;
+	ctx->y = new_y;	
+}
+
+void backward (const struct ast_node* n, struct context* ctx) {
+	double new_x = ctx->x;
+	double new_y = ctx->y + n->u.value;
+	new_x = new_x * cos(ctx->angle) - new_y * sin(ctx->angle);
+	new_y = new_x * sin(ctx->angle) + new_y * cos(ctx->angle);
+	ctx->x = new_x;
+	ctx->y = new_y;	
 }
