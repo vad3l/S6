@@ -45,10 +45,10 @@ cmds:
 
 cmd:
 		KW_FORWARD expr	 { 
-			$$ = make_cmd_forward($2); 
+			$$ = make_cmd_forbackward(true,$2); 
 		}
 	|	KW_BACKWARD expr {
-			$$ = make_cmd_backward($2)
+			$$ = make_cmd_forbackward(false,$2);
 		}
 
 

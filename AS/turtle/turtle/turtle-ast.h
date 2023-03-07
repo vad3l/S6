@@ -69,7 +69,7 @@ void ast_node_destroy (struct ast_node* self);
 // for example:
 struct ast_node *make_expr_value(double value);
 
-struct ast_node *make_cmd_forward(struct ast_node *expr);
+struct ast_node *make_cmd_forbackward(bool choice, struct ast_node *expr);
 
 // root of the abstract syntax tree
 struct ast {
