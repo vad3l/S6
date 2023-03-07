@@ -64,7 +64,7 @@ struct ast_node {
 	struct ast_node *next;	// the next node in the sequence
 };
 
-
+void ast_node_destroy (struct ast_node* self);
 // TODO: make some constructors to use in parser.y
 // for example:
 struct ast_node *make_expr_value(double value);
@@ -98,5 +98,6 @@ void ast_print(const struct ast *self);
 
 // evaluate the tree and generate some basic primitives
 void ast_eval(const struct ast *self, struct context *ctx);
+void ast_node_eval (const struct ast_node *node, struct context* ctx);
 
 #endif /* TURTLE_AST_H */

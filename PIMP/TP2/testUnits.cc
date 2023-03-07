@@ -221,6 +221,34 @@ TEST(OperatorPlus, Metres) {
 	EXPECT_EQ(10, decltype(newqty)::Ratio::den);
 }
 
+// Operator -
+TEST(OperatorPlus, PrimeRatio) {
+	phy::Qty<phy::Metre, std::ratio<1, 10>> dm(5);
+	phy::Qty<phy::Metre, std::ratio<1>> m(1);
+	auto newqty = m - dm;
+	EXPECT_EQ(5, newqty.value);
+	EXPECT_EQ(1, decltype(newqty)::Ratio::num);
+	EXPECT_EQ(10, decltype(newqty)::Ratio::den);
+}
+
+TEST(OperatorPlus, MultiRatio) {
+	phy::Qty<phy::Metre, std::ratio<1, 5>> dm(5);
+	phy::Qty<phy::Metre, std::ratio<1, 3>> m(1);
+	auto newqty = m - dm;
+	EXPECT_EQ(20, newqty.value);
+	EXPECT_EQ(1, decltype(newqty)::Ratio::num);
+	EXPECT_EQ(15, decltype(newqty)::Ratio::den);
+}
+
+TEST(OperatorPlus, Metres) {
+	phy::Qty<phy::Metre, std::ratio<1>> dm(5);
+	phy::Qty<phy::Metre, std::ratio<1, 10>> m(1);
+	auto newqty = m - dm;
+	EXPECT_EQ(51, newqty.value);
+	EXPECT_EQ(1, decltype(newqty)::Ratio::num);
+	EXPECT_EQ(10, decltype(newqty)::Ratio::den);
+}
+
 // Celsius
 TEST(QtyCelsuis, CelsiusZero) {
 	auto c = 0_celsius;
