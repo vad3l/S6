@@ -221,19 +221,36 @@ TEST(OperatorPlus, Metres) {
 	EXPECT_EQ(10, decltype(newqty)::Ratio::den);
 }
 
-// experimental
-/*
-TEST(experimental, velocity) {
-	auto velocity = 100000_metres / 3600_seconds; // 100 km/h
-	EXPECT_EQ(100,velocity.value);
+// Celsius
+TEST(QtyCelsuis, CelsiusZero) {
+	auto c = 0_celsius;
+	EXPECT_EQ(27315,c.value);
 }
 
-TEST(experimental, add) {
-	phy::Qty<phy::Metre,std::ratio<1,75>> mm(10);
-	auto add = 100000_metres + mm;
-	EXPECT_EQ(200000,add.value);
+TEST(QtyCelsuis, CelsiusSunTemp) {
+	auto c = 5505_celsius;
+	EXPECT_EQ(577815,c.value);
 }
-*/
+
+// Fahrenheit
+TEST(QtyFahrenheit, FahrenheitZero) {
+	auto c = 0_fahrenheit;
+	EXPECT_EQ(255372,c.value);
+}
+
+TEST(QtyFahrenheit, FahrenheitSunTemp) {
+	auto c = 9941_fahrenheit;
+	EXPECT_EQ(5778150,c.value);
+}
+
+// TEMPERATURE EXPERIENCE 
+TEST(QtyTemperature, TemperatureAddCelsiusFahrenheitZero) {
+	auto f = 0_fahrenheit;
+	auto c = 0_celsius;
+	auto add = c+f;
+	EXPECT_EQ(282687,c.value);
+}
+
 int main(int argc, char* argv[]) {
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

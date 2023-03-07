@@ -197,8 +197,12 @@ namespace phy {
 		 * Temperature literals
 		 */
 
-		Kelvin operator "" _celsius(unsigned long long int val);
-		Kelvin operator "" _fahrenheit(unsigned long long int val);
+		Qty<Kelvin,std::ratio<1,100>> operator "" _celsius(unsigned long long int val) {
+			return Qty<Kelvin,std::ratio<1,100>>((intmax_t)(val*100+27315));
+		}
+		Qty<Kelvin,std::ratio<1,1000>> operator "" _fahrenheit(unsigned long long int val) {
+			return Qty<Kelvin,std::ratio<1,1000>>((intmax_t)((val*1000. + 459670)* 5/9.f));
+		}
 
 	}	
 
