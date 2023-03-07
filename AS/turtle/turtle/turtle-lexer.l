@@ -9,22 +9,32 @@
 
 %option warn 8bit nodefault noyywrap
 
-DIGIT   [0-9]
-FORWARD "forward"|"fw"
-LEFT    "left"
-RIGHT   "right"
+COLOR_DIGIT	[0](\.[0-9]+)?|1(\.[0]+)?
+COLOR_CHOICE	({COLOR_DIGIT}", "{COLOR_DIGIT}", "{COLOR_DIGIT})|blue|red|green
+COLOR	"color "{COLOR_CHOICE}
+
+
+DIGIT	[0-9]
+FORWARD	"forward"|"fw"
+BACKWARD	"backward"|"bw"
+LEFT	"left"
+RIGHT	"right"
 
 %%
 
-{FORWARD} { return KW_FORWARD;}
+{COLOR}		{ printf("Color : %s\n",yytext); }	
+
+{FORWARD}		{ return KW_FORWARD; }
  
-{DIGIT}+              { yylval.value = strtod(yytext, NULL); return VALUE; }
+{BACKWARD}		{ return KW_BACKWARD; }
 
-{LEFT}{0,1} { return KW_LEFT; }
+{DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
 
-{RIGHT}{0,1} { return KW_RIGHT; }
+{LEFT}		{ return KW_LEFT; }
 
-[\n\t ]*              /* whitespace */
-.                     { fprintf(stderr, "Unknown token: '%s'\n", yytext); exit(EXIT_FAILURE); }
+{RIGHT}		{ return KW_RIGHT; }
+
+[\n\t ]*		/* whitespace */
+.		{ fprintf(stderr, "Unknown token: '%s'\n", yytext); exit(EXIT_FAILURE); }
 
 %%
