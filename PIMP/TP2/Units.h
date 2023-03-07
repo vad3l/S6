@@ -4,13 +4,21 @@
 #include <cstdint>
 #include <ratio>
 #include <type_traits>
+#include <numeric>
 
 namespace phy {	
 
 
 	namespace details {
 		template<typename R1, typename R2>
-		using MinoRatio = typename std::conditional<(R1::num/R1::den)<(R2::num/R2::den), R1, R2>::type;
+		using RealRatio = typename std::conditional<
+					std::gcd(R1::den, R2::den) != 1,
+					typename std::conditional<std::ratio_less<R1, R2>::value,
+						R1,
+						R2
+					>::type,
+					typename std::ratio<R1::num * R2::num, R1::den * R2::den>
+				>::type;
 	}
 
 	/*
@@ -129,17 +137,8 @@ namespace phy {
 	 */
 
 	template<typename U, typename R1, typename R2>
-	Qty<U,details::MinoRatio<R1,R2>> operator+(Qty<U, R1> q1, Qty<U, R2> q2) {
-		float temp1 = R1::num/R1::den;
-		float temp2 = R2::num/R2::den;
-
-		if (temp1 < temp2) {
-			Qty<U,details::MinoRatio<R1,R2>> newe1(q1.value+q2.value*temp2);
-			return newe1;	
-		}
-		
-		Qty<U,details::MinoRatio<R1,R2>> newe2(q1.value+q2.value*temp1);
-		return newe2;
+	Qty<U, details::RealRatio<R1, R2>> operator+(Qty<U, R1> q1, Qty<U, R2> q2) {
+		return Qty<U, details::RealRatio<R1, R2>>(q1.value * R2::den  + q2.value * R1::den);
 	}
 
 	template<typename U, typename R1, typename R2>
