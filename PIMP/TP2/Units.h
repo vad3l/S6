@@ -138,11 +138,13 @@ namespace phy {
 
 	template<typename U, typename R1, typename R2>
 	Qty<U, details::RealRatio<R1, R2>> operator+(Qty<U, R1> q1, Qty<U, R2> q2) {
-		return Qty<U, details::RealRatio<R1, R2>>(q1.value * R2::den  + q2.value * R1::den);
+		return Qty<U, details::RealRatio<R1, R2>>(q1.value * R2::den + q2.value * R1::den);
 	}
 
 	template<typename U, typename R1, typename R2>
-	Qty<U, R1> operator-(Qty<U, R1> q1, Qty<U, R2> q2) { return q1; }
+	Qty<U, details::RealRatio<R1, R2>> operator-(Qty<U, R1> q1, Qty<U, R2> q2) {
+		return Qty<U, details::RealRatio<R1, R2>>(q1.value * R2::den - q2.value * R1::den);
+	}
 
 	template<typename U1, typename R1, typename U2, typename R2>
 	Qty<U2, R1> operator*(Qty<U1, R1> q1, Qty<U2, R2> q2) { return q1; }
