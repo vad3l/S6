@@ -248,7 +248,9 @@ TEST(QtyTemperature, TemperatureAddCelsiusFahrenheitZero) {
 	auto f = 0_fahrenheit;
 	auto c = 0_celsius;
 	auto add = c+f;
-	EXPECT_EQ(282687,c.value);
+	std::cout << "F°" << f.value << " ratio :" << decltype(f)::Ratio::den << "\nC°"  << c.value << " ratio :" << decltype(c)::Ratio::den << "\nres : " << add.value << " ratio :" << decltype(add)::Ratio::den << std::endl;
+	
+	EXPECT_EQ(282687,add.value);
 }
 
 int main(int argc, char* argv[]) {
