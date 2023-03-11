@@ -328,6 +328,15 @@ TEST(OperatorDiv, SameUnit) {
 	EXPECT_EQ(0, decltype(mm)::Unit::metre);
 }
 
+TEST(OperatorMul, squareToNothing) {
+	auto mm = 10_metres * 1_metres*1_metres*1_metres*1_metres;
+	auto res = mm / 1_metres;
+	EXPECT_EQ(10, mm.value);
+	EXPECT_EQ(1, decltype(res)::Ratio::num);
+	EXPECT_EQ(1, decltype(res)::Ratio::den);
+	EXPECT_EQ(4, decltype(res)::Unit::metre);
+}
+
 //QtyCast
 TEST(QtyCast, Cours) {
 	phy::Qty<phy::Metre, std::milli> mm(32);
@@ -354,10 +363,19 @@ TEST(QtyTemperature, TemperatureAddCelsiusFahrenheitZero) {
 	auto c = 0_celsius;
 	auto add = c+f;
 	auto adde = f+c;
-	std::cout << "F°" << f.value << " ratio :" << decltype(f)::Ratio::den << "\nC°"  << c.value << " ratio :" << decltype(c)::Ratio::den << "\nres : " << add.value << " ratio :" << decltype(add)::Ratio::den << std::endl;
-	
+		
 	EXPECT_EQ(282687,add.value);
 	EXPECT_EQ(282687,adde.value);
+}
+
+TEST(QtyTemperature, TemperatureMinusCelsiusFahrenheitZero) {
+	auto f = 0_fahrenheit;
+	auto c = 0_celsius;
+	auto add = c-f;
+	auto adde = f-c;
+	
+	EXPECT_EQ(-228057,add.value);
+	EXPECT_EQ(228057,adde.value);
 }
 
 int main(int argc, char* argv[]) {

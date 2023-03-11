@@ -107,6 +107,7 @@ namespace phy {
 	 * Comparison operators
 	 */
 
+
 	template<typename U, typename R1, typename R2>
 	bool operator==(Qty<U, R1> q1, Qty<U, R2> q2) {
 		if (R2::den < R2::num && R1::den > R1::num) {
@@ -152,11 +153,11 @@ namespace phy {
 
 	template<typename U, typename R1, typename R2>
 	Qty<U, details::RealRatio<R1, R2>> operator+(Qty<U, R1> q1, Qty<U, R2> q2) {
-		std::cout << "q1 : " << q1.value << "\n\tnum :" << R1::num << "\n\tden :" << R1::den <<std::endl;
-		std::cout << "q2 : " << q2.value << "\n\tnum :" << R2::num << "\n\tden :" << R2::den <<std::endl;
+		/*std::cout << "q1 : " << q1.value << "\n\tnum :" << R1::num << "\n\tden :" << R1::den <<std::endl;
+		std::cout << "q2 : " << q2.value << "\n\tnum :" << R2::num << "\n\tden :" << R2::den <<std::endl;*/
 		if (std::gcd(R1::den, R2::den) != 1) {
 			if (std::ratio_less<R1, R2>::value) {
-				
+				return Qty<U, details::RealRatio<R1, R2>>(q1.value + q2.value*R1::num);
 			}
 			return Qty<U, details::RealRatio<R1, R2>>(q1.value + q2.value);
 		}
@@ -165,6 +166,12 @@ namespace phy {
 
 	template<typename U, typename R1, typename R2>
 	Qty<U, details::RealRatio<R1, R2>> operator-(Qty<U, R1> q1, Qty<U, R2> q2) {
+		if (std::gcd(R1::den, R2::den) != 1) {
+			if (std::ratio_less<R1, R2>::value) {
+				return Qty<U, details::RealRatio<R1, R2>>(q1.value - q2.value*R1::num);
+			}
+			return Qty<U, details::RealRatio<R1, R2>>(q1.value - q2.value);
+		}
 		return Qty<U, details::RealRatio<R1, R2>>(q1.value * R2::den - q2.value * R1::den);
 	}
 
@@ -177,7 +184,6 @@ namespace phy {
 	Qty<details::DivUnit<U1, U2>, details::RealRatio<R1, R2>> operator/(Qty<U1, R1> q1, Qty<U2, R2> q2) { 
 		return Qty<details::DivUnit<U1, U2>, details::RealRatio<R1, R2>>(q1.value / q2.value);
 	}
-
 
 	/*
 	 * Cast function between two quantities
