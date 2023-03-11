@@ -159,12 +159,12 @@ namespace phy {
 
 	template<typename U1, typename R1, typename U2, typename R2>
 	Qty<details::MulUnit<U1, U2>, details::RealRatio<R1, R2>> operator*(Qty<U1, R1> q1, Qty<U2, R2> q2) {
-		return Qty<details::MulUnit<U1, U2>, details::RealRatio<R1, R2>>(q1.value * R2::den + q2.value * R1::den);
+		return Qty<details::MulUnit<U1, U2>, details::RealRatio<R1, R2>>(q1.value * q2.value);
 	}
 
 	template<typename U1, typename R1, typename U2, typename R2>
 	Qty<details::DivUnit<U1, U2>, details::RealRatio<R1, R2>> operator/(Qty<U1, R1> q1, Qty<U2, R2> q2) { 
-		return Qty<details::MulUnit<U1, U2>, details::RealRatio<R1, R2>>(q1.value * R2::den - q2.value * R1::den);
+		return Qty<details::DivUnit<U1, U2>, details::RealRatio<R1, R2>>(q1.value / q2.value);
 	}
 
 
@@ -172,7 +172,10 @@ namespace phy {
 	 * Cast function between two quantities
 	 */
 	template<typename ResQty, typename U, typename R>
-	ResQty qtyCast(Qty<U,R>);
+	ResQty qtyCast(Qty<U,R> q) {
+		return ResQty(q.value * (R::num / R::den));
+	}
+
 	namespace literals {
 
 		/*
