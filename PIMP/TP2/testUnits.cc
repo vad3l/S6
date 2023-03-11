@@ -292,6 +292,62 @@ TEST(QtyFahrenheit, FahrenheitSunTemp) {
 	EXPECT_EQ(5778150,c.value);
 }
 
+// Multiplication
+TEST(OperatorMul, NewUnit) {
+	auto mk = 1_metres * 1_candelas;
+	EXPECT_EQ(1, mk.value);
+	EXPECT_EQ(1, decltype(mk)::Ratio::num);
+	EXPECT_EQ(1, decltype(mk)::Ratio::den);
+	EXPECT_EQ(1, decltype(mk)::Unit::metre);
+	EXPECT_EQ(1, decltype(mk)::Unit::candela);
+}
+
+TEST(OperatorMul, SameUnit) {
+	auto mm = 10_metres * 1_metres;
+	EXPECT_EQ(10, mm.value);
+	EXPECT_EQ(1, decltype(mm)::Ratio::num);
+	EXPECT_EQ(1, decltype(mm)::Ratio::den);
+	EXPECT_EQ(2, decltype(mm)::Unit::metre);
+}
+
+// Division
+TEST(OperatorDiv, NewUnit) {
+	auto mk = 1_metres / 1_candelas;
+	EXPECT_EQ(1, mk.value);
+	EXPECT_EQ(1, decltype(mk)::Ratio::num);
+	EXPECT_EQ(1, decltype(mk)::Ratio::den);
+	EXPECT_EQ(1, decltype(mk)::Unit::metre);
+	EXPECT_EQ(-1, decltype(mk)::Unit::candela);
+}
+
+TEST(OperatorDiv, SameUnit) {
+	auto mm = 10_metres / 1_metres;
+	EXPECT_EQ(10, mm.value);
+	EXPECT_EQ(1, decltype(mm)::Ratio::num);
+	EXPECT_EQ(1, decltype(mm)::Ratio::den);
+	EXPECT_EQ(0, decltype(mm)::Unit::metre);
+}
+
+//QtyCast
+TEST(QtyCast, Cours) {
+	phy::Qty<phy::Metre, std::milli> mm(32);
+	auto nm = phy::qtyCast<phy::Qty<phy::Metre, std::nano>>(mm);
+	EXPECT_TRUE(nm == mm);
+}
+
+TEST(QtyCast, Big) {
+	phy::Qty<phy::Metre, std::kilo> km(1);
+	auto m = phy::qtyCast<phy::Qty<phy::Metre, std::ratio<1>>>(km);
+	EXPECT_EQ(1000, m.value);
+	EXPECT_TRUE(m == km);
+}
+
+TEST(QtyCast, Small) {
+	phy::Qty<phy::Metre, std::milli> mm(1);
+	auto m = phy::qtyCast<phy::Qty<phy::Metre, std::ratio<1>>>(mm);
+	EXPECT_TRUE(m == mm);
+}
+
 // TEMPERATURE EXPERIENCE 
 TEST(QtyTemperature, TemperatureAddCelsiusFahrenheitZero) {
 	auto f = 0_fahrenheit;
