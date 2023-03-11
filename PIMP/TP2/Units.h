@@ -5,6 +5,7 @@
 #include <ratio>
 #include <type_traits>
 #include <numeric>
+#include <iostream>
 
 namespace phy {	
 
@@ -104,7 +105,13 @@ namespace phy {
 
 	template<typename U, typename R1, typename R2>
 	bool operator==(Qty<U, R1> q1, Qty<U, R2> q2) {
-		return q1.value * (R1::num / R1::den) == q2.value * (R2::num / R2::den);
+		/*std::cout << "q1 \nvalue :" << q1.value << "\nnum :" << R1::num << "\nden :" << R1::den <<  "\ncalc : " << q1.value * (R1::num / R1::den) << std::endl;
+		std::cout << "q2 \nvalue :" << q2.value << "\nnum :" << R2::num << "\nden :" << R2::den << "\ncalc : " << q2.value * (R2::num / R2::den) <<  std::endl;
+		*/
+		if (R2::den < R2::num || R1::den < R1::num){
+			return q1.value * R1::num == q2.value * R2::num;	
+		}
+		return q1.value * R2::den == q2.value * R1::den;
 	}
 
 	template<typename U, typename R1, typename R2>

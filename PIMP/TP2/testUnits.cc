@@ -32,6 +32,16 @@ TEST(QtyMetre, Equal) {
 	EXPECT_TRUE(10_metres == 10_metres);
 }
 
+TEST(QtyMetre, EqualDifferentsRatioCm){
+	phy::Qty<phy::Metre, std::ratio<1,100>> cm(100);
+	EXPECT_TRUE(1_metres == cm);
+}
+
+TEST(QtyMetre, EqualDifferentsRatioKm){
+	phy::Qty<phy::Metre, std::ratio<1000,1>> km(1);
+	EXPECT_TRUE(1000_metres == km);
+}
+
 // Masse
 TEST(QtyKilogram, KilogramAdd) {
 	auto kg = 1_kilograms;
@@ -222,7 +232,7 @@ TEST(OperatorPlus, Metres) {
 }
 
 // Operator -
-TEST(OperatorPlus, PrimeRatio) {
+TEST(OperatorMoin, PrimeRatio) {
 	phy::Qty<phy::Metre, std::ratio<1, 10>> dm(5);
 	phy::Qty<phy::Metre, std::ratio<1>> m(1);
 	auto newqty = m - dm;
@@ -231,7 +241,7 @@ TEST(OperatorPlus, PrimeRatio) {
 	EXPECT_EQ(10, decltype(newqty)::Ratio::den);
 }
 
-TEST(OperatorPlus, MultiRatio) {
+TEST(OperatorMoin, MultiRatio) {
 	phy::Qty<phy::Metre, std::ratio<1, 5>> dm(5);
 	phy::Qty<phy::Metre, std::ratio<1, 3>> m(1);
 	auto newqty = m - dm;
@@ -240,7 +250,7 @@ TEST(OperatorPlus, MultiRatio) {
 	EXPECT_EQ(15, decltype(newqty)::Ratio::den);
 }
 
-TEST(OperatorPlus, Metres) {
+TEST(OperatorMoin, Metres) {
 	phy::Qty<phy::Metre, std::ratio<1>> dm(5);
 	phy::Qty<phy::Metre, std::ratio<1, 10>> m(1);
 	auto newqty = m - dm;

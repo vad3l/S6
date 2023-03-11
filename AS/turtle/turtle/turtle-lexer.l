@@ -19,6 +19,8 @@ FORWARD	"forward"|"fw"
 BACKWARD	"backward"|"bw"
 LEFT	"left"
 RIGHT	"right"
+UP	"up"|"Up"
+DOWN  "down"|"Down"
 
 %%
 
@@ -27,6 +29,10 @@ RIGHT	"right"
 {FORWARD}		{ return KW_FORWARD; }
  
 {BACKWARD}		{ return KW_BACKWARD; }
+
+{UP}		{ return KW_UP; }
+
+{DOWN}		{ return KW_DOWN; }
 
 {DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
 
