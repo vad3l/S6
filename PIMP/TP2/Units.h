@@ -9,19 +9,6 @@
 
 namespace phy {	
 
-
-	namespace details {
-		template<typename R1, typename R2>
-		using RealRatio = typename std::conditional<
-					std::gcd(R1::den, R2::den) != 1,
-					typename std::conditional<std::ratio_less<R1, R2>::value,
-						R1,
-						R2
-					>::type,
-					typename std::ratio<R1::num * R2::num, R1::den * R2::den>
-				>::type;
-	}
-
 	/*
 	 * A unit defined in terms of the base units
 	 */
@@ -38,7 +25,7 @@ namespace phy {
 
 	/*
 	 * Various type aliases
- */
+	*/
 
 	using Metre	= Unit<1,0,0,0,0,0,0>;
 	using Kilogram	= Unit<0,1,0,0,0,0,0>;
@@ -48,6 +35,24 @@ namespace phy {
 	using Mole	= Unit<0,0,0,0,0,1,0>;
 	using Candela	= Unit<0,0,0,0,0,0,1>;
 	using Radian	= Unit<0,0,0,0,0,0,0>;
+
+	namespace details {
+		template<typename R1, typename R2>
+		using RealRatio = typename std::conditional<
+					std::gcd(R1::den, R2::den) != 1,
+					typename std::conditional<std::ratio_less<R1, R2>::value,
+						R1,
+						R2
+					>::type,
+					typename std::ratio<R1::num * R2::num, R1::den * R2::den>
+				>::type;
+
+		template<typename U1, typename U2>
+		using MulUnit = Unit<U1::metre + U2::metre, U1::kilogram + U2::kilogram, U1::second + U2::second, U1::ampere + U2::ampere, U1::kelvin + U2::kelvin, U1::mole + U2::mole, U1::candela + U2::candela>;
+
+		template<typename U1, typename U2>
+		using DivUnit = Unit<U1::metre - U2::metre, U1::kilogram - U2::kilogram, U1::second - U2::second, U1::ampere - U2::ampere, U1::kelvin - U2::kelvin, U1::mole - U2::mole, U1::candela - U2::candela>;
+	}
 
 	/*
 	 * A quantity is a value associated with a unit and a ratio
@@ -71,7 +76,6 @@ namespace phy {
 		}
 
 		template<typename ROther>
-
 		Qty& operator-=(Qty<U, ROther> other) {
 			value -= other.value * (ROther::num / ROther::den);		
 			return *this;
@@ -157,12 +161,13 @@ namespace phy {
 	}
 
 	template<typename U1, typename R1, typename U2, typename R2>
-	Qty<U2, R1> operator*(Qty<U1, R1> q1, Qty<U2, R2> q2) { return q1; }
+	Qty<details::MulUnit<U1, U2>, details::RealRatio<R1, R2>> operator*(Qty<U1, R1> q1, Qty<U2, R2> q2) {
+		return Qty<details::MulUnit<U1, U2>, details::RealRatio<R1, R2>>(q1.value * R2::den + q2.value * R1::den);
+	}
 
 	template<typename U1, typename R1, typename U2, typename R2>
-	Qty<U1, R1> operator/(Qty<U1, R1> q1, Qty<U2, R2> q2) { 
-		q1.value = q1.value/q2.value;
-		return  q1;
+	Qty<details::DivUnit<U1, U2>, details::RealRatio<R1, R2>> operator/(Qty<U1, R1> q1, Qty<U2, R2> q2) { 
+		return Qty<details::MulUnit<U1, U2>, details::RealRatio<R1, R2>>(q1.value * R2::den - q2.value * R1::den);
 	}
 
 
