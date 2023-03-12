@@ -53,6 +53,19 @@ TEST(QtyMetre, EqualDifferentsRatioKmCmWeird){
 	phy::Qty<phy::Metre, std::ratio<1,100>> cm(7500000);
 	EXPECT_TRUE(km == cm);
 }
+
+
+TEST(QtyMetre, NegativAdd){
+	phy::Qty<phy::Metre, std::ratio<1,1>> m(-100);
+	auto res = m + 1_metres;
+	EXPECT_EQ(-99,res.value);
+}
+
+TEST(QtyMetre, NegativMinus){
+	phy::Qty<phy::Metre, std::ratio<1,1>> m(-100);
+	auto res = m - 1_metres;
+	EXPECT_EQ(-101,res.value);
+}
 // Masse
 TEST(QtyKilogram, KilogramAdd) {
 	auto kg = 1_kilograms;
@@ -377,6 +390,7 @@ TEST(QtyTemperature, TemperatureMinusCelsiusFahrenheitZero) {
 	EXPECT_EQ(-228057,add.value);
 	EXPECT_EQ(228057,adde.value);
 }
+
 
 int main(int argc, char* argv[]) {
 	::testing::InitGoogleTest(&argc, argv);
