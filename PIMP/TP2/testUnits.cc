@@ -323,6 +323,30 @@ TEST(OperatorMul, SameUnit) {
 	EXPECT_EQ(2, decltype(mm)::Unit::metre);
 }
 
+TEST(OperatorMul, SmallerRatio) {
+	auto m = 1_metres * phy::Qty<phy::Metre, std::centi>(1);
+	EXPECT_EQ(1, m.value);
+	EXPECT_EQ(1, decltype(m)::Ratio::num);
+	EXPECT_EQ(100, decltype(m)::Ratio::den);
+}
+
+TEST(OperatorMul, BiggerRatio) {
+	auto m = 1_metres * phy::Qty<phy::Metre, std::kilo>(1);
+	EXPECT_EQ(1, m.value);
+	EXPECT_EQ(1000, decltype(m)::Ratio::num);
+	EXPECT_EQ(1, decltype(m)::Ratio::den);
+}
+
+TEST(OperatorMul, squareToNothing) {
+	auto mm = 10_metres * 1_metres*1_metres*1_metres*1_metres;
+	auto res = mm / 1_metres;
+	EXPECT_EQ(10, mm.value);
+	EXPECT_EQ(1, decltype(res)::Ratio::num);
+	EXPECT_EQ(1, decltype(res)::Ratio::den);
+	EXPECT_EQ(4, decltype(res)::Unit::metre);
+}
+
+
 // Division
 TEST(OperatorDiv, NewUnit) {
 	auto mk = 1_metres / 1_candelas;
@@ -341,20 +365,27 @@ TEST(OperatorDiv, SameUnit) {
 	EXPECT_EQ(0, decltype(mm)::Unit::metre);
 }
 
-TEST(OperatorMul, squareToNothing) {
-	auto mm = 10_metres * 1_metres*1_metres*1_metres*1_metres;
-	auto res = mm / 1_metres;
-	EXPECT_EQ(10, mm.value);
-	EXPECT_EQ(1, decltype(res)::Ratio::num);
-	EXPECT_EQ(1, decltype(res)::Ratio::den);
-	EXPECT_EQ(4, decltype(res)::Unit::metre);
+TEST(OperatorDiv, SmallerRatio) {
+	auto m = 1_metres / phy::Qty<phy::Metre, std::centi>(1);
+	EXPECT_EQ(1, m.value);
+	EXPECT_EQ(100, decltype(m)::Ratio::num);
+	EXPECT_EQ(1, decltype(m)::Ratio::den);
+}
+
+TEST(OperatorDiv, BiggerRatio) {
+	auto m = 1_metres / phy::Qty<phy::Metre, std::kilo>(1);
+	EXPECT_EQ(1, m.value);
+	EXPECT_EQ(1, decltype(m)::Ratio::num);
+	EXPECT_EQ(1000, decltype(m)::Ratio::den);
 }
 
 //QtyCast
 TEST(QtyCast, Cours) {
 	phy::Qty<phy::Metre, std::milli> mm(32);
 	auto nm = phy::qtyCast<phy::Qty<phy::Metre, std::nano>>(mm);
-	EXPECT_TRUE(nm == mm);
+	EXPECT_EQ(1, decltype(nm)::Ratio::num);
+	EXPECT_EQ(1000000000, decltype(nm)::Ratio::den);
+	EXPECT_EQ(320000000, nm.value);
 }
 
 TEST(QtyCast, Big) {
@@ -367,7 +398,9 @@ TEST(QtyCast, Big) {
 TEST(QtyCast, Small) {
 	phy::Qty<phy::Metre, std::milli> mm(1);
 	auto m = phy::qtyCast<phy::Qty<phy::Metre, std::ratio<1>>>(mm);
-	EXPECT_TRUE(m == mm);
+	EXPECT_EQ(1, decltype(m)::Ratio::num);
+	EXPECT_EQ(1, decltype(m)::Ratio::den);
+	EXPECT_EQ(0, m.value);
 }
 
 // TEMPERATURE EXPERIENCE 

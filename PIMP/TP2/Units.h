@@ -153,8 +153,6 @@ namespace phy {
 
 	template<typename U, typename R1, typename R2>
 	Qty<U, details::RealRatio<R1, R2>> operator+(Qty<U, R1> q1, Qty<U, R2> q2) {
-		/*std::cout << "q1 : " << q1.value << "\n\tnum :" << R1::num << "\n\tden :" << R1::den <<std::endl;
-		std::cout << "q2 : " << q2.value << "\n\tnum :" << R2::num << "\n\tden :" << R2::den <<std::endl;*/
 		if (std::gcd(R1::den, R2::den) != 1) {
 			if (std::ratio_less<R1, R2>::value) {
 				return Qty<U, details::RealRatio<R1, R2>>(q1.value + q2.value*R1::num);
@@ -176,13 +174,13 @@ namespace phy {
 	}
 
 	template<typename U1, typename R1, typename U2, typename R2>
-	Qty<details::MulUnit<U1, U2>, details::RealRatio<R1, R2>> operator*(Qty<U1, R1> q1, Qty<U2, R2> q2) {
-		return Qty<details::MulUnit<U1, U2>, details::RealRatio<R1, R2>>(q1.value * q2.value);
+	Qty<details::MulUnit<U1, U2>, std::ratio<R1::num * R2::num, R1::den * R2::den>> operator*(Qty<U1, R1> q1, Qty<U2, R2> q2) {
+		return Qty<details::MulUnit<U1, U2>, std::ratio<R1::num * R2::num, R1::den * R2::den>>(q1.value * q2.value);
 	}
 
 	template<typename U1, typename R1, typename U2, typename R2>
-	Qty<details::DivUnit<U1, U2>, details::RealRatio<R1, R2>> operator/(Qty<U1, R1> q1, Qty<U2, R2> q2) { 
-		return Qty<details::DivUnit<U1, U2>, details::RealRatio<R1, R2>>(q1.value / q2.value);
+	Qty<details::DivUnit<U1, U2>, std::ratio<R1::num * R2::den, R2::num * R1::den>> operator/(Qty<U1, R1> q1, Qty<U2, R2> q2) { 
+		return Qty<details::DivUnit<U1, U2>, std::ratio<R1::num * R2::den, R2::num * R1::den>>(q1.value / q2.value);
 	}
 
 	/*
@@ -190,7 +188,7 @@ namespace phy {
 	 */
 	template<typename ResQty, typename U, typename R>
 	ResQty qtyCast(Qty<U,R> q) {
-		return ResQty(q.value * (R::num / R::den));
+		return ResQty((q.value * R::num) / R::den);
 	}
 
 	namespace literals {
