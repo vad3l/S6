@@ -68,7 +68,7 @@ void ast_node_destroy (struct ast_node* self);
 // TODO: make some constructors to use in parser.y
 // for example:
 struct ast_node *make_expr_value(double value);
-
+struct ast_node *make_cmd_rotate(bool left,struct ast_node *expr);
 struct ast_node *make_cmd_forbackward(bool choice, struct ast_node *expr);
 
 // root of the abstract syntax tree
@@ -103,6 +103,6 @@ void ast_node_eval (const struct ast_node *node, struct context* ctx);
 // CMD
 void foward (const struct ast_node* n, struct context* ctx);
 void backward (const struct ast_node* n, struct context* ctx);
-
+void rotate (bool left,const struct ast_node* n, struct context* ctx);
 
 #endif /* TURTLE_AST_H */

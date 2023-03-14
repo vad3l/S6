@@ -121,7 +121,7 @@ int main() {
 
 	// game loop
 
-	renderer.clear(gf::Color::Black);
+	renderer.clear(gf::Color::White);
 	gf::Clock clock;
 
 	static constexpr float Duration = 10.0f;

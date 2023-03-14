@@ -49,8 +49,8 @@ cmds:
 cmd:
 		KW_FORWARD expr	{ $$ = make_cmd_forbackward(true,$2); }
 	|	KW_BACKWARD expr	{$$ = make_cmd_forbackward(false,$2);}
-	|	KW_RIGHT	{}
-	|	KW_LEFT	{}
+	|	KW_RIGHT expr	{$$ = make_cmd_rotate(false,$2);}
+	|	KW_LEFT	expr	{$$ = make_cmd_rotate(true,$2);}
 	|	KW_UP	{}
 	|	KW_DOWN	{}
 ;
