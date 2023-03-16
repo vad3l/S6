@@ -103,18 +103,17 @@ void ast_print(const struct ast *self) {
 	printf(":)\n");
 }
 
-
 void foward (const struct ast_node* node, struct context* ctx) {
 	double dist = node->children[0]->u.value;
 	double angle = (PI/180.0)* ctx->angle;
 	double dx = dist * cos(angle);
 	double dy = dist * sin(angle);
 	if (!ctx->up) {
-		printf("LineTo %f %f\n", ctx->y + dy,ctx->x + dx );
+		printf("LineTo %f %f\n", ctx->y + dy, ctx->x - dx);
 	} else {
-		printf("MoveTo %f %f\n", ctx->x, ctx->y);
+		printf("MoveTo %f %f\n", ctx->y + dy, ctx->x - dx);
 	}
-	ctx->x += dx;
+	ctx->x -= dx;
 	ctx->y += dy;
 }
 
