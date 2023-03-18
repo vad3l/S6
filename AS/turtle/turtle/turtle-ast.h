@@ -70,6 +70,7 @@ void ast_node_destroy (struct ast_node* self);
 struct ast_node *make_expr_value(double value);
 struct ast_node *make_cmd_rotate(bool left,struct ast_node *expr);
 struct ast_node *make_cmd_forbackward(bool choice, struct ast_node *expr);
+struct ast_node *make_cmd_color(struct ast_node *expr1,struct ast_node *expr2,struct ast_node *expr3);
 
 // root of the abstract syntax tree
 struct ast {
@@ -104,5 +105,6 @@ void ast_node_eval (const struct ast_node *node, struct context* ctx);
 void foward (const struct ast_node* n, struct context* ctx);
 void backward (const struct ast_node* n, struct context* ctx);
 void rotate (bool left,const struct ast_node* n, struct context* ctx);
+void color (const struct ast_node* node, struct context* ctx);
 
 #endif /* TURTLE_AST_H */
