@@ -24,7 +24,6 @@ namespace sig {
 	public:
 		using result_type = T;
 		T last;
-		
 
 		template<typename U>
 		void combine(U&& item) {
@@ -56,7 +55,10 @@ namespace sig {
 	class Signal {
 	public:
 		using combiner_type = Combiner;
-		using result_type = typename std::function<Signature>::result_type;
+		using result_type = typename std::conditional<
+					std::is_same<Combiner, VectorCombiner<typename std::function<Signature>::result_type>>::value,
+					std::vector<typename std::function<Signature>::result_type>,
+					typename std::function<Signature>::result_type>::type;
 
 		Combiner combiner;
 		std::vector<std::function<Signature>> functions;
@@ -82,7 +84,7 @@ namespace sig {
 					combiner.combine(functions[i](args...));
 				}
 			}
-			if (std::is_same<result_type, void>::value) {
+			if constexpr (!std::is_same<result_type, void>::value) {
 				return combiner.result();
 			}
 		}
