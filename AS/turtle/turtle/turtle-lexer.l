@@ -24,7 +24,7 @@ DOWN  "down"|"Down"
 
 %%
 
-{COLOR}		{ printf("Color : %s\n",yytext); }	
+{COLOR}		{ return KW_COLOR; }
 
 {FORWARD}		{ return KW_FORWARD; }
  
