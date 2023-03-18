@@ -128,9 +128,9 @@ void foward (const struct ast_node* node, struct context* ctx) {
 	if (!ctx->up) {
 		printf("LineTo %f %f\n", ctx->x + dx,ctx->y + dy );
 	} else {
-		printf("MoveTo %f %f\n", ctx->x, ctx->y);
+		printf("MoveTo %f %f\n", ctx->y + dy, ctx->x - dx);
 	}
-	ctx->x += dx;
+	ctx->x -= dx;
 	ctx->y += dy;
 }
 
