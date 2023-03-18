@@ -11,7 +11,7 @@
 
 COLOR_DIGIT	[0](\.[0-9]+)?|1(\.[0]+)?
 COLOR_CHOICE	({COLOR_DIGIT}", "{COLOR_DIGIT}", "{COLOR_DIGIT})|blue|red|green
-COLOR	"color "{COLOR_CHOICE}
+COLOR	"color"
 
 
 DIGIT	[0-9]
@@ -33,6 +33,8 @@ DOWN  "down"|"Down"
 {UP}		{ return KW_UP; }
 
 {DOWN}		{ return KW_DOWN; }
+
+{COLOR_CHOICE}			{ yylval.color = yytext; return COLOR; }
 
 {DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
 

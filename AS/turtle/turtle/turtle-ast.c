@@ -16,6 +16,13 @@ struct ast_node *make_expr_value(double value) {
 	return node;
 }
 
+struct ast_node *make_expr_color(char*	color) {
+	struct ast_node *node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_EXPR_VALUE;
+	node->u.name = color;
+	return node;
+}
+
 struct ast_node *make_cmd_forbackward(bool choice,struct ast_node *expr) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_CMD_SIMPLE;
@@ -25,14 +32,22 @@ struct ast_node *make_cmd_forbackward(bool choice,struct ast_node *expr) {
 	return node;
 }
 
-struct ast_node *make_cmd_color(struct ast_node *expr1,struct ast_node *expr2,struct ast_node *expr3) {
+struct ast_node *make_cmd_color(struct ast_node *expr) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));
+	struct ast_node *r = calloc(1, sizeof(struct ast_node));
+	struct ast_node *g = calloc(1, sizeof(struct ast_node));
+	struct ast_node *b = calloc(1, sizeof(struct ast_node));
+
 	node->kind = KIND_CMD_SIMPLE;
 	node->u.cmd = CMD_COLOR;
 	node->children_count = 3;
-	node->children[0] = expr1;
-	node->children[1] = expr2;
-	node->children[2] = expr3;
+	if (strcmp(node->u.name,"red") == 0) { r->u.value = 1.0; }
+	else if (strcmp(node->u.name,"green") == 0) { g->u.value = 1.0; }
+	else if (strcmp(node->u.name,"blue") == 0) { b->u.value = 1.0; }
+
+	node->children[0] = r;
+	node->children[1] = g;
+	node->children[2] = b;
 	return node;
 }
 
@@ -98,7 +113,6 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 				backward(node, ctx);
 				break;
 			case CMD_COLOR:
-				color(node, ctx);
 				break;
 		}
 	}
@@ -112,12 +126,20 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
  * print
  */
 
-void ast_print(const struct ast *self) {
-	printf(":)\n");
+void ast_node_print(const struct ast_node *node) {
+	if (node->kind == KIND_CMD_SIMPLE) {
+		printf("kind : %d\n",node->kind);
+	}else if (node->kind == KIND_EXPR_VALUE) {
+		printf("value : %f\n",node->u.value);
+	}
+
+	if (node->next != NULL) {
+		ast_node_print(node->next);
+	}
 }
 
-void color (const struct ast_node* node, struct context* ctx) {
-	printf("Color %f\n", node->children[0]->u.value );
+void ast_print(const struct ast *self) {
+	ast_node_print(self->unit);
 }
 
 void foward (const struct ast_node* node, struct context* ctx) {

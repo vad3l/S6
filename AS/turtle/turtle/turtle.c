@@ -23,9 +23,9 @@ int main() {
 	struct context ctx;
 	context_create(&ctx);
 
-	ast_eval(&root, &ctx);
 	ast_print(&root);
-
+	ast_eval(&root, &ctx);
+	
 	ast_destroy(&root);
 
 	return ret;

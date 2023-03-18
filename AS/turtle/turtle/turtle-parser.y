@@ -18,11 +18,13 @@ void yyerror(struct ast *ret, const char *);
 %union {
 	double value;
 	char *name;
+	char *color;
 	struct ast_node *node;
 }
 
 %token <value>		VALUE		"value"
 %token <name>		 NAME		"name"
+%token <color>		COLOR		"color"
 %token		KW_COLOR		"Color"
 %token		KW_FORWARD		"forward"
 %token		KW_BACKWARD		"backward"
@@ -51,14 +53,14 @@ cmd:
 	|	KW_BACKWARD expr	{$$ = make_cmd_forbackward(false,$2);}
 	|	KW_RIGHT expr	{$$ = make_cmd_rotate(false,$2);}
 	|	KW_LEFT	expr	{$$ = make_cmd_rotate(true,$2);}
-	|	KW_COLOR expr {}
+	|	KW_COLOR expr { $$ = make_cmd_color($2); }
 	|	KW_UP	{}
 	|	KW_DOWN	{}
 ;
 
 expr:
 		VALUE		{ $$ = make_expr_value($1); }
-		/* TODO: add identifier */
+	|	COLOR		{ $$ = make_expr_color($1); }
 ;
 
 %%
