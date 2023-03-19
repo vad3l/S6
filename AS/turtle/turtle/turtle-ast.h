@@ -70,7 +70,7 @@ void ast_node_destroy (struct ast_node* self);
 struct ast_node *make_expr_value(double value);
 struct ast_node *make_cmd_rotate(bool left,struct ast_node *expr);
 struct ast_node *make_cmd_forbackward(bool choice, struct ast_node *expr);
-struct ast_node *make_cmd_color(struct ast_node *expr1);
+struct ast_node *make_cmd_color(struct ast_node *expr);
 
 // root of the abstract syntax tree
 struct ast {

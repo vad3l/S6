@@ -18,14 +18,12 @@ void yyerror(struct ast *ret, const char *);
 %union {
 	double value;
 	char *name;
-	char *color;
 	struct ast_node *node;
 }
 
 %token <value>		VALUE		"value"
 %token <name>		 NAME		"name"
-%token <color>		COLOR		"color"
-%token		KW_COLOR		"Color"
+%token		KW_COLOR		"color"
 %token		KW_FORWARD		"forward"
 %token		KW_BACKWARD		"backward"
 %token		KW_LEFT		"DirectionLeft"
@@ -60,7 +58,6 @@ cmd:
 
 expr:
 		VALUE		{ $$ = make_expr_value($1); }
-	|	COLOR		{ $$ = make_expr_color($1); }
 ;
 
 %%

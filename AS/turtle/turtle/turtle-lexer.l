@@ -10,7 +10,7 @@
 %option warn 8bit nodefault noyywrap
 
 COLOR_DIGIT	[0](\.[0-9]+)?|1(\.[0]+)?
-COLOR_CHOICE	({COLOR_DIGIT}", "{COLOR_DIGIT}", "{COLOR_DIGIT})|blue|red|green
+COLOR_CHOICE	({COLOR_DIGIT}", "{COLOR_DIGIT}", "{COLOR_DIGIT})|blue|red|green|cyan|magenta|yellow|black|gray|white
 COLOR	"color"
 
 
@@ -34,7 +34,7 @@ DOWN  "down"|"Down"
 
 {DOWN}		{ return KW_DOWN; }
 
-{COLOR_CHOICE}			{ yylval.color = yytext; return COLOR; }
+{COLOR_CHOICE}			{ yylval.name = yytext; return VALUE; }
 
 {DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
 
