@@ -9,6 +9,10 @@
 
 #define PI 3.141592653589793
 
+/*
+ *	EXPR
+ */
+
 struct ast_node *make_expr_value(double value) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_EXPR_VALUE;
@@ -16,14 +20,9 @@ struct ast_node *make_expr_value(double value) {
 	return node;
 }
 
-struct ast_node *make_expr_color(char*	color) {
-	printf("expr : %s\n",color);
-	struct ast_node *node = calloc(1, sizeof(struct ast_node));
-	node->u.name = calloc(1,sizeof(char)*(strlen(color)+1));
-	node->kind = KIND_EXPR_NAME;
-	strcpy(node->u.name,color);
-	return node;
-}
+/*
+ *	CMD
+ */
 
 struct ast_node *make_cmd_forbackward(bool choice,struct ast_node *expr) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));
@@ -117,10 +116,10 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 				ctx->angle += node->children[0]->u.value;
 				break;
 			case CMD_FORWARD:
-				foward(node, ctx);
+				walk(true, node, ctx);
 				break;
 			case CMD_BACKWARD:
-				backward(node, ctx);
+				walk(false, node, ctx);
 				break;
 			case CMD_COLOR:
 				printf("Color %f %f %f\n",node->children[0]->u.value,node->children[1]->u.value,node->children[2]->u.value);
@@ -133,19 +132,8 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 	}
 }
 
-/*
- * print
- */
-
-void ast_node_print(const struct ast_node *node) {
-}
-
-void ast_print(const struct ast *self) {
-	ast_node_print(self->unit);
-}
-
-void foward (const struct ast_node* node, struct context* ctx) {
-	double dist = node->children[0]->u.value;
+void walk (bool forward,const struct ast_node* node, struct context* ctx) {
+	double dist = (forward ? node->children[0]->u.value : -node->children[0]->u.value);
 	double angle = ctx->angle * (PI/180.0);
 	double dx = dist * cos(angle);
 	double dy = dist * sin(angle);
@@ -158,17 +146,9 @@ void foward (const struct ast_node* node, struct context* ctx) {
 	ctx->y += dy;
 }
 
-void backward(const struct ast_node* node, struct context* ctx) {
-	double dist = node->children[0]->u.value;
-	double angle = ctx->angle * (PI / 180.0);
-	double dx = -dist * cos(angle);
-	double dy = -dist * sin(angle);
-	if (!ctx->up) {
-		printf("LineTo %f %f\n", ctx->x + dx, ctx->y + dy);
-	}
-	else {
-		printf("MoveTo %f %f\n", ctx->x, ctx->y);
-	}
-	ctx->x += dx;
-	ctx->y += dy;
+/*
+ * print
+ */
+
+void ast_print(const struct ast *self) {
 }

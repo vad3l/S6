@@ -96,15 +96,13 @@ void context_create(struct context *self);
 
 // print the tree as if it was a Turtle program
 void ast_print(const struct ast *self);
-void ast_node_print(const struct ast_node *node);
 
 // evaluate the tree and generate some basic primitives
 void ast_eval(const struct ast *self, struct context *ctx);
 void ast_node_eval (const struct ast_node *node, struct context* ctx);
 
 // CMD
-void foward (const struct ast_node* n, struct context* ctx);
-void backward (const struct ast_node* n, struct context* ctx);
+void walk (bool forward,const struct ast_node* n, struct context* ctx);
 void rotate (bool left,const struct ast_node* n, struct context* ctx);
 
 #endif /* TURTLE_AST_H */
