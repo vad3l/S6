@@ -72,6 +72,7 @@ struct ast_node *make_cmd_rotate(bool left,struct ast_node *expr);
 struct ast_node *make_cmd_forbackward(bool choice, struct ast_node *expr);
 struct ast_node *make_cmd_color(double r,double g,double b);
 struct ast_node *make_cmd_color_rgb(struct ast_node *r,struct ast_node *g,struct ast_node *b);
+struct ast_node *make_cmd_pencilLead(bool up);
 
 // root of the abstract syntax tree
 struct ast {
