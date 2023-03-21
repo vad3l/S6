@@ -24,7 +24,7 @@ struct ast_node *make_expr_value(double value) {
 struct ast_node* make_expr_sin (struct ast_node* a) {
 	struct ast_node* node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_EXPR_FUNC;
-	node->u.func = FUNC_RANDOM;
+	node->u.func = FUNC_SIN;
 	node->children_count = 1;
 	node->children[0] = a;
 	return node;
@@ -57,11 +57,7 @@ struct ast_node* make_expr_sqrt (struct ast_node* a) {
 	return node;
 }
 
-/*
- *	CMD
- */
-
-struct ast_node* make_cmd_random (struct ast_node* a, struct ast_node* b) {
+struct ast_node* make_expr_random (struct ast_node* a, struct ast_node* b) {
 	struct ast_node* node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_EXPR_FUNC;
 	node->u.func = FUNC_RANDOM;
@@ -70,6 +66,10 @@ struct ast_node* make_cmd_random (struct ast_node* a, struct ast_node* b) {
 	node->children[1] = b;
 	return node;
 }
+
+/*
+ *	CMD
+ */
 
 struct ast_node *make_cmd_forbackward(bool choice,struct ast_node *expr) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));

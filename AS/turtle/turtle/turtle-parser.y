@@ -94,7 +94,7 @@ expr:
 	|	KW_SIN	'(' expr ')'	{ $$ = make_expr_sin($3); }
 	|	KW_TAN	'(' expr ')'	{ $$ = make_expr_tan($3); }
 	|	KW_SQRT	'(' expr ')'	{ $$ = make_expr_sqrt($3); }
-	|	KW_RANDOM '(' expr ',' expr ')' { $$ = make_cmd_random($3, $5); }
+	|	KW_RANDOM '(' expr ',' expr ')'	{ $$ = make_expr_random($3, $5); }
 ;
 
 %%
