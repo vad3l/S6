@@ -111,6 +111,9 @@ void ast_node_eval (const struct ast_node *node, struct context* ctx);
 double ast_node_eval_return (const struct ast_node* n, struct context* ctx);
 
 // CMD
+void position (const struct ast_node* n, struct context* ctx);
+void color (const struct ast_node* n, struct context* ctx);
+double random (const struct ast_node* n, struct context* ctx);
 void walk (bool forward,const struct ast_node* n, struct context* ctx);
 void rotate (bool left,const struct ast_node* n, struct context* ctx);
 void heading(struct context* ctx, int angle);

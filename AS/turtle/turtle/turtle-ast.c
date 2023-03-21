@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <limits.h>
 
 #define PI 3.141592653589793
 
@@ -210,9 +211,15 @@ double ast_node_eval_return (const struct ast_node* n, struct context* ctx) {
 	if (n->kind == KIND_EXPR_FUNC) {
 		switch (n->u.func) {
 			case FUNC_RANDOM:
-				return 0.5;
+				return random(n, ctx);
 		}
 	}
+}
+
+double random (const struct ast_node* n, struct context* ctx) {
+	double min = ast_node_eval_return(n->children[0], ctx);
+	double max = ast_node_eval_return(n->children[1], ctx);
+	return (((double)rand() / INT_MAX) * (max - min)) + min;
 }
 
 void position (const struct ast_node* n, struct context* ctx) {
