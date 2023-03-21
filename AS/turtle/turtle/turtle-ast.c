@@ -214,12 +214,15 @@ double ast_node_eval_return (const struct ast_node* n, struct context* ctx) {
 				return random(n, ctx);
 		}
 	}
+
+	return 0.0;
 }
 
 double random (const struct ast_node* n, struct context* ctx) {
 	double min = ast_node_eval_return(n->children[0], ctx);
 	double max = ast_node_eval_return(n->children[1], ctx);
-	return (((double)rand() / INT_MAX) * (max - min)) + min;
+	double value = (((double)rand() / INT_MAX) * (max - min)) + min;
+	return value;
 }
 
 void position (const struct ast_node* n, struct context* ctx) {
@@ -244,7 +247,8 @@ void color (const struct ast_node* n, struct context* ctx) {
 }
 
 void walk (bool forward,const struct ast_node* node, struct context* ctx) {
-	double dist = (forward ? node->children[0]->u.value : -node->children[0]->u.value);
+	double value = ast_node_eval_return(node->children[0], ctx);
+	double dist = (forward ? value : -value);
 	double angle = ctx->angle * (PI/180.0);
 	double dx = dist * cos(angle);
 	double dy = dist * sin(angle);

@@ -66,8 +66,7 @@ cmds:
 ;
 
 cmd:
-		KW_RANDOM '('expr ',' expr ')' { $$ = make_cmd_random($3, $5); }
-	|	KW_COLOR_BLUE	{ $$ = make_cmd_color(0.0 ,0.0 ,1.0); }
+		KW_COLOR_BLUE	{ $$ = make_cmd_color(0.0 ,0.0 ,1.0); }
 	|	KW_COLOR_RED	{ $$ = make_cmd_color(1.0 ,0.0 ,0.0); }
 	|	KW_COLOR_GREEN	{ $$ = make_cmd_color(0.0 ,1.0 ,0.0); }
 	|	KW_COLOR_CYAN	{ $$ = make_cmd_color(0.0 ,1.0 ,1.0); }
@@ -87,14 +86,15 @@ cmd:
 	|	KW_REPEAT	{}
 	|	KW_HOME	{ $$ = make_cmd_home(); }
 	|	KW_HEADING expr	{ $$ = make_cmd_heading($2); }
-	|	KW_COS	'(' expr ')'	{}
-	|	KW_SIN	'(' expr ')'	{}
-	|	KW_TAN	'(' expr ')'	{}
-	|	KW_SQRT	'(' expr ')'	{}
 ;
 
 expr:
 		VALUE		{ $$ = make_expr_value($1); }
+	|	KW_COS	'(' expr ')'	{}
+	|	KW_SIN	'(' expr ')'	{}
+	|	KW_TAN	'(' expr ')'	{}
+	|	KW_SQRT	'(' expr ')'	{}
+	|	KW_RANDOM '(' expr ',' expr ')' { $$ = make_cmd_random($3, $5); }
 ;
 
 %%

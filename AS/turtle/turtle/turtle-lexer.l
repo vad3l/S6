@@ -23,7 +23,7 @@ COLOR_DIGIT	[0](\.[0-9]+)?|1(\.[0]+)?
 COLOR	"color"
 
 
-DIGIT	-?[0-9]
+DIGIT	[0-9]+(.[0-9]+)?
 FORWARD	"forward"|"fw"
 BACKWARD	"backward"|"bw"
 LEFT	"left"|"lt"
