@@ -70,9 +70,12 @@ void ast_node_destroy (struct ast_node* self);
 struct ast_node *make_expr_value(double value);
 struct ast_node *make_cmd_rotate(bool left,struct ast_node *expr);
 struct ast_node *make_cmd_forbackward(bool choice, struct ast_node *expr);
-struct ast_node *make_cmd_color(struct ast_node *expr);
+
 struct ast_node* make_cmd_random (struct ast_node* a, struct ast_node* b);
-	
+struct ast_node *make_cmd_color(double r,double g,double b);
+struct ast_node *make_cmd_color_rgb(struct ast_node *r,struct ast_node *g,struct ast_node *b);
+struct ast_node *make_cmd_pencilLead(bool up);
+
 // root of the abstract syntax tree
 struct ast {
 	struct ast_node *unit;
