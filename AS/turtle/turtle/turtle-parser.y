@@ -30,6 +30,7 @@ void yyerror(struct ast *ret, const char *);
 %token		KW_RIGHT		"DirectionRight"
 %token		KW_UP		"up"
 %token		KW_DOWN		"down"
+%token		KW_RANDOM	"random"
 
 /* TODO: add other tokens */
 
@@ -51,6 +52,7 @@ cmd:
 	|	KW_BACKWARD expr	{$$ = make_cmd_forbackward(false,$2);}
 	|	KW_RIGHT expr	{$$ = make_cmd_rotate(false,$2);}
 	|	KW_LEFT	expr	{$$ = make_cmd_rotate(true,$2);}
+	|	KW_RANDOM '(' expr ',' expr ')' { $$ = make_cmd_random($3, $5); }
 	|	KW_COLOR expr { $$ = make_cmd_color($2); }
 	|	KW_UP	{}
 	|	KW_DOWN	{}

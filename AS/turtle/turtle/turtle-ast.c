@@ -24,6 +24,15 @@ struct ast_node *make_expr_value(double value) {
  *	CMD
  */
 
+struct ast_node* make_cmd_random (struct ast_node* a, struct ast_node* b) {
+	struct ast_node* node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_EXPR_FUNC;
+	node->u.func = FUNC_RANDOM;
+	node->children_count = 2;
+	node->children[0] = a;
+	node->children[1] = b;
+}
+
 struct ast_node *make_cmd_forbackward(bool choice,struct ast_node *expr) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_CMD_SIMPLE;
@@ -125,6 +134,8 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 				printf("Color %f %f %f\n",node->children[0]->u.value,node->children[1]->u.value,node->children[2]->u.value);
 				break;
 		}
+	} else if (node->kind == KIND_EXPR_FUNC) {
+
 	}
 
 	if (node->next != NULL) {

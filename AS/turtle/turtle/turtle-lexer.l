@@ -24,6 +24,8 @@ DOWN  "down"|"Down"
 
 %%
 
+"random"	{ return KW_RANDOM; }
+
 {COLOR}		{ return KW_COLOR; }
 
 {FORWARD}		{ return KW_FORWARD; }

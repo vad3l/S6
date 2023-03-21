@@ -2,6 +2,7 @@
 #define SIGNAL_H
 
 #include <vector>
+#include <map>
 #include <functional>
 #include <type_traits>
 
@@ -52,30 +53,36 @@ namespace sig {
 	};
 
 	template<typename Signature, typename Combiner = DiscardCombiner>
-	class Signal {
+	class Signal;
+
+	template<typename R, typename... Args, typename Combiner>
+	class Signal<R(Args...), Combiner> {
 	public:
 		using combiner_type = Combiner;
 		using result_type = typename std::conditional<
-					std::is_same<Combiner, VectorCombiner<typename std::function<Signature>::result_type>>::value,
-					std::vector<typename std::function<Signature>::result_type>,
-					typename std::function<Signature>::result_type>::type;
+					std::is_same<Combiner, VectorCombiner<typename std::function<R(Args...)>::result_type>>::value,
+					std::vector<typename std::function<R(Args...)>::result_type>,
+					typename std::function<R(Args...)>::result_type>::type;
 
 		Combiner combiner;
-		std::vector<std::function<Signature>> functions;
+		std::map<int, std::function<R(Args...)>> functions;
+		int count = 0;
+
 		Signal(Combiner c = Combiner()) {
 			combiner = c;
 		}
 
-		std::size_t connectSlot(std::function<Signature> callback) {
-			functions.push_back(callback);
-			return functions.size() - 1;
+		std::size_t connectSlot(std::function<R(Args...)> callback) {
+			functions[count] = callback;
+			int save = count;
+			count++;
+			return save;
 		}
 
 		void disconnectSlot(std::size_t id) {
-			functions.erase(functions.begin() + id);
+			functions.erase(id);
 		}
 
-		template<typename... Args>
 		result_type emitSignal(Args... args) {
 			for (size_t i = 0; i < functions.size(); i++) {
 				if constexpr (std::is_same<result_type, void>::value) {
