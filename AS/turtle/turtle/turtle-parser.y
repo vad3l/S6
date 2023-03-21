@@ -90,10 +90,10 @@ cmd:
 
 expr:
 		VALUE		{ $$ = make_expr_value($1); }
-	|	KW_COS	'(' expr ')'	{}
-	|	KW_SIN	'(' expr ')'	{}
-	|	KW_TAN	'(' expr ')'	{}
-	|	KW_SQRT	'(' expr ')'	{}
+	|	KW_COS	'(' expr ')'	{ $$ = make_expr_cos($3); }
+	|	KW_SIN	'(' expr ')'	{ $$ = make_expr_sin($3); }
+	|	KW_TAN	'(' expr ')'	{ $$ = make_expr_tan($3); }
+	|	KW_SQRT	'(' expr ')'	{ $$ = make_expr_sqrt($3); }
 	|	KW_RANDOM '(' expr ',' expr ')' { $$ = make_cmd_random($3, $5); }
 ;
 

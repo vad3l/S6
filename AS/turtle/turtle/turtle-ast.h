@@ -68,9 +68,13 @@ void ast_node_destroy (struct ast_node* self);
 // TODO: make some constructors to use in parser.y
 // for example:
 struct ast_node *make_expr_value(double value);
+struct ast_node* make_expr_sin (struct ast_node* a);
+struct ast_node* make_expr_cos (struct ast_node* a);
+struct ast_node* make_expr_tan (struct ast_node* a);
+struct ast_node* make_expr_sqrt (struct ast_node* a);
+
 struct ast_node *make_cmd_rotate(bool left,struct ast_node *expr);
 struct ast_node *make_cmd_forbackward(bool choice, struct ast_node *expr);
-
 struct ast_node* make_cmd_random (struct ast_node* a, struct ast_node* b);
 struct ast_node *make_cmd_color(double r,double g,double b);
 struct ast_node *make_cmd_color_rgb(struct ast_node *r,struct ast_node *g,struct ast_node *b);
@@ -78,6 +82,7 @@ struct ast_node *make_cmd_pencilLead(bool up);
 struct ast_node *make_cmd_position(struct ast_node *expr,struct ast_node *expr1);
 struct ast_node *make_cmd_home();
 struct ast_node *make_cmd_heading(struct ast_node *expr);
+
 
 // root of the abstract syntax tree
 struct ast {
@@ -114,6 +119,11 @@ double ast_node_eval_return (const struct ast_node* n, struct context* ctx);
 void position (const struct ast_node* n, struct context* ctx);
 void color (const struct ast_node* n, struct context* ctx);
 double random (const struct ast_node* n, struct context* ctx);
+double fsin (const struct ast_node* n, struct context* ctx);
+double fcos (const struct ast_node* n, struct context* ctx); 
+double ftan (const struct ast_node* n, struct context* ctx);
+double fsqrt (const struct ast_node* n, struct context* ctx);
+
 void walk (bool forward,const struct ast_node* n, struct context* ctx);
 void rotate (bool left,const struct ast_node* n, struct context* ctx);
 void heading(struct context* ctx, int angle);

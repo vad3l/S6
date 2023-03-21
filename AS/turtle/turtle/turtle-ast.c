@@ -21,6 +21,42 @@ struct ast_node *make_expr_value(double value) {
 	return node;
 }
 
+struct ast_node* make_expr_sin (struct ast_node* a) {
+	struct ast_node* node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_EXPR_FUNC;
+	node->u.func = FUNC_RANDOM;
+	node->children_count = 1;
+	node->children[0] = a;
+	return node;
+}
+
+struct ast_node* make_expr_cos (struct ast_node* a) {
+	struct ast_node* node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_EXPR_FUNC;
+	node->u.func = FUNC_COS;
+	node->children_count = 1;
+	node->children[0] = a;
+	return node;
+}
+
+struct ast_node* make_expr_tan (struct ast_node* a) {
+	struct ast_node* node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_EXPR_FUNC;
+	node->u.func = FUNC_TAN;
+	node->children_count = 1;
+	node->children[0] = a;
+	return node;
+}
+
+struct ast_node* make_expr_sqrt (struct ast_node* a) {
+	struct ast_node* node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_EXPR_FUNC;
+	node->u.func = FUNC_SQRT;
+	node->children_count = 1;
+	node->children[0] = a;
+	return node;
+}
+
 /*
  *	CMD
  */
@@ -212,6 +248,14 @@ double ast_node_eval_return (const struct ast_node* n, struct context* ctx) {
 		switch (n->u.func) {
 			case FUNC_RANDOM:
 				return random(n, ctx);
+			case FUNC_SIN:
+				return fsin(n, ctx);
+			case FUNC_COS:
+				return fcos(n, ctx);
+			case FUNC_TAN:
+				return ftan(n, ctx);
+			case FUNC_SQRT:
+				return fsqrt(n, ctx);
 		}
 	}
 
@@ -224,6 +268,20 @@ double random (const struct ast_node* n, struct context* ctx) {
 	double value = (((double)rand() / INT_MAX) * (max - min)) + min;
 	return value;
 }
+
+double fsin (const struct ast_node* n, struct context* ctx) {
+	return sin(ast_node_eval_return(n->children[0], ctx));
+}
+double fcos (const struct ast_node* n, struct context* ctx) {
+	return cos(ast_node_eval_return(n->children[0], ctx));
+}
+double ftan (const struct ast_node* n, struct context* ctx) {
+	return tan(ast_node_eval_return(n->children[0], ctx));
+}
+double fsqrt (const struct ast_node* n, struct context* ctx) {
+	return sqrt(ast_node_eval_return(n->children[0], ctx));
+}
+
 
 void position (const struct ast_node* n, struct context* ctx) {
 	if (!ctx->up) {
