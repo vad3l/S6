@@ -45,29 +45,16 @@ REPEAT	"repeat"
 {COLOR_WHITE}	{ return KW_COLOR_WHITE; }
 
 "random"	{ return KW_RANDOM; }
-
 ","		{ return ','; }
-
 {COLOR}		{ return KW_COLOR; }
-
 {REPEAT}		{ return KW_REPEAT; }
-
 {FORWARD}		{ return KW_FORWARD; }
- 
 {BACKWARD}		{ return KW_BACKWARD; }
-
 {UP}		{ return KW_UP; }
-
 {DOWN}		{ return KW_DOWN; }
-
 {DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
-
-
 {COLOR_DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
-
-
 {LEFT}		{ return KW_LEFT; }
-
 {RIGHT}		{ return KW_RIGHT; }
 
 [\n\t ]*		/* whitespace */

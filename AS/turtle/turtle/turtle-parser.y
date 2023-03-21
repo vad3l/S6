@@ -59,10 +59,8 @@ cmds:
 ;
 
 cmd:
-	|	KW_RANDOM '(' expr ',' expr ')' { $$ = make_cmd_random($3, $5); }
-	|	KW_UP	{}
-	|	KW_DOWN	{}
-		KW_COLOR_BLUE	{ $$ = make_cmd_color(0.0 ,0.0 ,1.0); }
+		KW_RANDOM '(' expr ',' expr ')' { $$ = make_expr_random($3, $5); }
+	|	KW_COLOR_BLUE	{ $$ = make_cmd_color(0.0 ,0.0 ,1.0); }
 	|	KW_COLOR_RED	{ $$ = make_cmd_color(1.0 ,0.0 ,0.0); }
 	|	KW_COLOR_GREEN	{ $$ = make_cmd_color(0.0 ,1.0 ,0.0); }
 	|	KW_COLOR_CYAN	{ $$ = make_cmd_color(0.0 ,1.0 ,1.0); }
