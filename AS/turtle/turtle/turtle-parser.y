@@ -32,6 +32,7 @@ void yyerror(struct ast *ret, const char *);
 %token		KW_UP		"up"
 %token		KW_DOWN		"down"
 %token		KW_RANDOM	"random"
+%token		KW_POSITION	"position"
 
 %token		KW_COLOR_BLUE	"blue"
 %token		KW_COLOR_RED	"red"
@@ -59,10 +60,8 @@ cmds:
 ;
 
 cmd:
-	|	KW_RANDOM '(' expr ',' expr ')' { $$ = make_cmd_random($3, $5); }
-	|	KW_UP	{}
-	|	KW_DOWN	{}
-		KW_COLOR_BLUE	{ $$ = make_cmd_color(0.0 ,0.0 ,1.0); }
+		KW_RANDOM '(' expr ',' expr ')' { $$ = make_cmd_random($3, $5); }
+	|	KW_COLOR_BLUE	{ $$ = make_cmd_color(0.0 ,0.0 ,1.0); }
 	|	KW_COLOR_RED	{ $$ = make_cmd_color(1.0 ,0.0 ,0.0); }
 	|	KW_COLOR_GREEN	{ $$ = make_cmd_color(0.0 ,1.0 ,0.0); }
 	|	KW_COLOR_CYAN	{ $$ = make_cmd_color(0.0 ,1.0 ,1.0); }
@@ -78,6 +77,7 @@ cmd:
 	|	KW_LEFT	expr	{$$ = make_cmd_rotate(true,$2); }
 	|	KW_UP	{ $$ = make_cmd_pencilLead(true); }
 	|	KW_DOWN	{ $$ = make_cmd_pencilLead(false); }
+	|	KW_POSITION	expr ',' expr { $$ = make_cmd_position($2,$4); }
 	|	KW_REPEAT	{}
 ;
 

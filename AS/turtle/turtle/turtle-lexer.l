@@ -23,7 +23,7 @@ COLOR_DIGIT	[0](\.[0-9]+)?|1(\.[0]+)?
 COLOR	"color"
 
 
-DIGIT	[0-9]
+DIGIT	-?[0-9]
 FORWARD	"forward"|"fw"
 BACKWARD	"backward"|"bw"
 LEFT	"left"
@@ -31,6 +31,7 @@ RIGHT	"right"
 UP	"up"|"Up"
 DOWN  "down"|"Down"
 REPEAT	"repeat"
+POSITION	"position" 
 
 %%
 
@@ -50,6 +51,8 @@ REPEAT	"repeat"
 
 {COLOR}		{ return KW_COLOR; }
 
+{POSITION}		{ return KW_POSITION; }
+
 {REPEAT}		{ return KW_REPEAT; }
 
 {FORWARD}		{ return KW_FORWARD; }
@@ -62,9 +65,7 @@ REPEAT	"repeat"
 
 {DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
 
-
 {COLOR_DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
-
 
 {LEFT}		{ return KW_LEFT; }
 

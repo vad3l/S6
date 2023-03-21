@@ -93,6 +93,16 @@ struct ast_node *make_cmd_rotate(bool left,struct ast_node *expr) {
 	return node;
 }
 
+struct ast_node *make_cmd_position(struct ast_node *expr,struct ast_node *expr1) {
+	struct ast_node *node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_CMD_SIMPLE;
+	node->u.cmd = CMD_POSITION;
+	node->children_count = 2;
+	node->children[0] = expr;
+	node->children[1] = expr1;
+	return node;
+}
+
 void ast_node_destroy (struct ast_node* self) {
 	if (self == NULL){return ;}
 	for (size_t i = 0; i < self->children_count; i++) {
@@ -154,6 +164,10 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 			case CMD_COLOR:
 				printf("Color %f %f %f\n",node->children[0]->u.value,node->children[1]->u.value,node->children[2]->u.value);
 				break;
+			case CMD_POSITION:
+				char *word = (!ctx->up ? "LineTo": "MoveTo") ;
+				printf("%s %f %f\n",word, node->children[0]->u.value,node->children[1]->u.value );
+				ctx->x += node->children[0]->u.value; ctx->y += node->children[1]->u.value;
 		}
 	} else if (node->kind == KIND_EXPR_FUNC) {
 
@@ -169,13 +183,9 @@ void walk (bool forward,const struct ast_node* node, struct context* ctx) {
 	double angle = ctx->angle * (PI/180.0);
 	double dx = dist * cos(angle);
 	double dy = dist * sin(angle);
-	if (!ctx->up) {
-		printf("LineTo %f %f\n", ctx->x + dx,ctx->y + dy );
-	} else {
-		printf("MoveTo %f %f\n", ctx->x + dx, ctx->y + dy);
-	}
-	ctx->x += dx;
-	ctx->y += dy;
+	char *word = (!ctx->up ? "LineTo": "MoveTo") ;
+	printf("%s %f %f\n",word, ctx->x + dx,ctx->y + dy );
+	ctx->x += dx; ctx->y += dy;
 }
 
 /*
