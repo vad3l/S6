@@ -24,7 +24,7 @@ struct ast_node *make_expr_value(double value) {
  *	CMD
  */
 
-struct ast_node* make_cmd_random (struct ast_node* a, struct ast_node* b) {
+struct ast_node* make_expr_random (struct ast_node* a, struct ast_node* b) {
 	struct ast_node* node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_EXPR_FUNC;
 	node->u.func = FUNC_RANDOM;
@@ -192,5 +192,32 @@ void walk (bool forward,const struct ast_node* node, struct context* ctx) {
  * print
  */
 
+void ast_node_print (const struct ast_node* n) {
+	switch (n->kind) {
+		case KIND_CMD_SIMPLE:
+			printf("CMD_SIMPLE\n\tcmd : %i\n", n->u.cmd);
+			break;
+		case KIND_EXPR_FUNC:
+			printf("EXPR_FUNC\n\tname : %i\n", n->u.func);
+			break;
+		case KIND_EXPR_VALUE:
+			printf("EXPR_VALUE\n\tvalue : %f\n", n->u.value);
+			break;
+	}
+	if (n->children_count > 0) {
+		printf("(\n");
+	}
+	for (size_t i = 0; i < n->children_count; i++) {
+		ast_node_print(n->children[i]);
+	}
+	if (n->children_count > 0) {
+		printf(")\n");
+	}
+	if (n->next != NULL) {
+		ast_node_print(n->next);
+	}
+}
+
 void ast_print(const struct ast *self) {
+	ast_node_print(self->unit);
 }

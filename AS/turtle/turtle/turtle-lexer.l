@@ -46,29 +46,28 @@ POSITION	"position"
 {COLOR_WHITE}	{ return KW_COLOR_WHITE; }
 
 "random"	{ return KW_RANDOM; }
-
 ","		{ return ','; }
-
 {COLOR}		{ return KW_COLOR; }
+<<<<<<< HEAD
 
 {POSITION}		{ return KW_POSITION; }
 
+=======
+>>>>>>> f655407ab06cf0af87ebf8a64178dc43098c54da
 {REPEAT}		{ return KW_REPEAT; }
-
 {FORWARD}		{ return KW_FORWARD; }
- 
 {BACKWARD}		{ return KW_BACKWARD; }
-
 {UP}		{ return KW_UP; }
-
 {DOWN}		{ return KW_DOWN; }
-
 {DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
+<<<<<<< HEAD
 
 {COLOR_DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
 
+=======
+{COLOR_DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
+>>>>>>> f655407ab06cf0af87ebf8a64178dc43098c54da
 {LEFT}		{ return KW_LEFT; }
-
 {RIGHT}		{ return KW_RIGHT; }
 
 [\n\t ]*		/* whitespace */

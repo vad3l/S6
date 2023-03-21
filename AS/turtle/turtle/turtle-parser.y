@@ -60,7 +60,11 @@ cmds:
 ;
 
 cmd:
+<<<<<<< HEAD
 		KW_RANDOM '(' expr ',' expr ')' { $$ = make_cmd_random($3, $5); }
+=======
+		KW_RANDOM '(' expr ',' expr ')' { $$ = make_expr_random($3, $5); }
+>>>>>>> f655407ab06cf0af87ebf8a64178dc43098c54da
 	|	KW_COLOR_BLUE	{ $$ = make_cmd_color(0.0 ,0.0 ,1.0); }
 	|	KW_COLOR_RED	{ $$ = make_cmd_color(1.0 ,0.0 ,0.0); }
 	|	KW_COLOR_GREEN	{ $$ = make_cmd_color(0.0 ,1.0 ,0.0); }
