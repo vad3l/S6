@@ -23,6 +23,7 @@ void yyerror(struct ast *ret, const char *);
 
 %token <value>		VALUE		"value"
 %token <name>		 NAME		"name"
+%token		KW_REPEAT		"repeat"
 %token		KW_COLOR		"color"
 %token		KW_FORWARD		"forward"
 %token		KW_BACKWARD		"backward"
@@ -30,6 +31,16 @@ void yyerror(struct ast *ret, const char *);
 %token		KW_RIGHT		"DirectionRight"
 %token		KW_UP		"up"
 %token		KW_DOWN		"down"
+
+%token		KW_COLOR_BLUE	"blue"
+%token		KW_COLOR_RED	"red"
+%token		KW_COLOR_GREEN	"green"
+%token		KW_COLOR_CYAN	"cyan"
+%token		KW_COLOR_MAGENTA	"magenta"
+%token		KW_COLOR_YELLOW	"yellow"
+%token		KW_COLOR_BLACK	"black"
+%token		KW_COLOR_GRAY	"gray"
+%token		KW_COLOR_WHITE	"white"
 
 /* TODO: add other tokens */
 
@@ -47,13 +58,23 @@ cmds:
 ;
 
 cmd:
-		KW_FORWARD expr	{ $$ = make_cmd_forbackward(true,$2); }
-	|	KW_BACKWARD expr	{$$ = make_cmd_forbackward(false,$2);}
-	|	KW_RIGHT expr	{$$ = make_cmd_rotate(false,$2);}
-	|	KW_LEFT	expr	{$$ = make_cmd_rotate(true,$2);}
-	|	KW_COLOR expr { $$ = make_cmd_color($2); }
-	|	KW_UP	{}
-	|	KW_DOWN	{}
+		KW_COLOR_BLUE	{ $$ = make_cmd_color(0.0 ,0.0 ,1.0); }
+	|	KW_COLOR_RED	{ $$ = make_cmd_color(1.0 ,0.0 ,0.0); }
+	|	KW_COLOR_GREEN	{ $$ = make_cmd_color(0.0 ,1.0 ,0.0); }
+	|	KW_COLOR_CYAN	{ $$ = make_cmd_color(0.0 ,1.0 ,1.0); }
+	|	KW_COLOR_MAGENTA	{ $$ = make_cmd_color(1.0 ,0.0 ,1.0); }
+	|	KW_COLOR_YELLOW	{ $$ = make_cmd_color(1.0 ,1.0 ,0.0); }
+	|	KW_COLOR_BLACK	{ $$ = make_cmd_color(0.0 ,0.0 ,0.0); }
+	|	KW_COLOR_GRAY	{ $$ = make_cmd_color(0.5 ,0.5 ,0.5); }
+	|	KW_COLOR_WHITE	{ $$ = make_cmd_color(1.0 ,1.0 ,1.0); }
+	|	KW_COLOR	expr ',' expr ',' expr	{ $$ = make_cmd_color_rgb($2,$4,$6); }
+	|	KW_FORWARD expr	{ $$ = make_cmd_forbackward(true,$2); }
+	|	KW_BACKWARD expr	{$$ = make_cmd_forbackward(false,$2); }
+	|	KW_RIGHT expr	{$$ = make_cmd_rotate(false,$2); }
+	|	KW_LEFT	expr	{$$ = make_cmd_rotate(true,$2); }
+	|	KW_UP	{ $$ = make_cmd_pencilLead(true); }
+	|	KW_DOWN	{ $$ = make_cmd_pencilLead(false); }
+	|	KW_REPEAT	{}
 ;
 
 expr:

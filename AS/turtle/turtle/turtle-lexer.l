@@ -9,8 +9,17 @@
 
 %option warn 8bit nodefault noyywrap
 
+COLOR_BLUE	"color blue"
+COLOR_RED	"color red"
+COLOR_GREEN	"color green"
+COLOR_CYAN	"color cyan"
+COLOR_MAGENTA	"color magenta"
+COLOR_YELLOW	"color yellow"
+COLOR_BLACK	"color bkack"
+COLOR_GRAY	"color gray"
+COLOR_WHITE	"color white"
+
 COLOR_DIGIT	[0](\.[0-9]+)?|1(\.[0]+)?
-COLOR_CHOICE	({COLOR_DIGIT}", "{COLOR_DIGIT}", "{COLOR_DIGIT})|blue|red|green|cyan|magenta|yellow|black|gray|white
 COLOR	"color"
 
 
@@ -21,10 +30,25 @@ LEFT	"left"
 RIGHT	"right"
 UP	"up"|"Up"
 DOWN  "down"|"Down"
+REPEAT	"repeat"
 
 %%
 
+{COLOR_BLUE}	{return KW_COLOR_BLUE; }
+{COLOR_RED}		{return KW_COLOR_RED; }
+{COLOR_GREEN}	{return KW_COLOR_GREEN; }
+{COLOR_CYAN}	{return KW_COLOR_CYAN; }
+{COLOR_MAGENTA}	{return KW_COLOR_MAGENTA; }
+{COLOR_YELLOW}	{return KW_COLOR_YELLOW; }
+{COLOR_BLACK}	{return KW_COLOR_BLACK; }
+{COLOR_GRAY}	{return KW_COLOR_GRAY; }
+{COLOR_WHITE}	{return KW_COLOR_WHITE; }
+
+","		{ return ','; }
+
 {COLOR}		{ return KW_COLOR; }
+
+{REPEAT}		{ return KW_REPEAT; }
 
 {FORWARD}		{ return KW_FORWARD; }
  
@@ -34,9 +58,11 @@ DOWN  "down"|"Down"
 
 {DOWN}		{ return KW_DOWN; }
 
-{COLOR_CHOICE}			{ yylval.name = yytext; return VALUE; }
-
 {DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
+
+
+{COLOR_DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
+
 
 {LEFT}		{ return KW_LEFT; }
 

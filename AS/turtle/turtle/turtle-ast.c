@@ -33,30 +33,45 @@ struct ast_node *make_cmd_forbackward(bool choice,struct ast_node *expr) {
 	return node;
 }
 
-struct ast_node *make_cmd_color(struct ast_node *expr) {
+struct ast_node *make_cmd_color_rgb(struct ast_node *r,struct ast_node *g,struct ast_node *b) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_CMD_SIMPLE;
 	node->u.cmd = CMD_COLOR;
 	node->children_count = 3;
 
-	struct ast_node *r = calloc(1, sizeof(struct ast_node));
-	struct ast_node *g = calloc(1, sizeof(struct ast_node));
-	struct ast_node *b = calloc(1, sizeof(struct ast_node));
-
-	if (strcmp(expr->u.name,"red") == 0) { r->u.value = 1.0; }
-	else if (strcmp(expr->u.name,"green") == 0) { g->u.value = 1.0; }
-	else if (strcmp(expr->u.name,"blue") == 0) { b->u.value = 1.0; }
-	else if (strcmp(expr->u.name,"cyan") == 0) { g->u.value = 1.0; b->u.value = 1.0; }
-	else if (strcmp(expr->u.name,"magenta") == 0) { r->u.value = 1.0; b->u.value = 1.0; }
-	else if (strcmp(expr->u.name,"yellow") == 0) { r->u.value = 1.0; g->u.value = 1.0; }
-	else if (strcmp(expr->u.name,"black") == 0) { }
-	else if (strcmp(expr->u.name,"gray") == 0) { r->u.value = 0.5; g->u.value = 0.5; b->u.value = 0.5; }
-	else if (strcmp(expr->u.name,"white") == 0) { r->u.value = 1.0; g->u.value = 1.0; b->u.value = 1.0; }
-	else { r->u.value = atof(strtok(expr->u.name, ", ")); g->u.value = atof(strtok(NULL, ", ")); b->u.value = atof(strtok(NULL, ", "));}
 	node->children[0] = r;
 	node->children[1] = g;
 	node->children[2] = b;
 	
+	return node;
+}
+
+struct ast_node *make_cmd_color(double r,double g,double b) {
+	struct ast_node *node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_CMD_SIMPLE;
+	node->u.cmd = CMD_COLOR;
+	node->children_count = 3;
+
+	struct ast_node *noder = calloc(1, sizeof(struct ast_node));
+	struct ast_node *nodeg = calloc(1, sizeof(struct ast_node));
+	struct ast_node *nodeb = calloc(1, sizeof(struct ast_node));
+
+	noder->u.value = r;
+	nodeg->u.value = g;
+	nodeb->u.value = b;
+
+	node->children[0] = noder;
+	node->children[1] = nodeg;
+	node->children[2] = nodeb;
+	
+	return node;
+}
+
+struct ast_node *make_cmd_pencilLead(bool up) {
+	struct ast_node *node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_CMD_SIMPLE;
+	node->children_count = 0;
+	node->u.cmd = ( up ? CMD_UP : CMD_DOWN);
 	return node;
 }
 
@@ -109,6 +124,12 @@ void ast_eval(const struct ast *self, struct context *ctx) {
 void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 	if (node->kind == KIND_CMD_SIMPLE) {
 		switch (node->u.cmd) {
+			case CMD_UP:
+				ctx->up = true;
+				break;
+			case CMD_DOWN:
+				ctx->up = false;
+				break;
 			case CMD_LEFT:
 				ctx->angle -= node->children[0]->u.value;
 				break;
@@ -140,7 +161,7 @@ void walk (bool forward,const struct ast_node* node, struct context* ctx) {
 	if (!ctx->up) {
 		printf("LineTo %f %f\n", ctx->x + dx,ctx->y + dy );
 	} else {
-		printf("MoveTo %f %f\n", ctx->y + dy, ctx->x - dx);
+		printf("MoveTo %f %f\n", ctx->x + dx, ctx->y + dy);
 	}
 	ctx->x += dx;
 	ctx->y += dy;
