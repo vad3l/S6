@@ -71,11 +71,13 @@ struct ast_node *make_expr_value(double value);
 struct ast_node *make_cmd_rotate(bool left,struct ast_node *expr);
 struct ast_node *make_cmd_forbackward(bool choice, struct ast_node *expr);
 
-struct ast_node* make_expr_random (struct ast_node* a, struct ast_node* b);
+struct ast_node* make_cmd_random (struct ast_node* a, struct ast_node* b);
 struct ast_node *make_cmd_color(double r,double g,double b);
 struct ast_node *make_cmd_color_rgb(struct ast_node *r,struct ast_node *g,struct ast_node *b);
 struct ast_node *make_cmd_pencilLead(bool up);
 struct ast_node *make_cmd_position(struct ast_node *expr,struct ast_node *expr1);
+struct ast_node *make_cmd_home();
+struct ast_node *make_cmd_heading(struct ast_node *expr);
 
 // root of the abstract syntax tree
 struct ast {
@@ -110,5 +112,5 @@ void ast_node_eval (const struct ast_node *node, struct context* ctx);
 // CMD
 void walk (bool forward,const struct ast_node* n, struct context* ctx);
 void rotate (bool left,const struct ast_node* n, struct context* ctx);
-
+void heading(struct context* ctx, int angle);
 #endif /* TURTLE_AST_H */

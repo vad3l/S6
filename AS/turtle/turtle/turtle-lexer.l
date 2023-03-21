@@ -26,12 +26,15 @@ COLOR	"color"
 DIGIT	-?[0-9]
 FORWARD	"forward"|"fw"
 BACKWARD	"backward"|"bw"
-LEFT	"left"
-RIGHT	"right"
+LEFT	"left"|"lt"
+RIGHT	"right"|"rt"
+HEADING	"heading"|"hd"
 UP	"up"|"Up"
 DOWN  "down"|"Down"
 REPEAT	"repeat"
 POSITION	"position" 
+RANDOM		"random"
+HOME		"home"
 
 %%
 
@@ -44,31 +47,26 @@ POSITION	"position"
 {COLOR_BLACK}	{ return KW_COLOR_BLACK; }
 {COLOR_GRAY}	{ return KW_COLOR_GRAY; }
 {COLOR_WHITE}	{ return KW_COLOR_WHITE; }
-
-"random"	{ return KW_RANDOM; }
-","		{ return ','; }
 {COLOR}		{ return KW_COLOR; }
-<<<<<<< HEAD
+
+","		{ return ','; }
+"("		{ return '('; }
+")"		{ return ')'; }
 
 {POSITION}		{ return KW_POSITION; }
-
-=======
->>>>>>> f655407ab06cf0af87ebf8a64178dc43098c54da
+{RANDOM}	{ return KW_RANDOM; }
 {REPEAT}		{ return KW_REPEAT; }
 {FORWARD}		{ return KW_FORWARD; }
 {BACKWARD}		{ return KW_BACKWARD; }
 {UP}		{ return KW_UP; }
 {DOWN}		{ return KW_DOWN; }
-{DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
-<<<<<<< HEAD
-
-{COLOR_DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
-
-=======
-{COLOR_DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
->>>>>>> f655407ab06cf0af87ebf8a64178dc43098c54da
 {LEFT}		{ return KW_LEFT; }
 {RIGHT}		{ return KW_RIGHT; }
+{HOME}		{ return KW_HOME; }
+{HEADING}	{	return KW_HEADING; }
+
+{DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
+{COLOR_DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
 
 [\n\t ]*		/* whitespace */
 .		{ fprintf(stderr, "Unknown token: '%s'\n", yytext); exit(EXIT_FAILURE); }

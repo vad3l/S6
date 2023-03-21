@@ -1,7 +1,6 @@
-position -200, 500
 color 1.0, 0.0, 0.9
 fw 100
-right 120
+heading 120
 color green
 fw 100
 right 120
