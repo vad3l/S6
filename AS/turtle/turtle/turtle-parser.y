@@ -35,6 +35,10 @@ void yyerror(struct ast *ret, const char *);
 %token		KW_POSITION	"position"
 %token		KW_HOME		"home"
 %token		KW_HEADING	"heading"
+%token		KW_COS		"cos"
+%token		KW_SIN		"sin"
+%token		KW_TAN		"tan"
+%token		KW_SQRT		"sqrt"
 
 %token		KW_COLOR_BLUE	"blue"
 %token		KW_COLOR_RED	"red"
@@ -83,6 +87,10 @@ cmd:
 	|	KW_REPEAT	{}
 	|	KW_HOME	{ $$ = make_cmd_home(); }
 	|	KW_HEADING expr	{ $$ = make_cmd_heading($2); }
+	|	KW_COS	'(' expr ')'	{}
+	|	KW_SIN	'(' expr ')'	{}
+	|	KW_TAN	'(' expr ')'	{}
+	|	KW_SQRT	'(' expr ')'	{}
 ;
 
 expr:
