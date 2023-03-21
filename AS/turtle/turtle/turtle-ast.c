@@ -163,68 +163,77 @@ void ast_eval(const struct ast *self, struct context *ctx) {
 }
 
 void ast_node_eval (const struct ast_node* node, struct context *ctx) {
-	switch (node->kind) {
-		case KIND_CMD_SIMPLE:
-			switch (node->u.cmd) {
-				case CMD_UP:
-					ctx->up = true;
-					break;
-				case CMD_DOWN:
-					ctx->up = false;
-					break;
-				case CMD_RIGHT:
-					ctx->angle += node->children[0]->u.value;
-					break;
-				case CMD_LEFT:
-					ctx->angle -= node->children[0]->u.value;
-					break;
-				case CMD_HEADING:
-					heading(ctx, node->children[0]->u.value);
-					break;
-				case CMD_FORWARD:
-					walk(true, node, ctx);
-					break;
-				case CMD_BACKWARD:
-					walk(false, node, ctx);
-					break;
-				case CMD_POSITION:
-					char *word = (!ctx->up ? "LineTo": "MoveTo") ;
-					printf("%s %f %f\n",word, node->children[0]->u.value,node->children[1]->u.value );
-					ctx->x += node->children[0]->u.value; ctx->y += node->children[1]->u.value;
-					break;
-				case CMD_HOME:
-					context_create(ctx);
-					break;
-				case CMD_COLOR:
-					printf("Color %f %f %f\n",node->children[0]->u.value,node->children[1]->u.value,node->children[2]->u.value);
-					break;
-				case CMD_PRINT:
-					break;
-			}
-			break;
-		case KIND_EXPR_FUNC:
-			switch (node->u.func){
-				case FUNC_COS:
-					break;
-				case FUNC_RANDOM:
-					printf("random\n");
-
-					break;
-				case FUNC_SIN:
-					break;
-				case FUNC_SQRT:
-					break;
-				case FUNC_TAN:
-					break;
-			}
-
-			break;
-
+	if (node->kind == KIND_CMD_SIMPLE) {
+		switch (node->u.cmd) {
+			case CMD_UP:
+				ctx->up = true;
+				break;
+			case CMD_DOWN:
+				ctx->up = false;
+				break;
+			case CMD_RIGHT:
+				ctx->angle += ast_node_eval_return(node->children[0], ctx);
+				break;
+			case CMD_LEFT:
+				ctx->angle -= ast_node_eval_return(node->children[0], ctx);
+				break;
+			case CMD_HEADING:
+				heading(ctx, ast_node_eval_return(node->children[0], ctx));
+				break;
+			case CMD_FORWARD:
+				walk(true, node, ctx);
+				break;
+			case CMD_BACKWARD:
+				walk(false, node, ctx);
+				break;
+			case CMD_POSITION:
+				position(node, ctx);
+				break;
+			case CMD_HOME:
+				context_create(ctx);
+				break;
+			case CMD_COLOR:
+				color(node, ctx);
+				break;
+		}
 	}
 
 	if (node->next != NULL) {
 		ast_node_eval(node->next, ctx);
 	}
+}
+
+double ast_node_eval_return (const struct ast_node* n, struct context* ctx) {
+	if (n->kind == KIND_EXPR_VALUE) {
+		return n->u.value;
+	}
+	if (n->kind == KIND_EXPR_FUNC) {
+		switch (n->u.func) {
+			case FUNC_RANDOM:
+				return 0.5;
+		}
+	}
+}
+
+void position (const struct ast_node* n, struct context* ctx) {
+	if (!ctx->up) {
+		printf("LineTo ");
+	} else {
+		printf("MoveTo ");
+	}
+
+	double a = ast_node_eval_return(n->children[0], ctx);
+	double b = ast_node_eval_return(n->children[1], ctx);
+	printf("%f %f\n", a, b);
+	ctx->x += a;
+	ctx->y += b;
+}
+
+void color (const struct ast_node* n, struct context* ctx) {
+	double r = ast_node_eval_return(n->children[0], ctx);
+	double g = ast_node_eval_return(n->children[1], ctx);
+	double b = ast_node_eval_return(n->children[2], ctx);
+	printf("Color %f %f %f\n", r, g, b);
 }
 
 void walk (bool forward,const struct ast_node* node, struct context* ctx) {

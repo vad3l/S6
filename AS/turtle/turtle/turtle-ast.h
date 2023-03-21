@@ -108,6 +108,7 @@ void ast_print(const struct ast *self);
 // evaluate the tree and generate some basic primitives
 void ast_eval(const struct ast *self, struct context *ctx);
 void ast_node_eval (const struct ast_node *node, struct context* ctx);
+double ast_node_eval_return (const struct ast_node* n, struct context* ctx);
 
 // CMD
 void walk (bool forward,const struct ast_node* n, struct context* ctx);

@@ -1,4 +1,4 @@
-color 1.0, 0.0, 0.9
+color random(0.2, 0.3), 0.0, 0.9
 fw 100
 heading 120
 color green
