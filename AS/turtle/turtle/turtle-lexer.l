@@ -35,6 +35,10 @@ REPEAT	"repeat"
 POSITION	"position" 
 RANDOM		"random"
 HOME		"home"
+COS		"cos"
+SIN		"sin"
+TAN		"tan"
+SQRT	"sqrt"
 
 %%
 
@@ -63,7 +67,11 @@ HOME		"home"
 {LEFT}		{ return KW_LEFT; }
 {RIGHT}		{ return KW_RIGHT; }
 {HOME}		{ return KW_HOME; }
-{HEADING}	{	return KW_HEADING; }
+{HEADING}	{ return KW_HEADING; }
+{COS}		{ return KW_COS; }
+{SIN}		{ return KW_SIN; }
+{TAN}		{ return KW_TAN; }
+{SQRT}		{ return KW_SQRT; }		
 
 {DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
 {COLOR_DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
