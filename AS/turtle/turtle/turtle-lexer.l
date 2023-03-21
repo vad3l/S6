@@ -34,7 +34,6 @@ REPEAT	"repeat"
 
 %%
 
-"random"	{ return KW_RANDOM; }
 {COLOR_BLUE}	{ return KW_COLOR_BLUE; }
 {COLOR_RED}	{ return KW_COLOR_RED; }
 {COLOR_GREEN}	{ return KW_COLOR_GREEN; }
@@ -44,6 +43,8 @@ REPEAT	"repeat"
 {COLOR_BLACK}	{ return KW_COLOR_BLACK; }
 {COLOR_GRAY}	{ return KW_COLOR_GRAY; }
 {COLOR_WHITE}	{ return KW_COLOR_WHITE; }
+
+"random"	{ return KW_RANDOM; }
 
 ","		{ return ','; }
 
