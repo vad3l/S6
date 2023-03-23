@@ -25,6 +25,7 @@ int main() {
 	ast_eval(&root, &ctx);
 
 	ast_destroy(&root);
+	context_destroy(&ctx);
 
 	return ret;
 }
