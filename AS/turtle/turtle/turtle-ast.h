@@ -73,6 +73,11 @@ struct ast_node* make_expr_cos (struct ast_node* a);
 struct ast_node* make_expr_tan (struct ast_node* a);
 struct ast_node* make_expr_sqrt (struct ast_node* a);
 struct ast_node* make_expr_random (struct ast_node* a, struct ast_node* b);
+struct ast_node* make_expr_add (struct ast_node* a, struct ast_node* b);
+struct ast_node* make_expr_sub (struct ast_node* a, struct ast_node* b);
+struct ast_node* make_expr_mul (struct ast_node* a, struct ast_node* b);
+struct ast_node* make_expr_div (struct ast_node* a, struct ast_node* b);
+
 
 struct ast_node *make_cmd_rotate(bool left,struct ast_node *expr);
 struct ast_node *make_cmd_forbackward(bool choice, struct ast_node *expr);

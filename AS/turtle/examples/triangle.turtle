@@ -1,4 +1,4 @@
-color 0.3, 0.0, 0.9
+color 0.3 + 0.5, 0.0, 0.9
 fw random(100.0, 150.0)
 heading 120
 color green
@@ -7,6 +7,3 @@ right 120
 color blue
 fw 100
 right 120
-{
-	fw 100
-}

@@ -91,6 +91,10 @@ cmd:
 
 expr:
 		VALUE		{ $$ = make_expr_value($1); }
+	|	expr '/' expr { $$ = make_expr_div($1, $3); }
+	|	expr '*' expr { $$ = make_expr_mul($1, $3); }
+	|	expr '-' expr { $$ = make_expr_sub($1, $3); }
+	|	expr '+' expr { $$ = make_expr_add($1, $3); }
 	|	KW_COS	'(' expr ')'	{ $$ = make_expr_cos($3); }
 	|	KW_SIN	'(' expr ')'	{ $$ = make_expr_sin($3); }
 	|	KW_TAN	'(' expr ')'	{ $$ = make_expr_tan($3); }

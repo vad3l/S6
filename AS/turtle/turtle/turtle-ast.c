@@ -21,6 +21,46 @@ struct ast_node *make_expr_value(double value) {
 	return node;
 }
 
+struct ast_node* make_expr_add (struct ast_node* a, struct ast_node* b) {
+	struct ast_node* n = calloc(1, sizeof(struct ast_node));
+	n->kind = KIND_EXPR_BINOP;
+	n->u.op = '+';
+	n->children_count = 2;
+	n->children[0] = a;
+	n->children[1] = b;
+	return n;
+}
+
+struct ast_node* make_expr_sub (struct ast_node* a, struct ast_node* b) {
+	struct ast_node* n = calloc(1, sizeof(struct ast_node));
+	n->kind = KIND_EXPR_BINOP;
+	n->u.op = '-';
+	n->children_count = 2;
+	n->children[0] = a;
+	n->children[1] = b;
+	return n;
+}
+
+struct ast_node* make_expr_mul (struct ast_node* a, struct ast_node* b) {
+	struct ast_node* n = calloc(1, sizeof(struct ast_node));
+	n->kind = KIND_EXPR_BINOP;
+	n->u.op = '*';
+	n->children_count = 2;
+	n->children[0] = a;
+	n->children[1] = b;
+	return n;
+}
+
+struct ast_node* make_expr_div (struct ast_node* a, struct ast_node* b) {
+	struct ast_node* n = calloc(1, sizeof(struct ast_node));
+	n->kind = KIND_EXPR_BINOP;
+	n->u.op = '/';
+	n->children_count = 2;
+	n->children[0] = a;
+	n->children[1] = b;
+	return n;
+}
+
 struct ast_node* make_expr_sin (struct ast_node* a) {
 	struct ast_node* node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_EXPR_FUNC;
@@ -243,6 +283,7 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 				break;
 		}
 	}
+
 	if (node->kind == KIND_CMD_REPEAT) {
 		for (int i = 0 ; i < node->children[0]->u.value ; i++) {
 			ast_node_eval(node->children[1],ctx);
@@ -270,6 +311,17 @@ double ast_node_eval_return (const struct ast_node* n, struct context* ctx) {
 				return ftan(n, ctx);
 			case FUNC_SQRT:
 				return fsqrt(n, ctx);
+		}
+	} else if (n->kind == KIND_EXPR_BINOP) {
+		switch (n->u.op) {
+			case '+':
+				return ast_node_eval_return(n->children[0], ctx) + ast_node_eval_return(n->children[1], ctx);
+			case '-':
+				return ast_node_eval_return(n->children[0], ctx) - ast_node_eval_return(n->children[1], ctx);
+			case '*':
+				return ast_node_eval_return(n->children[0], ctx) * ast_node_eval_return(n->children[1], ctx);
+			case '/':
+				return ast_node_eval_return(n->children[0], ctx) / ast_node_eval_return(n->children[1], ctx);
 		}
 	}
 
