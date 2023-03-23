@@ -86,8 +86,13 @@ cmd:
 	|	KW_REPEAT	expr cmd { $$ = make_cmd_repeat($2,$3); }
 	|	KW_HOME	{ $$ = make_cmd_home(); }
 	|	KW_HEADING expr	{ $$ = make_cmd_heading($2); }
+<<<<<<< HEAD
 	|	'{' cmds '}'	{ $$ = make_cmd_bloc($2); }
 	|	KW_PROC expr cmd	{ $$ = make_cmd_proc($2,$3); }
+=======
+	|	'{' cmd '}'	{ $$ = make_cmd_bloc($2); }
+	|	KW_SET NAME expr { $$ = make_cmd_set($2, $3); }
+>>>>>>> d814caa79b11163fe3fdb9afb0e0d55fed02fda7
 ;
 
 expr:
