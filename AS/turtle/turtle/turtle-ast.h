@@ -83,6 +83,7 @@ struct ast_node *make_cmd_position(struct ast_node *expr,struct ast_node *expr1)
 struct ast_node *make_cmd_home();
 struct ast_node *make_cmd_heading(struct ast_node *expr);
 struct ast_node *make_cmd_repeat(struct ast_node *nb,struct ast_node *expr);
+struct ast_node *make_cmd_bloc(struct ast_node *expr);
 
 
 // root of the abstract syntax tree
