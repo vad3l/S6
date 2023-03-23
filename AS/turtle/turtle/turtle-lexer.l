@@ -39,6 +39,7 @@ COS		"cos"
 SIN		"sin"
 TAN		"tan"
 SQRT	"sqrt"
+PROC	"proc"
 
 %%
 
@@ -67,6 +68,7 @@ SQRT	"sqrt"
 "{"		{ return '{'; }
 "}"		{ return '}'; }
 
+{PROC}		{ return KW_PROC; }
 {POSITION}		{ return KW_POSITION; }
 {RANDOM}	{ return KW_RANDOM; }
 {REPEAT}		{ return KW_REPEAT; }

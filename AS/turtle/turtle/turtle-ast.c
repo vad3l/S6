@@ -94,7 +94,7 @@ struct ast_node* make_expr_sqrt (struct ast_node* a) {
 	node->u.func = FUNC_SQRT;
 	node->children_count = 1;
 	node->children[0] = a;
-	return node;
+	return a->u.value < 0 ? NULL : node;
 }
 
 struct ast_node* make_expr_random (struct ast_node* a, struct ast_node* b) {
