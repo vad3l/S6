@@ -22,7 +22,7 @@ COLOR_WHITE	"color white"
 COLOR_DIGIT	[0](\.[0-9]+)?|1(\.[0]+)?
 COLOR	"color"
 
-
+IDC	[A-Z_][A-Z_0-9]*
 DIGIT	[0-9]+(.[0-9]+)?
 FORWARD	"forward"|"fw"
 BACKWARD	"backward"|"bw"
@@ -40,6 +40,7 @@ SIN		"sin"
 TAN		"tan"
 SQRT	"sqrt"
 PROC	"proc"
+SET		"set"
 
 %%
 
@@ -69,6 +70,8 @@ PROC	"proc"
 "}"		{ return '}'; }
 
 {PROC}		{ return KW_PROC; }
+{SET}		{ return KW_SET; }
+{IDC}		{ yyval.name = yytext; return NAME; }
 {POSITION}		{ return KW_POSITION; }
 {RANDOM}	{ return KW_RANDOM; }
 {REPEAT}		{ return KW_REPEAT; }

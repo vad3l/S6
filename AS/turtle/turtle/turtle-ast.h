@@ -77,7 +77,7 @@ struct ast_node* make_expr_add (struct ast_node* a, struct ast_node* b);
 struct ast_node* make_expr_sub (struct ast_node* a, struct ast_node* b);
 struct ast_node* make_expr_mul (struct ast_node* a, struct ast_node* b);
 struct ast_node* make_expr_div (struct ast_node* a, struct ast_node* b);
-
+struct ast_node* make_expr_unop (struct ast_node* a);
 
 struct ast_node *make_cmd_rotate(bool left,struct ast_node *expr);
 struct ast_node *make_cmd_forbackward(bool choice, struct ast_node *expr);
@@ -89,7 +89,8 @@ struct ast_node *make_cmd_home();
 struct ast_node *make_cmd_heading(struct ast_node *expr);
 struct ast_node *make_cmd_repeat(struct ast_node *nb,struct ast_node *expr);
 struct ast_node *make_cmd_bloc(struct ast_node *expr);
-
+struct ast_node* make_cmd_set (const char* name, struct ast_node* a);
+struct ast_node* make_cmd_proc (const char* name, struct ast_node* expr);
 
 // root of the abstract syntax tree
 struct ast {
