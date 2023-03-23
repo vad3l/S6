@@ -100,19 +100,34 @@ struct ast {
 // do not forget to destroy properly! no leaks allowed!
 void ast_destroy(struct ast *self);
 
+struct list_node {
+	const char* name;
+	double value;
+	struct ast_node* block;
+	struct list_node* next;
+};
+
+struct list {
+	struct list_node* first;
+};
+
 // the execution context
 struct context {
 	double x;
 	double y;
 	double angle;
 	bool up;
-
-	// TODO: add procedure handling
-	// TODO: add variable handling
+	struct list* variable;
 };
 
 // create an initial context
 void context_create(struct context *self);
+void add_variable (struct context* self, const char* name, double value);
+void add_proc (struct context* self, const char* name, struct ast_node* block);
+struct ast_node* get_proc (struct context* self, const char* name);
+double get_var (struct context* self, const char* name);
+bool remove_name (struct context* self, const char* name);
+void context_destroy (struct context* self);
 
 // print the tree as if it was a Turtle program
 void ast_node_print (const struct ast_node* self);

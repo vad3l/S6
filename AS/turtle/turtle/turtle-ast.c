@@ -24,6 +24,10 @@ struct ast_node *make_expr_value(double value) {
 struct ast_node* make_expr_name(const char* name) {
 	struct ast_node* n = calloc(1, sizeof(struct ast_node));
 	n->kind = KIND_EXPR_NAME;
+	char* cpy = calloc(strlen(name), sizeof(char));
+	strcpy(cpy, name);
+	n->u.name = cpy;
+	n->children_count = 0;
 	return n;
 }
 
@@ -138,7 +142,7 @@ struct ast_node *make_cmd_forbackward(bool choice,struct ast_node *expr) {
 struct ast_node* make_cmd_set (const char* name, struct ast_node* a) {
 	struct ast_node* n = calloc(1, sizeof(struct ast_node));
 	n->kind = KIND_CMD_SET;
-	const char* cpy = calloc(strlen(name), sizeof(char));
+	char* cpy = calloc(strlen(name), sizeof(char));
 	strcpy(cpy, name);
 	n->u.name = cpy;
 	n->children_count = 1;
@@ -267,11 +271,109 @@ void ast_destroy(struct ast *self) {
  * context
  */
 
+void list_node_destroy(struct list_node* n) {
+	free(n->name);
+	free(n->block);
+	free(n);
+}
+
 void context_create(struct context *self) {
 	self->x = 0.0;
 	self->y = 0.0;
 	self->angle = -90.0;
 	self->up = false;
+	self->variable = calloc(1, sizeof(struct list));
+	self->variable->first = NULL;
+}
+
+void context_destroy (struct context* self) {
+	struct list_node* v = self->variable->first;
+	while (v != NULL) {
+		struct list_node* c = v;
+		v = v->next;
+		list_node_destroy(c);
+	}
+	free(self->variable);
+}
+
+void add_variable (struct context* self, const char* name, double value) {
+	struct list_node* node = calloc(1, sizeof(struct list_node));
+	node->value = value;
+	char* cpy = calloc(strlen(name), sizeof(char));
+	strcpy(cpy, name);
+	node->name = cpy;
+	node->block = NULL;
+	node->next = NULL;
+	if (self->variable->first == NULL) {
+		self->variable->first = node;
+		return;
+	}
+	struct list_node* last = self->variable->first;
+	while (last->next != NULL) {
+		last = last->next;
+	}
+	last->next = node;
+}
+
+void add_proc (struct context* self, const char* name, struct ast_node* block) {
+	struct list_node* node = calloc(1, sizeof(struct list_node));
+	node->block = block;
+	char* cpy = calloc(strlen(name), sizeof(char));
+	strcpy(cpy, name);
+	node->name = cpy;
+	node->block = NULL;
+	node->next = NULL;
+	if (self->variable->first == NULL) {
+		self->variable->first = node;
+		return;
+	}
+	struct list_node* last = self->variable->first;
+	while (last->next != NULL) {
+		last = last->next;
+	}
+	last->next = node;
+}
+
+struct ast_node* get_proc (struct context* self, const char* name) {
+	struct list_node* v = self->variable->first;
+	while (v != NULL) {
+		if (strcmp(v->name, name) == 0) {
+			return v->block;
+		}
+	}
+	exit(-1);
+}
+
+double get_var (struct context* self, const char* name) {
+	struct list_node* v = self->variable->first;
+	while (v != NULL) {
+		if (strcmp(v->name, name) == 0) {
+			return v->value;
+		}
+	}
+	exit(-1);
+}
+
+bool remove_name (struct context* self, const char* name) {
+	struct list_node* prev = NULL;
+	struct list_node* v = self->variable->first;
+	if (v == NULL) { return false; }
+	while (v != NULL) {
+		if (strcmp(v->name, name) == 0) {
+			if (prev == NULL) {
+				self->variable->first = v->next;
+				list_node_destroy(v);
+				return true;
+			} else {
+				prev->next = v->next;
+				list_node_destroy(v);
+				return true;
+			}
+		}
+		prev = v;
+		v = v->next;
+	}
+	return false;
 }
 
 /*
@@ -318,6 +420,9 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 		}
 	}
 
+	if (node->kind == KIND_CMD_SET) {
+		
+	}
 	if (node->kind == KIND_CMD_REPEAT) {
 		for (int i = 0 ; i < node->children[0]->u.value ; i++) {
 			ast_node_eval(node->children[1],ctx);
@@ -335,6 +440,9 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 double ast_node_eval_return (const struct ast_node* n, struct context* ctx) {
 	if (n->kind == KIND_EXPR_VALUE) {
 		return n->u.value;
+	}
+	if (n->kind == KIND_EXPR_NAME) {
+		
 	}
 	if (n->kind == KIND_EXPR_FUNC) {
 		switch (n->u.func) {

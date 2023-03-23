@@ -68,7 +68,7 @@ SQRT	"sqrt"
 "}"		{ return '}'; }
 
 "set"		{ return KW_SET; }
-{IDC}		{ yyval.name = yytext; return NAME; }
+{IDC}		{ yylval.name = yytext; return NAME; }
 {POSITION}		{ return KW_POSITION; }
 {RANDOM}	{ return KW_RANDOM; }
 {REPEAT}		{ return KW_REPEAT; }
