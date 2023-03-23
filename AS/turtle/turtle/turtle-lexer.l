@@ -57,6 +57,16 @@ SQRT	"sqrt"
 "("		{ return '('; }
 ")"		{ return ')'; }
 
+"+"		{ return '+'; }
+"-"		{ return '-'; }
+"*"		{ return '*'; }
+"/"		{ return '/'; }
+"%"		{ return '%'; }
+"^"		{ return '^'; }
+
+"{"		{ return '{'; }
+"}"		{ return '}'; }
+
 {POSITION}		{ return KW_POSITION; }
 {RANDOM}	{ return KW_RANDOM; }
 {REPEAT}		{ return KW_REPEAT; }

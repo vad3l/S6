@@ -158,6 +158,15 @@ struct ast_node *make_cmd_heading(struct ast_node *expr) {
 	return node;
 }
 
+struct ast_node *make_cmd_repeat(struct ast_node *nb,struct ast_node *expr) {
+	struct ast_node *node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_CMD_REPEAT;
+	node->children_count = 2;
+	node->children[0] = nb;
+	node->children[1] = expr;
+	return node;
+}
+
 /*
  *	AST
  */
@@ -232,6 +241,11 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 			case CMD_COLOR:
 				color(node, ctx);
 				break;
+		}
+	}
+	if (node->kind == KIND_CMD_REPEAT) {
+		for (int i = 0 ; i < node->children[0]->u.value ; i++) {
+			ast_node_eval(node->children[1],ctx);
 		}
 	}
 

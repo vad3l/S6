@@ -83,9 +83,10 @@ cmd:
 	|	KW_UP	{ $$ = make_cmd_pencilLead(true); }
 	|	KW_DOWN	{ $$ = make_cmd_pencilLead(false); }
 	|	KW_POSITION	expr ',' expr { $$ = make_cmd_position($2,$4); }
-	|	KW_REPEAT	{}
+	|	KW_REPEAT	expr cmd { $$ = make_cmd_repeat($2,$3); }
 	|	KW_HOME	{ $$ = make_cmd_home(); }
 	|	KW_HEADING expr	{ $$ = make_cmd_heading($2); }
+	|	'{'	cmd '}'		{ printf("bloc\n");}
 ;
 
 expr:
