@@ -21,6 +21,21 @@ struct ast_node *make_expr_value(double value) {
 	return node;
 }
 
+struct ast_node* make_expr_name(const char* name) {
+	struct ast_node* n = calloc(1, sizeof(struct ast_node));
+	n->kind = KIND_EXPR_NAME;
+	return n;
+}
+
+struct ast_node* make_expr_unop (struct ast_node* a) {
+	struct ast_node* n = calloc(1, sizeof(struct ast_node));
+	n->kind = KIND_EXPR_UNOP;
+	n->u.op = '-';
+	n->children_count = 1;
+	n->children[0] = a;
+	return n;
+}
+
 struct ast_node* make_expr_add (struct ast_node* a, struct ast_node* b) {
 	struct ast_node* n = calloc(1, sizeof(struct ast_node));
 	n->kind = KIND_EXPR_BINOP;
@@ -118,6 +133,17 @@ struct ast_node *make_cmd_forbackward(bool choice,struct ast_node *expr) {
 	node->children_count = 1;
 	node->children[0] = expr;
 	return node;
+}
+
+struct ast_node* make_cmd_set (const char* name, struct ast_node* a) {
+	struct ast_node* n = calloc(1, sizeof(struct ast_node));
+	n->kind = KIND_CMD_SET;
+	const char* cpy = calloc(strlen(name), sizeof(char));
+	strcpy(cpy, name);
+	n->u.name = cpy;
+	n->children_count = 1;
+	n->children[0] = a;
+	return n;
 }
 
 struct ast_node *make_cmd_color_rgb(struct ast_node *r,struct ast_node *g,struct ast_node *b) {
@@ -334,6 +360,8 @@ double ast_node_eval_return (const struct ast_node* n, struct context* ctx) {
 			case '/':
 				return ast_node_eval_return(n->children[0], ctx) / ast_node_eval_return(n->children[1], ctx);
 		}
+	} else if (n->kind == KIND_EXPR_UNOP) {
+		return -ast_node_eval_return(n->children[0], ctx);
 	}
 
 	return 0.0;
