@@ -86,7 +86,7 @@ cmd:
 	|	KW_REPEAT	expr cmd { $$ = make_cmd_repeat($2,$3); }
 	|	KW_HOME	{ $$ = make_cmd_home(); }
 	|	KW_HEADING expr	{ $$ = make_cmd_heading($2); }
-	|	'{' cmd '}'	{ $$ = make_cmd_bloc($2); }
+	|	'{' cmds '}'	{ $$ = make_cmd_bloc($2); }
 ;
 
 expr:
