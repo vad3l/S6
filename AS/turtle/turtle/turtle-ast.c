@@ -207,6 +207,14 @@ struct ast_node *make_cmd_repeat(struct ast_node *nb,struct ast_node *expr) {
 	return node;
 }
 
+struct ast_node *make_cmd_bloc(struct ast_node *expr) {
+	struct ast_node *node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_CMD_BLOCK;
+	node->children_count = 1;
+	node->children[0] = expr;
+	return node;
+}
+
 /*
  *	AST
  */
@@ -288,6 +296,9 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 		for (int i = 0 ; i < node->children[0]->u.value ; i++) {
 			ast_node_eval(node->children[1],ctx);
 		}
+	}
+	if (node->kind == KIND_CMD_BLOCK) {
+		ast_node_eval(node->children[0],ctx);
 	}
 
 	if (node->next != NULL) {
