@@ -18,6 +18,7 @@ struct ast_node *make_expr_value(double value) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_EXPR_VALUE;
 	node->u.value = value;
+	node->children_count = 0;
 	return node;
 }
 
@@ -140,10 +141,12 @@ struct ast_node *make_cmd_forbackward(bool choice,struct ast_node *expr) {
 }
 
 struct ast_node* make_cmd_set (const char* name, struct ast_node* a) {
+	printf("name : %s\n", name);
+	char* str = strtok((char*)name, " ");
 	struct ast_node* n = calloc(1, sizeof(struct ast_node));
 	n->kind = KIND_CMD_SET;
-	char* cpy = calloc(strlen(name) + 1, sizeof(char));
-	strcpy(cpy, name);
+	char* cpy = calloc(strlen(str) + 1, sizeof(char));
+	strcpy(cpy, str);
 	n->u.name = cpy;
 	n->children_count = 1;
 	n->children[0] = a;
@@ -173,6 +176,9 @@ struct ast_node *make_cmd_color(double r,double g,double b) {
 	struct ast_node *nodeg = calloc(1, sizeof(struct ast_node));
 	struct ast_node *nodeb = calloc(1, sizeof(struct ast_node));
 
+	noder->kind = KIND_EXPR_VALUE;
+	nodeb->kind = KIND_EXPR_VALUE;
+	nodeg->kind = KIND_EXPR_VALUE;
 	noder->u.value = r;
 	nodeg->u.value = g;
 	nodeb->u.value = b;
@@ -559,6 +565,9 @@ void ast_node_print (const struct ast_node* n) {
 	switch (n->kind) {
 		case KIND_CMD_SIMPLE:
 			printf("CMD_SIMPLE\n\tcmd : %i\n", n->u.cmd);
+			break;
+		case KIND_CMD_SET:
+			printf("CMD_SET\n\tname : %s\n", n->u.name);
 			break;
 		case KIND_EXPR_FUNC:
 			printf("EXPR_FUNC\n\tname : %i\n", n->u.func);
