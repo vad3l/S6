@@ -24,7 +24,7 @@ struct ast_node *make_expr_value(double value) {
 struct ast_node* make_expr_name(const char* name) {
 	struct ast_node* n = calloc(1, sizeof(struct ast_node));
 	n->kind = KIND_EXPR_NAME;
-	char* cpy = calloc(strlen(name), sizeof(char));
+	char* cpy = calloc(strlen(name) + 1, sizeof(char));
 	strcpy(cpy, name);
 	n->u.name = cpy;
 	n->children_count = 0;
@@ -142,7 +142,7 @@ struct ast_node *make_cmd_forbackward(bool choice,struct ast_node *expr) {
 struct ast_node* make_cmd_set (const char* name, struct ast_node* a) {
 	struct ast_node* n = calloc(1, sizeof(struct ast_node));
 	n->kind = KIND_CMD_SET;
-	char* cpy = calloc(strlen(name), sizeof(char));
+	char* cpy = calloc(strlen(name) + 1, sizeof(char));
 	strcpy(cpy, name);
 	n->u.name = cpy;
 	n->children_count = 1;
@@ -309,7 +309,7 @@ void context_destroy (struct context* self) {
 void add_variable (struct context* self, const char* name, double value) {
 	struct list_node* node = calloc(1, sizeof(struct list_node));
 	node->value = value;
-	char* cpy = calloc(strlen(name), sizeof(char));
+	char* cpy = calloc(strlen(name) + 1, sizeof(char));
 	strcpy(cpy, name);
 	node->name = cpy;
 	node->block = NULL;
@@ -328,7 +328,7 @@ void add_variable (struct context* self, const char* name, double value) {
 void add_proc (struct context* self, const char* name, struct ast_node* block) {
 	struct list_node* node = calloc(1, sizeof(struct list_node));
 	node->block = block;
-	char* cpy = calloc(strlen(name), sizeof(char));
+	char* cpy = calloc(strlen(name) + 1, sizeof(char));
 	strcpy(cpy, name);
 	node->name = cpy;
 	node->block = NULL;
@@ -431,8 +431,9 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 	}
 
 	if (node->kind == KIND_CMD_SET) {
-		
+		add_variable(ctx, node->u.name, ast_node_eval_return(node->children[0], ctx));
 	}
+
 	if (node->kind == KIND_CMD_REPEAT) {
 		for (int i = 0 ; i < node->children[0]->u.value ; i++) {
 			ast_node_eval(node->children[1],ctx);
@@ -455,7 +456,7 @@ double ast_node_eval_return (const struct ast_node* n, struct context* ctx) {
 		return n->u.value;
 	}
 	if (n->kind == KIND_EXPR_NAME) {
-		
+		return get_var(ctx, n->u.name);
 	}
 	if (n->kind == KIND_EXPR_FUNC) {
 		switch (n->u.func) {
@@ -564,6 +565,9 @@ void ast_node_print (const struct ast_node* n) {
 			break;
 		case KIND_EXPR_VALUE:
 			printf("EXPR_VALUE\n\tvalue : %f\n", n->u.value);
+			break;
+		case KIND_EXPR_NAME:
+			printf("EXPR NAME\n\tname : %s\n", n->u.name);
 			break;
 	}
 	if (n->children_count > 0) {

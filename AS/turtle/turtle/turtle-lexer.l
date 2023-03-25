@@ -69,14 +69,9 @@ SET		"set"
 "{"		{ return '{'; }
 "}"		{ return '}'; }
 
-<<<<<<< HEAD
 {PROC}		{ return KW_PROC; }
 {SET}		{ return KW_SET; }
 {IDC}		{ yyval.name = yytext; return NAME; }
-=======
-"set"		{ return KW_SET; }
-{IDC}		{ yylval.name = yytext; return NAME; }
->>>>>>> d814caa79b11163fe3fdb9afb0e0d55fed02fda7
 {POSITION}		{ return KW_POSITION; }
 {RANDOM}	{ return KW_RANDOM; }
 {REPEAT}		{ return KW_REPEAT; }
