@@ -1,5 +1,5 @@
 set ONE 1.0
-color 0.3, 0.1, 0.1
+color 0.3, 0.1, ONE
 fw random(100.0, 150.0)
 heading 120
 color green

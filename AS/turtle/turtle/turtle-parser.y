@@ -53,6 +53,10 @@ void yyerror(struct ast *ret, const char *);
 %token		KW_COLOR_WHITE	"white"
 
 /* TODO: add other tokens */
+%left '+' '-'
+%left '*' '/'
+%left '(' ')'
+
 
 %type <node> unit cmds cmd expr
 
@@ -88,8 +92,7 @@ cmd:
 	|	KW_REPEAT	expr cmd { $$ = make_cmd_repeat($2,$3); }
 	|	KW_HOME	{ $$ = make_cmd_home(); }
 	|	KW_HEADING expr	{ $$ = make_cmd_heading($2); }
-	|	KW_PROC NAME cmd	{ $$ = make_cmd_proc($2,$3); }
-	|	'{' cmd '}'	{ $$ = make_cmd_bloc($2); }
+	|	'{' cmds '}'	{ $$ = make_cmd_bloc($2); }
 	|	KW_SET NAME expr { $$ = make_cmd_set($2, $3); }
 ;
 
