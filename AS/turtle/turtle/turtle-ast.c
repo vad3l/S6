@@ -265,7 +265,7 @@ struct ast_node* make_cmd_call (struct ast_node* name) {
 }
 
 /*
- *	AST
+ *	Destroy
  */
 
 void ast_node_destroy (struct ast_node* self) {
@@ -289,23 +289,9 @@ void ast_destroy(struct ast *self) {
 	ast_node_destroy(self->unit);
 }
 
-/*
- * context
- */
-
 void list_node_destroy(struct list_node* n) {
 	free((void *)n->name);
-//	free(n->block);
 	free(n);
-}
-
-void context_create(struct context *self) {
-	self->x = 0.0;
-	self->y = 0.0;
-	self->angle = -90.0;
-	self->up = false;
-	self->variable = calloc(1, sizeof(struct list));
-	self->variable->first = NULL;
 }
 
 void context_destroy (struct context* self) {
@@ -317,6 +303,27 @@ void context_destroy (struct context* self) {
 	}
 	free(self->variable);
 }
+
+
+/*
+ * context creation
+ */
+
+
+
+void context_create(struct context *self) {
+	self->x = 0.0;
+	self->y = 0.0;
+	self->angle = -90.0;
+	self->up = false;
+	self->variable = calloc(1, sizeof(struct list));
+	self->variable->first = NULL;
+}
+
+
+/*
+ * Linked-list managed function
+ */
 
 void add_variable (struct context* self, const char* name, double value) {
 	struct list_node* node = calloc(1, sizeof(struct list_node));
