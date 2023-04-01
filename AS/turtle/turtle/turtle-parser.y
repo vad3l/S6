@@ -98,6 +98,7 @@ cmd:
 
 expr:
 		VALUE		{ $$ = make_expr_value($1); }
+	|	NAME		{ $$ = make_expr_name($1); }
 	|	'-' expr	{ $$ = make_expr_unop($2); }
 	|	expr '/' expr { $$ = make_expr_div($1, $3); }
 	|	expr '*' expr { $$ = make_expr_mul($1, $3); }

@@ -23,7 +23,6 @@ struct ast_node *make_expr_value(double value) {
 }
 
 struct ast_node* make_expr_name(const char* name) {
-	printf("expr is %s\n", name);
 	struct ast_node* n = calloc(1, sizeof(struct ast_node));
 	n->kind = KIND_EXPR_NAME;
 	char* cpy = calloc(strlen(name) + 1, sizeof(char));
@@ -255,7 +254,7 @@ struct ast_node *make_cmd_bloc(struct ast_node *expr) {
 struct ast_node* make_cmd_proc (const char* name, struct ast_node* expr) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_CMD_PROC;
-	node->u.name = calloc(1, sizeof(char)*(strlen(name)+1));
+	node->u.name = calloc(strlen(name) + 1, sizeof(char));
 	strcpy(node->u.name,name);
 	node->children_count = 1;
 	node->children[0] = expr;
@@ -563,7 +562,6 @@ void heading(struct context* ctx,int angle) {
  */
 
 void ast_node_print (const struct ast_node* n) {
-	printf("n = %p\n", n);
 	switch (n->kind) {
 		case KIND_CMD_SIMPLE:
 			printf("CMD_SIMPLE\n\tcmd : %i\n", n->u.cmd);
