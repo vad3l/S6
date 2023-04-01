@@ -39,6 +39,8 @@ void yyerror(struct ast *ret, const char *);
 %token		KW_SIN		"sin"
 %token		KW_TAN		"tan"
 %token		KW_SQRT		"sqrt"
+%token		KW_SET		"set"
+%token		KW_PROC		"proc"
 
 %token		KW_COLOR_BLUE	"blue"
 %token		KW_COLOR_RED	"red"

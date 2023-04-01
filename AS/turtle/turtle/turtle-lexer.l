@@ -69,8 +69,6 @@ SET		"set"
 "{"		{ return '{'; }
 "}"		{ return '}'; }
 
-{PROC}		{ return KW_PROC; }
-{SET}		{ return KW_SET; }
 {IDC}		{ yylval.name = yytext; printf("yytext = %s\n", yytext); return NAME; }
 {POSITION}		{ return KW_POSITION; }
 {RANDOM}	{ return KW_RANDOM; }
@@ -87,6 +85,8 @@ SET		"set"
 {SIN}		{ return KW_SIN; }
 {TAN}		{ return KW_TAN; }
 {SQRT}		{ return KW_SQRT; }		
+{PROC}		{ return KW_PROC; }
+{SET}		{ return KW_SET; }
 
 {DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
 {COLOR_DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }

@@ -254,7 +254,7 @@ struct ast_node *make_cmd_bloc(struct ast_node *expr) {
 struct ast_node* make_cmd_proc (const char* name, struct ast_node* expr) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_CMD_PROC;
-	node->u.name = calloc(1, sizeof(char *(strlen(name)+1)));
+	node->u.name = calloc(1, sizeof(char)*(strlen(name)+1));
 	strcpy(node->u.name,name);
 	node->children_count = 1;
 	node->children[0] = expr;
@@ -288,7 +288,7 @@ void ast_destroy(struct ast *self) {
  */
 
 void list_node_destroy(struct list_node* n) {
-	free(n->name);
+	free((void *)n->name);
 	free(n->block);
 	free(n);
 }
@@ -449,7 +449,7 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 		ast_node_eval(node->children[0],ctx);
 	}
 	if (node->kind == KIND_CMD_PROC) {
-		ast_node_eval(get_proc(ctx),ctx);
+		ast_node_eval(get_proc(ctx,node->children[0]->u.name),ctx);
 	}
 
 	if (node->next != NULL) {
