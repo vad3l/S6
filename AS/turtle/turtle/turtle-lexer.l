@@ -39,6 +39,8 @@ COS		"cos"
 SIN		"sin"
 TAN		"tan"
 SQRT	"sqrt"
+PROC	"proc"
+SET		"set"
 
 %%
 
@@ -67,7 +69,8 @@ SQRT	"sqrt"
 "{"		{ return '{'; }
 "}"		{ return '}'; }
 
-"set"		{ return KW_SET; }
+{PROC}		{ return KW_PROC; }
+{SET}		{ return KW_SET; }
 {IDC}		{ yylval.name = yytext; printf("yytext = %s\n", yytext); return NAME; }
 {POSITION}		{ return KW_POSITION; }
 {RANDOM}	{ return KW_RANDOM; }

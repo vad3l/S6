@@ -115,7 +115,7 @@ struct ast_node* make_expr_sqrt (struct ast_node* a) {
 	node->u.func = FUNC_SQRT;
 	node->children_count = 1;
 	node->children[0] = a;
-	return node;
+	return a->u.value < 0 ? NULL : node;
 }
 
 struct ast_node* make_expr_random (struct ast_node* a, struct ast_node* b) {
@@ -247,6 +247,16 @@ struct ast_node *make_cmd_repeat(struct ast_node *nb,struct ast_node *expr) {
 struct ast_node *make_cmd_bloc(struct ast_node *expr) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_CMD_BLOCK;
+	node->children_count = 1;
+	node->children[0] = expr;
+	return node;
+}
+
+struct ast_node* make_cmd_proc (const char* name, struct ast_node* expr) {
+	struct ast_node *node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_CMD_PROC;
+	node->u.name = calloc(1, sizeof(char *(strlen(name)+1)));
+	strcpy(node->u.name,name);
 	node->children_count = 1;
 	node->children[0] = expr;
 	return node;
@@ -438,6 +448,9 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 	}
 	if (node->kind == KIND_CMD_BLOCK) {
 		ast_node_eval(node->children[0],ctx);
+	}
+	if (node->kind == KIND_CMD_PROC) {
+		ast_node_eval(get_proc(ctx),ctx);
 	}
 
 	if (node->next != NULL) {

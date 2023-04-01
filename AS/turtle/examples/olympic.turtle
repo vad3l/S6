@@ -9,6 +9,8 @@ proc CIRCLE {
   }
 }
 
+proc MABITE fw 100
+
 up
 
 fw 50 right 90 fw 165 left 90
