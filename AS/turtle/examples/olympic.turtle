@@ -26,4 +26,5 @@ right 40 bw 110 right 140
 color 1, 1, 0 call CIRCLE
 
 fw 165 color 0, 1, 0
-call CIRCLE
+call CIRCLE 
+up
