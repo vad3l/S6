@@ -141,7 +141,6 @@ struct ast_node *make_cmd_forbackward (bool choice,struct ast_node *expr) {
 }
 
 struct ast_node* make_cmd_set (const char* name, struct ast_node* a) {
-	printf("name : %s\n", name);
 	char* str = strtok((char*)name, " ");
 	struct ast_node* n = calloc(1, sizeof(struct ast_node));
 	n->kind = KIND_CMD_SET;
@@ -361,7 +360,7 @@ void add_proc (struct context* self, const char* name, struct ast_node* block) {
 struct ast_node* get_proc (struct context* self, const char* name) {
 	struct list_node* v = self->variable->first;
 	while (v != NULL) {
-
+		printf("%s\n",v->name);
 		if (strcmp(v->name, name) == 0) {
 			return v->block;
 		}
