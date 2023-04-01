@@ -41,6 +41,7 @@ TAN		"tan"
 SQRT	"sqrt"
 PROC	"proc"
 SET		"set"
+CALL	"call"
 
 %%
 
@@ -87,6 +88,7 @@ SET		"set"
 {SQRT}		{ return KW_SQRT; }		
 {PROC}		{ return KW_PROC; }
 {SET}		{ return KW_SET; }
+{CALL}		{ return KW_CALL; }
 
 {DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
 {COLOR_DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }

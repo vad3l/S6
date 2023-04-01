@@ -67,7 +67,7 @@ struct ast_node {
 void ast_node_destroy (struct ast_node* self);
 // TODO: make some constructors to use in parser.y
 // for example:
-struct ast_node *make_expr_value(double value);
+struct ast_node *make_expr_value (double value);
 struct ast_node* make_expr_sin (struct ast_node* a);
 struct ast_node* make_expr_cos (struct ast_node* a);
 struct ast_node* make_expr_tan (struct ast_node* a);
@@ -78,20 +78,21 @@ struct ast_node* make_expr_sub (struct ast_node* a, struct ast_node* b);
 struct ast_node* make_expr_mul (struct ast_node* a, struct ast_node* b);
 struct ast_node* make_expr_div (struct ast_node* a, struct ast_node* b);
 struct ast_node* make_expr_unop (struct ast_node* a);
-struct ast_node* make_expr_name(const char* name);
+struct ast_node* make_expr_name (const char* name);
 	
-struct ast_node *make_cmd_rotate(bool left,struct ast_node *expr);
-struct ast_node *make_cmd_forbackward(bool choice, struct ast_node *expr);
-struct ast_node *make_cmd_color(double r,double g,double b);
-struct ast_node *make_cmd_color_rgb(struct ast_node *r,struct ast_node *g,struct ast_node *b);
-struct ast_node *make_cmd_pencilLead(bool up);
-struct ast_node *make_cmd_position(struct ast_node *expr,struct ast_node *expr1);
-struct ast_node *make_cmd_home();
-struct ast_node *make_cmd_heading(struct ast_node *expr);
-struct ast_node *make_cmd_repeat(struct ast_node *nb,struct ast_node *expr);
-struct ast_node *make_cmd_bloc(struct ast_node *expr);
+struct ast_node *make_cmd_rotate (bool left,struct ast_node *expr);
+struct ast_node *make_cmd_forbackward (bool choice, struct ast_node *expr);
+struct ast_node *make_cmd_color (double r,double g,double b);
+struct ast_node *make_cmd_color_rgb (struct ast_node *r,struct ast_node *g,struct ast_node *b);
+struct ast_node *make_cmd_pencilLead (bool up);
+struct ast_node *make_cmd_position (struct ast_node *expr,struct ast_node *expr1);
+struct ast_node *make_cmd_home ();
+struct ast_node *make_cmd_heading (struct ast_node *expr);
+struct ast_node *make_cmd_repeat (struct ast_node *nb,struct ast_node *expr);
+struct ast_node *make_cmd_bloc (struct ast_node *expr);
 struct ast_node* make_cmd_set (const char* name, struct ast_node* a);
 struct ast_node* make_cmd_proc (const char* name, struct ast_node* expr);
+struct ast_node* make_cmd_call (const char* name);
 
 // root of the abstract syntax tree
 struct ast {
