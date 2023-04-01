@@ -64,9 +64,7 @@ struct ast_node {
 	struct ast_node *next;	// the next node in the sequence
 };
 
-void ast_node_destroy (struct ast_node* self);
-// TODO: make some constructors to use in parser.y
-// for example:
+// make_expr Function
 struct ast_node *make_expr_value (double value);
 struct ast_node* make_expr_sin (struct ast_node* a);
 struct ast_node* make_expr_cos (struct ast_node* a);
@@ -81,6 +79,7 @@ struct ast_node* make_expr_unop (struct ast_node* a);
 struct ast_node* make_expr_name (const char* name);
 struct ast_node* make_expr_pow (struct ast_node* a, struct ast_node* b);
 
+//make_cmd Function
 struct ast_node *make_cmd_rotate (bool left,struct ast_node *expr);
 struct ast_node *make_cmd_forbackward (bool choice, struct ast_node *expr);
 struct ast_node *make_cmd_color (double r,double g,double b);
@@ -101,9 +100,7 @@ struct ast {
 	struct ast_node *unit;
 };
 
-// do not forget to destroy properly! no leaks allowed!
-void ast_destroy(struct ast *self);
-
+// linked list
 struct list_node {
 	char* name;
 	double value;
@@ -126,13 +123,10 @@ struct context {
 
 // create an initial context
 void context_create(struct context *self);
-void add_variable (struct context* self, const char* name, double value);
-void add_proc (struct context* self, const char* name, struct ast_node* block);
-struct ast_node* get_proc (struct context* self, const char* name);
-double get_var (struct context* self, const char* name);
-bool remove_name (struct context* self, const char* name);
-void print_list (struct list* l);
-void print_list_node (struct list_node* l);
+
+// destroy function
+void ast_node_destroy (struct ast_node* self);
+void ast_destroy(struct ast *self);
 void context_destroy (struct context* self);
 
 // print the tree as if it was a Turtle program
@@ -153,7 +147,21 @@ double fcos (const struct ast_node* n, struct context* ctx);
 double ftan (const struct ast_node* n, struct context* ctx);
 double fsqrt (const struct ast_node* n, struct context* ctx);
 
+// Tools Funtion
 void walk (bool forward,const struct ast_node* n, struct context* ctx);
 void rotate (bool left,const struct ast_node* n, struct context* ctx);
 void heading(struct context* ctx, int angle);
+
+// Manage linked-list
+void add_variable (struct context* self, const char* name, double value);
+void add_proc (struct context* self, const char* name, struct ast_node* block);
+
+struct ast_node* get_proc (struct context* self, const char* name);
+double get_var (struct context* self, const char* name);
+
+bool remove_name (struct context* self, const char* name);
+
+void print_list (struct list* l);
+void print_list_node (struct list_node* l);
+
 #endif /* TURTLE_AST_H */
