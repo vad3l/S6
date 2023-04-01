@@ -361,9 +361,11 @@ void add_proc (struct context* self, const char* name, struct ast_node* block) {
 struct ast_node* get_proc (struct context* self, const char* name) {
 	struct list_node* v = self->variable->first;
 	while (v != NULL) {
+
 		if (strcmp(v->name, name) == 0) {
 			return v->block;
 		}
+		v = v->next;
 	}
 	exit(-1);
 }
@@ -374,6 +376,7 @@ double get_var (struct context* self, const char* name) {
 		if (strcmp(v->name, name) == 0) {
 			return v->value;
 		}
+		v = v->next;
 	}
 	exit(-1);
 }
@@ -457,6 +460,10 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 		ast_node_eval(node->children[0],ctx);
 	}
 	if (node->kind == KIND_CMD_PROC) {
+		add_proc(ctx, node->u.name, node->children[0]);
+	}
+
+	if (node->kind == KIND_CMD_CALL) {
 		ast_node_eval(get_proc(ctx,node->u.name),ctx);
 	}
 
@@ -571,6 +578,9 @@ void heading(struct context* ctx,int angle) {
 
 void ast_node_print (const struct ast_node* n) {
 	switch (n->kind) {
+		case KIND_CMD_CALL:
+			printf("CMD_CALL\n\tname : %s\n", n->u.name);
+			break;
 		case KIND_CMD_SIMPLE:
 			printf("CMD_SIMPLE\n\tcmd : %i\n", n->u.cmd);
 			break;

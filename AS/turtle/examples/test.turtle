@@ -1,25 +1,21 @@
-repeat 360 {
-	up
-    fw 70
-    down
-    fw 7
-    up
-    bw 77
-    left 1
+proc CIRCLE {
+    repeat 360 {
+        up
+        fw 70
+        down
+        fw 7
+        up
+        bw 77
+        left 1
+    }
 }
+call CIRCLE
 
 heading 90
 fw 150
 
-repeat 360 {
-	up
-    fw 70
-    down
-    fw 7
-    up
-    bw 77
-    left 1
-}
+call CIRCLE
+
 left 90
 fw 75
 down

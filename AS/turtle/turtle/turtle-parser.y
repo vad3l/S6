@@ -95,6 +95,7 @@ cmd:
 	|	KW_HEADING expr	{ $$ = make_cmd_heading($2); }
 	|	'{' cmds '}'	{ $$ = make_cmd_bloc($2); }
 	|	KW_SET NAME expr { $$ = make_cmd_set($2, $3); }
+	|	KW_PROC	NAME cmds { $$ = make_cmd_proc($2,$3); }
 	|	KW_CALL NAME { $$ = make_cmd_call($2); }
 ;
 
