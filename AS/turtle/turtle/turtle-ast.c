@@ -450,7 +450,7 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 		ast_node_eval(node->children[0],ctx);
 	}
 	if (node->kind == KIND_CMD_PROC) {
-		ast_node_eval(get_proc(ctx,node->children[0]->u.name),ctx);
+		ast_node_eval(get_proc(ctx,node->u.name),ctx);
 	}
 
 	if (node->next != NULL) {
