@@ -32,6 +32,16 @@ struct ast_node* make_expr_name (const char* name) {
 	return n;
 }
 
+struct ast_node* make_expr_pow (struct ast_node* a, struct ast_node* b) {
+	struct ast_node* n = calloc(1, sizeof(struct ast_node));
+	n->kind = KIND_EXPR_BINOP;
+	n->u.op = '^';
+	n->children_count = 0;
+	n->children[0] = a;
+	n->children[1] = b;
+	return n;
+}
+
 struct ast_node* make_expr_unop (struct ast_node* a) {
 	struct ast_node* n = calloc(1, sizeof(struct ast_node));
 	n->kind = KIND_EXPR_UNOP;
@@ -130,6 +140,15 @@ struct ast_node* make_expr_random (struct ast_node* a, struct ast_node* b) {
 /*
  *	CMD
  */
+
+struct ast_node* make_cmd_print (struct ast_node* expr) {
+	struct ast_node* node = calloc(1, sizeof(struct ast_node));
+	node->kind = KIND_CMD_SIMPLE;
+	node->u.cmd = CMD_PRINT;
+	node->children_count = 1;
+	node->children[0] = expr;
+	return node;
+}
 
 struct ast_node *make_cmd_forbackward (bool choice,struct ast_node *expr) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));
@@ -437,6 +456,9 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 			case CMD_HOME:
 				context_create(ctx);
 				break;
+			case CMD_PRINT:
+				fprintf(stderr, "%f\n", ast_node_eval_return(node->children[0], ctx));
+				break;
 			case CMD_COLOR:
 				color(node, ctx);
 				break;
@@ -499,6 +521,8 @@ double ast_node_eval_return (const struct ast_node* n, struct context* ctx) {
 				return ast_node_eval_return(n->children[0], ctx) * ast_node_eval_return(n->children[1], ctx);
 			case '/':
 				return ast_node_eval_return(n->children[0], ctx) / ast_node_eval_return(n->children[1], ctx);
+			case '^':
+				return pow(ast_node_eval_return(n->children[0], ctx), ast_node_eval_return(n->children[1], ctx)); 
 		}
 	} else if (n->kind == KIND_EXPR_UNOP) {
 		return -ast_node_eval_return(n->children[0], ctx);

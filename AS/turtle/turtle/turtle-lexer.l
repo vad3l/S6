@@ -42,6 +42,7 @@ SQRT	"sqrt"
 PROC	"proc"
 SET		"set"
 CALL	"call"
+PRINT	"print"
 
 %%
 
@@ -70,7 +71,8 @@ CALL	"call"
 "{"		{ return '{'; }
 "}"		{ return '}'; }
 
-{IDC}		{ yylval.name = yytext; printf("yytext = %s\n", yytext); return NAME; }
+{PRINT}		{ return KW_PRINT; }
+{IDC}		{ yylval.name = yytext; return NAME; }
 {POSITION}		{ return KW_POSITION; }
 {RANDOM}	{ return KW_RANDOM; }
 {REPEAT}		{ return KW_REPEAT; }
@@ -90,8 +92,8 @@ CALL	"call"
 {SET}		{ return KW_SET; }
 {CALL}		{ return KW_CALL; }
 
-{DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
 {COLOR_DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
+{DIGIT}+		{ yylval.value = strtod(yytext, NULL); return VALUE; }
 
 [\n\t ]*		/* whitespace */
 .		{ fprintf(stderr, "Unknown token: '%s'\n", yytext); exit(EXIT_FAILURE); }

@@ -1,5 +1,6 @@
-set ONE 1.0
+set ONE 2.0 ^ 4
 color 0.3, 0.1, ONE
+print ONE
 fw random(100.0, 150.0)
 heading 120
 color green

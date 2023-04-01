@@ -42,6 +42,7 @@ void yyerror(struct ast *ret, const char *);
 %token		KW_SET		"set"
 %token		KW_PROC		"proc"
 %token		KW_CALL		"call"
+%token		KW_PRINT	"print"
 
 %token		KW_COLOR_BLUE	"blue"
 %token		KW_COLOR_RED	"red"
@@ -58,6 +59,7 @@ void yyerror(struct ast *ret, const char *);
 %left '+'
 %left '*' '/'
 %left '(' ')'
+%right '^'
 
 %type <node> unit cmds cmd expr
 
@@ -97,11 +99,13 @@ cmd:
 	|	KW_SET expr expr { $$ = make_cmd_set($2, $3); }
 	|	KW_PROC	expr cmd { $$ = make_cmd_proc($2,$3); }
 	|	KW_CALL expr { $$ = make_cmd_call($2); }
+	|	KW_PRINT expr { $$ = make_cmd_print($2); }
 ;
 
 expr:
 		NAME		{ $$ = make_expr_name($1); }
 	|	VALUE		{ $$ = make_expr_value($1); }
+	|	expr '^' expr	{ $$ = make_expr_pow($1, $3); }
 	|	'-' expr	{ $$ = make_expr_unop($2); }
 	|	expr '*' expr { $$ = make_expr_mul($1, $3); }
 	|	expr '+' expr { $$ = make_expr_add($1, $3); }
