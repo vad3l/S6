@@ -25,7 +25,7 @@ struct ast_node *make_expr_value (double value) {
 struct ast_node* make_expr_name (const char* name) {
 	struct ast_node* n = calloc(1, sizeof(struct ast_node));
 	n->kind = KIND_EXPR_NAME;
-	char* cpy = calloc(strlen(name), sizeof(char));
+	char* cpy = calloc(strlen(name) + 1, sizeof(char));
 	strcpy(cpy, name);
 	n->u.name = cpy;
 	n->children_count = 0;
@@ -340,7 +340,7 @@ void add_variable (struct context* self, const char* name, double value) {
 void add_proc (struct context* self, const char* name, struct ast_node* block) {
 	struct list_node* node = calloc(1, sizeof(struct list_node));
 	node->block = block;
-	char* cpy = calloc(strlen(name), sizeof(char));
+	char* cpy = calloc(strlen(name) + 1, sizeof(char));
 	strcpy(cpy, name);
 	node->name = cpy;
 	node->next = NULL;

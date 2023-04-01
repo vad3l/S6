@@ -54,10 +54,10 @@ void yyerror(struct ast *ret, const char *);
 %token		KW_COLOR_WHITE	"white"
 
 /* TODO: add other tokens */
-%left '+' '-'
+%right '-'
+%left '+'
 %left '*' '/'
 %left '(' ')'
-
 
 %type <node> unit cmds cmd expr
 
@@ -103,10 +103,10 @@ expr:
 		NAME		{ $$ = make_expr_name($1); }
 	|	VALUE		{ $$ = make_expr_value($1); }
 	|	'-' expr	{ $$ = make_expr_unop($2); }
-	|	expr '/' expr { $$ = make_expr_div($1, $3); }
 	|	expr '*' expr { $$ = make_expr_mul($1, $3); }
-	|	expr '-' expr { $$ = make_expr_sub($1, $3); }
 	|	expr '+' expr { $$ = make_expr_add($1, $3); }
+	|	expr '/' expr { $$ = make_expr_div($1, $3); }
+	|	expr '-' expr { $$ = make_expr_sub($1, $3); }
 	|	KW_COS	'(' expr ')'	{ $$ = make_expr_cos($3); }
 	|	KW_SIN	'(' expr ')'	{ $$ = make_expr_sin($3); }
 	|	KW_TAN	'(' expr ')'	{ $$ = make_expr_tan($3); }
