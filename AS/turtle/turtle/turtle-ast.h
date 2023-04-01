@@ -78,7 +78,8 @@ struct ast_node* make_expr_sub (struct ast_node* a, struct ast_node* b);
 struct ast_node* make_expr_mul (struct ast_node* a, struct ast_node* b);
 struct ast_node* make_expr_div (struct ast_node* a, struct ast_node* b);
 struct ast_node* make_expr_unop (struct ast_node* a);
-
+struct ast_node* make_expr_name(const char* name);
+	
 struct ast_node *make_cmd_rotate(bool left,struct ast_node *expr);
 struct ast_node *make_cmd_forbackward(bool choice, struct ast_node *expr);
 struct ast_node *make_cmd_color(double r,double g,double b);
