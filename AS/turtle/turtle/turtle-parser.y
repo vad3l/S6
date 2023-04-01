@@ -94,14 +94,14 @@ cmd:
 	|	KW_HOME	{ $$ = make_cmd_home(); }
 	|	KW_HEADING expr	{ $$ = make_cmd_heading($2); }
 	|	'{' cmds '}'	{ $$ = make_cmd_bloc($2); }
-	|	KW_SET NAME expr { $$ = make_cmd_set($2, $3); }
-	|	KW_PROC	NAME cmd { $$ = make_cmd_proc($2,$3); }
-	|	KW_CALL NAME { $$ = make_cmd_call($2); }
+	|	KW_SET expr expr { $$ = make_cmd_set($2, $3); }
+	|	KW_PROC	expr cmd { $$ = make_cmd_proc($2,$3); }
+	|	KW_CALL expr { $$ = make_cmd_call($2); }
 ;
 
 expr:
-		VALUE		{ $$ = make_expr_value($1); }
-	|	NAME		{ $$ = make_expr_name($1); }
+		NAME		{ $$ = make_expr_name($1); }
+	|	VALUE		{ $$ = make_expr_value($1); }
 	|	'-' expr	{ $$ = make_expr_unop($2); }
 	|	expr '/' expr { $$ = make_expr_div($1, $3); }
 	|	expr '*' expr { $$ = make_expr_mul($1, $3); }

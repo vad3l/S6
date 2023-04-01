@@ -1,0 +1,71 @@
+set SIZE 50
+
+proc BACK {
+    position -500, 550
+    repeat 500{
+        fw 1200
+        right 90
+        fw 1
+        right 90
+        fw 1200
+        left 90
+        fw 1 
+        left 90
+    }
+}
+
+proc BIGSQUARE {
+    repeat 100{
+        fw SIZE*4
+        right 90
+        fw 1
+        right 90
+        fw SIZE*4
+        left 90
+        fw 1 
+        left 90
+    }
+}
+
+proc BIGRECTANGLE{
+    repeat 100{
+        fw SIZE*6
+        right 90
+        fw 1
+        right 90
+        fw SIZE*6
+        left 90
+        fw 1 
+        left 90
+    }
+}
+
+proc SMOLRECTANGLE{
+    repeat 50{
+        fw SIZE*6
+        right 90
+        fw 1
+        right 90
+        fw SIZE*6
+        left 90
+        fw 1
+        left 90
+    }
+}
+
+proc CREEPER{
+    up position -SIZE*6, -SIZE down
+    call BIGSQUARE
+    up position SIZE*2, -SIZE down
+    call BIGSQUARE
+    up position -SIZE*2, SIZE*5 down
+    call BIGRECTANGLE
+    up position -SIZE*4, SIZE*7 down
+    call SMOLRECTANGLE
+    up position SIZE*2, SIZE*7 down
+    call SMOLRECTANGLE
+}
+color green
+call BACK
+color 0.0, 0.0, 0.0
+call CREEPER

@@ -90,9 +90,9 @@ struct ast_node *make_cmd_home ();
 struct ast_node *make_cmd_heading (struct ast_node *expr);
 struct ast_node *make_cmd_repeat (struct ast_node *nb,struct ast_node *expr);
 struct ast_node *make_cmd_bloc (struct ast_node *expr);
-struct ast_node* make_cmd_set (const char* name, struct ast_node* a);
-struct ast_node* make_cmd_proc (const char* name, struct ast_node* expr);
-struct ast_node* make_cmd_call (const char* name);
+struct ast_node* make_cmd_set (struct ast_node* name, struct ast_node* a);
+struct ast_node* make_cmd_proc (struct ast_node* name, struct ast_node* expr);
+struct ast_node* make_cmd_call (struct ast_node* name);
 
 // root of the abstract syntax tree
 struct ast {
@@ -103,7 +103,7 @@ struct ast {
 void ast_destroy(struct ast *self);
 
 struct list_node {
-	const char* name;
+	char* name;
 	double value;
 	struct ast_node* block;
 	struct list_node* next;
@@ -129,6 +129,8 @@ void add_proc (struct context* self, const char* name, struct ast_node* block);
 struct ast_node* get_proc (struct context* self, const char* name);
 double get_var (struct context* self, const char* name);
 bool remove_name (struct context* self, const char* name);
+void print_list (struct list* l);
+void print_list_node (struct list_node* l);
 void context_destroy (struct context* self);
 
 // print the tree as if it was a Turtle program

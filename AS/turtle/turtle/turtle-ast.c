@@ -140,15 +140,12 @@ struct ast_node *make_cmd_forbackward (bool choice,struct ast_node *expr) {
 	return node;
 }
 
-struct ast_node* make_cmd_set (const char* name, struct ast_node* a) {
-	char* str = strtok((char*)name, " ");
+struct ast_node* make_cmd_set (struct ast_node* name, struct ast_node* a) {
 	struct ast_node* n = calloc(1, sizeof(struct ast_node));
 	n->kind = KIND_CMD_SET;
-	char* cpy = calloc(strlen(str) + 1, sizeof(char));
-	strcpy(cpy, str);
-	n->u.name = cpy;
-	n->children_count = 1;
-	n->children[0] = a;
+	n->children_count = 2;
+	n->children[0] = name;
+	n->children[1] = a;
 	return n;
 }
 
@@ -250,21 +247,20 @@ struct ast_node *make_cmd_bloc (struct ast_node *expr) {
 	return node;
 }
 
-struct ast_node* make_cmd_proc (const char* name, struct ast_node* expr) {
+struct ast_node* make_cmd_proc (struct ast_node* name, struct ast_node* expr) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_CMD_PROC;
-	node->u.name = calloc(strlen(name) + 1, sizeof(char));
-	strcpy(node->u.name,name);
-	node->children_count = 1;
-	node->children[0] = expr;
+	node->children_count = 2;
+	node->children[0] = name;
+	node->children[1] = expr;
 	return node;
 }
 
-struct ast_node* make_cmd_call (const char* name) {
+struct ast_node* make_cmd_call (struct ast_node* name) {
 	struct ast_node *node = calloc(1, sizeof(struct ast_node));
 	node->kind = KIND_CMD_CALL;
-	node->u.name = calloc(strlen(name) + 1, sizeof(char));
-	strcpy(node->u.name,name);
+	node->children_count = 1;
+	node->children[0] = name;
 	return node;
 }
 
@@ -341,10 +337,9 @@ void add_variable (struct context* self, const char* name, double value) {
 void add_proc (struct context* self, const char* name, struct ast_node* block) {
 	struct list_node* node = calloc(1, sizeof(struct list_node));
 	node->block = block;
-	char* cpy = calloc(strlen(name) + 1, sizeof(char));
+	char* cpy = calloc(strlen(name), sizeof(char));
 	strcpy(cpy, name);
 	node->name = cpy;
-	node->block = NULL;
 	node->next = NULL;
 	if (self->variable->first == NULL) {
 		self->variable->first = node;
@@ -360,7 +355,6 @@ void add_proc (struct context* self, const char* name, struct ast_node* block) {
 struct ast_node* get_proc (struct context* self, const char* name) {
 	struct list_node* v = self->variable->first;
 	while (v != NULL) {
-		printf("%s\n",v->name);
 		if (strcmp(v->name, name) == 0) {
 			return v->block;
 		}
@@ -447,7 +441,7 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 	}
 
 	if (node->kind == KIND_CMD_SET) {
-		add_variable(ctx, node->u.name, ast_node_eval_return(node->children[0], ctx));
+		add_variable(ctx, node->children[0]->u.name, ast_node_eval_return(node->children[1], ctx));
 	}
 
 	if (node->kind == KIND_CMD_REPEAT) {
@@ -455,15 +449,16 @@ void ast_node_eval (const struct ast_node* node, struct context *ctx) {
 			ast_node_eval(node->children[1],ctx);
 		}
 	}
+
 	if (node->kind == KIND_CMD_BLOCK) {
 		ast_node_eval(node->children[0],ctx);
 	}
-	if (node->kind == KIND_CMD_PROC) {
-		add_proc(ctx, node->u.name, node->children[0]);
-	}
 
+	if (node->kind == KIND_CMD_PROC) {
+		add_proc(ctx, node->children[0]->u.name, node->children[1]);
+	}
 	if (node->kind == KIND_CMD_CALL) {
-		ast_node_eval(get_proc(ctx,node->u.name),ctx);
+		ast_node_eval(get_proc(ctx,node->children[0]->u.name),ctx);
 	}
 
 	if (node->next != NULL) {
@@ -540,8 +535,8 @@ void position (const struct ast_node* n, struct context* ctx) {
 	double a = ast_node_eval_return(n->children[0], ctx);
 	double b = ast_node_eval_return(n->children[1], ctx);
 	printf("%f %f\n", a, b);
-	ctx->x += a;
-	ctx->y += b;
+	ctx->x = a;
+	ctx->y = b;
 }
 
 void color (const struct ast_node* n, struct context* ctx) {
@@ -564,6 +559,10 @@ void walk (bool forward,const struct ast_node* node, struct context* ctx) {
 
 
 void heading(struct context* ctx,int angle) {
+	if (angle == 0) {
+		ctx->angle = -90.0;
+		return;
+	}
     double orientation = angle % 360;
     if (orientation < 0) {
         orientation += 360;
@@ -578,13 +577,16 @@ void heading(struct context* ctx,int angle) {
 void ast_node_print (const struct ast_node* n) {
 	switch (n->kind) {
 		case KIND_CMD_CALL:
-			printf("CMD_CALL\n\tname : %s\n", n->u.name);
+			printf("CMD_CALL\n\n");
 			break;
 		case KIND_CMD_SIMPLE:
 			printf("CMD_SIMPLE\n\tcmd : %i\n", n->u.cmd);
 			break;
 		case KIND_CMD_SET:
-			printf("CMD_SET\n\tname : %s\n", n->u.name);
+			printf("CMD_SET\n\t\n");
+			break;
+		case KIND_CMD_PROC:
+			printf("CMD_PROC\n\t\n");
 			break;
 		case KIND_EXPR_FUNC:
 			printf("EXPR_FUNC\n\tname : %i\n", n->u.func);
@@ -613,3 +615,18 @@ void ast_node_print (const struct ast_node* n) {
 void ast_print(const struct ast *self) {
 	ast_node_print(self->unit);
 }
+
+void print_list (struct list* l) {
+	printf("list : \n");
+	if (l->first != NULL) {
+		print_list_node(l->first);
+	}
+}
+
+void print_list_node (struct list_node* l) {
+	printf("name : %s, bloc %p, value : %f",  l->name, l->block, l->value);
+	if (l->next != NULL) {
+		print_list_node(l->next);
+	}
+}
+

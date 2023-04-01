@@ -15,6 +15,7 @@ proc TOWER {
 
   right 90
   fw 10
+  color green
   heading 0
   bw 100
 }
