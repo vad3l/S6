@@ -25,7 +25,7 @@ struct ast_node *make_expr_value (double value) {
 struct ast_node* make_expr_name (const char* name) {
 	struct ast_node* n = calloc(1, sizeof(struct ast_node));
 	n->kind = KIND_EXPR_NAME;
-	char* cpy = calloc(strlen(name) + 1, sizeof(char));
+	char* cpy = calloc(strlen(name), sizeof(char));
 	strcpy(cpy, name);
 	n->u.name = cpy;
 	n->children_count = 0;
@@ -270,6 +270,9 @@ struct ast_node* make_cmd_call (struct ast_node* name) {
 
 void ast_node_destroy (struct ast_node* self) {
 	if (self == NULL){return ;}
+	if (self->kind == KIND_EXPR_NAME) {
+		free(self->u.name);
+	}
 	for (size_t i = 0; i < self->children_count; i++) {
 		if (self->children[i] != NULL) {
 			ast_node_destroy(self->children[i]);
@@ -292,7 +295,7 @@ void ast_destroy(struct ast *self) {
 
 void list_node_destroy(struct list_node* n) {
 	free((void *)n->name);
-	free(n->block);
+//	free(n->block);
 	free(n);
 }
 
